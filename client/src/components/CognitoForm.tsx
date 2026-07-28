@@ -21,8 +21,9 @@ const ACCOUNT_KEY = 'ufIsh1RjbUCGYxX0PV-sug';
 // Form ids from Cognito, by what the delegate still has to pay:
 //   78 — "Self Financed (With Scholarship)"
 //   79 — "Partial (50% Scholarship)"
+//   81 — Alumni registration
 // Full-scholarship delegates have nothing to pay, so there is no form for them.
-export const COGNITO_FORM_IDS = { self: '78', partial: '79' } as const;
+export const COGNITO_FORM_IDS = { self: '78', partial: '79', alumni: '81' } as const;
 
 // Cognito's seamless embed prefills fields from the host page's query string,
 // keyed by each field's Internal Name. We pass the delegate's applicant_id into

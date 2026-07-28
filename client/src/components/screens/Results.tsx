@@ -9,7 +9,7 @@
 //   full    → scholarship covers the fee; no form, team confirms directly
 //   partial → pays 50%; registers + pays through Cognito form 79
 //   self    → pays in full; registers + pays through Cognito form 78
-//   alumni  → parked, handled by the team (final treatment still TBD)
+//   alumni  → registers through Cognito form 81
 //
 // No tier → nothing renders at all (see Dashboard).
 import { useState } from 'react';
@@ -166,15 +166,27 @@ export const TierResult = ({ tier }: { tier: ResultTier }) => {
     );
   }
 
-  // alumni — handled directly by the team, no form in the portal.
+  // alumni — dedicated registration form (Cognito 81).
+  const registered = profile?.registration_status === 'submitted';
   return (
-    <div className="t-card">
-      <p className="tag">Alumni</p>
-      <div className="t-title">Welcome back</div>
-      <p className="t-desc">
-        You're registered with us as a CSCD alumnus. Our team will contact you directly about your
-        participation in YPDS Jakarta 2026.
-      </p>
+    <div className="stack">
+      <div className="t-card is-award">
+        <p className="tag">Alumni</p>
+        <div className="t-title">Welcome back</div>
+        <p className="t-desc">
+          You're registered with us as a CSCD alumnus. Complete the registration form below to
+          confirm your place at YPDS Jakarta 2026.
+        </p>
+      </div>
+      {registered ? (
+        <RegistrationConfirmed submittedAt={profile?.registration_submitted_at || null} />
+      ) : (
+        <CognitoForm
+          formId={COGNITO_FORM_IDS.alumni}
+          title="Alumni registration"
+          applicantId={profile?.applicant_id}
+        />
+      )}
     </div>
   );
 };
