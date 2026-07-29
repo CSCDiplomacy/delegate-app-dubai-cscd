@@ -141,6 +141,7 @@ export type Screen =
   | 'about'
   | 'rundown'
   | 'venue'
+  | 'hotel'
   | 'schedule'
   | 'contact';
 

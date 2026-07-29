@@ -13,6 +13,7 @@ const SCREENS: Screen[] = [
   'about',
   'rundown',
   'venue',
+  'hotel',
   'schedule',
   'contact',
 ];

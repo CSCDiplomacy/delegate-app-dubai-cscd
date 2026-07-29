@@ -14,6 +14,7 @@ import { Interview } from '../screens/Interview';
 import { About } from '../screens/About';
 import { Rundown } from '../screens/Rundown';
 import { Venue } from '../screens/Venue';
+import { Hotel } from '../screens/Hotel';
 import { Schedule } from '../screens/Schedule';
 import { Contact } from '../screens/Contact';
 
@@ -23,6 +24,7 @@ const SCREENS = {
   about: About,
   rundown: Rundown,
   venue: Venue,
+  hotel: Hotel,
   schedule: Schedule,
   contact: Contact,
 } as const;

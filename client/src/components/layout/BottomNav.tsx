@@ -1,5 +1,6 @@
 // Mobile bottom navigation. When the applicant still owes an interview it
 // takes a slot; otherwise the standard four tabs show.
+import { useDelegateStore } from '../../stores/delegateStore';
 import { useUIStore } from '../../stores/uiStore';
 import { Icon } from '../Icon';
 import type { IconName } from '../Icon';
@@ -23,13 +24,23 @@ const WITH_INTERVIEW: NavItem[] = [
   BASE[3],
 ];
 
+const HOTEL_ITEM: NavItem = { screen: 'hotel', label: 'Hotel', icon: 'hotel' };
+
 export const BottomNav = ({
   showInterview,
 }: {
   showInterview: boolean;
 }) => {
   const { activeScreen, switchScreen } = useUIStore();
-  const base = showInterview ? WITH_INTERVIEW : BASE;
+  const voucherAvailable = useDelegateStore((s) => s.voucherAvailable);
+  // With only 5 mobile slots, we swap Schedule → Hotel for the ~17 delegates
+  // who have a voucher — Hotel is more actionable pre-event than an empty
+  // personal schedule.
+  const base = showInterview
+    ? WITH_INTERVIEW
+    : voucherAvailable
+    ? [BASE[0], BASE[1], BASE[2], BASE[3], HOTEL_ITEM]
+    : BASE;
   const items = base;
 
   return (

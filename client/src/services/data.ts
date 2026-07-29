@@ -57,6 +57,18 @@ export async function removeFavourite(sessionId: string): Promise<void> {
   await api(`/favourites/${encodeURIComponent(sessionId)}`, { method: 'DELETE' });
 }
 
+// Whether an accommodation voucher PDF exists in Supabase Storage for the
+// caller. `undefined` on failure so the UI can distinguish "not loaded yet"
+// from "definitely no voucher"; we treat that as false at the UI edges.
+export async function loadVoucherAvailability(): Promise<boolean> {
+  try {
+    const data = await api<{ available: boolean; url?: string }>('/me/voucher');
+    return !!data?.available;
+  } catch {
+    return false;
+  }
+}
+
 export async function submitFeedback(comment: string): Promise<void> {
   await api('/feedback', {
     method: 'POST',

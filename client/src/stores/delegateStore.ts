@@ -10,6 +10,10 @@ interface DelegateState {
   contact: ContactData | null;
   announcements: Announcement[];
   favourites: Set<string>;
+  /** Whether an accommodation voucher PDF exists for the caller (gates the
+   *  Hotel nav item + screen). Only the 17 delegates on the shared Diplomark
+   *  booking have one. */
+  voucherAvailable: boolean;
   loaded: boolean;
 
   loadAll: () => Promise<void>;
@@ -23,22 +27,25 @@ export const useDelegateStore = create<DelegateState>((set, get) => ({
   contact: null,
   announcements: [],
   favourites: new Set<string>(),
+  voucherAvailable: false,
   loaded: false,
 
   loadAll: () => {
     if (loadPromise) return loadPromise;
     loadPromise = (async () => {
-      const [rundown, contact, announcements, favourites] = await Promise.all([
+      const [rundown, contact, announcements, favourites, voucherAvailable] = await Promise.all([
         dataService.loadRundown(),
         dataService.loadContact(),
         dataService.loadAnnouncements(),
         dataService.loadFavourites(),
+        dataService.loadVoucherAvailability(),
       ]);
       set({
         rundown,
         contact,
         announcements,
         favourites: new Set(favourites),
+        voucherAvailable,
         loaded: true,
       });
     })();

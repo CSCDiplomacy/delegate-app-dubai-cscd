@@ -1,5 +1,6 @@
 // Desktop sidebar: brand, nav, user card, theme toggle, sign out.
 import { useAuthStore } from '../../stores/authStore';
+import { useDelegateStore } from '../../stores/delegateStore';
 import { useUIStore } from '../../stores/uiStore';
 import { Icon } from '../Icon';
 import type { IconName } from '../Icon';
@@ -21,13 +22,18 @@ export const Sidebar = ({
 }) => {
   const { profile, eventName, logout } = useAuthStore();
   const { activeScreen, switchScreen, theme, toggleTheme } = useUIStore();
+  const voucherAvailable = useDelegateStore((s) => s.voucherAvailable);
 
   const items: typeof NAV = [
     NAV[0],
     ...(showInterview
       ? ([{ screen: 'interview', label: 'Interview', icon: 'video' }] as typeof NAV)
       : []),
-    ...NAV.slice(1),
+    ...NAV.slice(1, 4), // about, rundown, venue
+    ...(voucherAvailable
+      ? ([{ screen: 'hotel', label: 'Hotel', icon: 'hotel' }] as typeof NAV)
+      : []),
+    ...NAV.slice(4), // schedule, contact
   ];
 
   return (
