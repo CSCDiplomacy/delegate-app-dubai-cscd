@@ -118,6 +118,24 @@ router.post('/accept-scholarship', requireAuth, async (req, res) => {
   return res.json({ accepted_at: finalAt });
 });
 
+// Accommodation voucher (PDF). Uploaded once via scripts/upload-vouchers.js
+// into the private `accommodation-vouchers` Supabase Storage bucket, keyed
+// `{applicant_id}.pdf`. This endpoint returns a short-lived signed URL if a
+// voucher exists for the caller, and `{ available: false }` otherwise.
+router.get('/voucher', requireAuth, async (req, res) => {
+  if (!serviceClient) return res.status(503).json({ error: 'Storage not configured' });
+  const delegate = await getDelegate(req.user.id);
+  if (!delegate || !delegate.applicant_id) return res.json({ available: false });
+
+  const key = `${delegate.applicant_id}.pdf`;
+  const { data, error } = await serviceClient.storage
+    .from('accommodation-vouchers')
+    .createSignedUrl(key, 60 * 10, { download: key });
+
+  if (error || !data || !data.signedUrl) return res.json({ available: false });
+  res.json({ available: true, url: data.signedUrl });
+});
+
 // The interview form URL is a secret: anyone holding it can submit without ever
 // logging in. So it lives in the server env, never in the client bundle, and is
 // handed out only to an authenticated applicant who has not yet submitted.

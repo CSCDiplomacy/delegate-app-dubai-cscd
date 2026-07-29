@@ -28,6 +28,7 @@ delegates.csv
 
 # Pre-Jakarta DB backup: delegate PII (names, emails, passports) + bcrypt hashes
 backup_database/
+accommodation_vouchers/
 
 # Applicant lists (emails / PII) and generated credentials
 candidates.csv

@@ -12,6 +12,7 @@ import { Icon } from '../Icon';
 import type { IconName } from '../Icon';
 import type { Screen } from '../../types';
 import { SelectedBanner, TierResult } from './Results';
+import { VoucherCard } from '../VoucherCard';
 
 const TILES: Array<{ screen: Screen; icon: IconName; title: string; sub: string }> = [
   { screen: 'about', icon: 'globe', title: 'The Summit', sub: 'Themes, story & lineage' },
@@ -86,6 +87,10 @@ export const Dashboard = () => {
           <SelectedBanner />
         </>
       )}
+
+      {/* Independent of tier: shows only when a voucher PDF exists for this
+          applicant. The card fetches on mount and hides itself otherwise. */}
+      <VoucherCard />
 
       {/* Featured banner */}
       <div className="dash-banner">
