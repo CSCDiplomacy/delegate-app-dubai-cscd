@@ -1,11 +1,26 @@
-// Accommodation voucher download card. Rendered on the Dashboard; hides itself
-// when no voucher exists for the current applicant. The server hands back a
-// short-lived signed URL from the private Supabase Storage bucket.
+// Accommodation voucher card. Rendered on the Dashboard; hides itself when no
+// voucher exists for the current applicant. Shows the booking summary and the
+// operational + legal notes delegates need (visa clause, Diplomark partner
+// phrasing, arrival instructions), alongside a PDF download button. The server
+// returns a short-lived signed URL from the private Supabase Storage bucket.
+//
+// The booking details below are constant across all delegates for YPDS Jakarta
+// 2026 (shared Diplomark booking No. 1755043942). If a future cohort has
+// varying bookings, thread these values through the /me/voucher payload.
 import { useEffect, useState } from 'react';
 import { api } from '../services/api';
 import { Icon } from './Icon';
 
 type VoucherResponse = { available: boolean; url?: string };
+
+const BOOKING = [
+  { label: 'Hotel', value: 'ARTOTEL Thamrin — Jakarta' },
+  { label: 'Check-in', value: '20 August 2026' },
+  { label: 'Check-out', value: '23 August 2026' },
+  { label: 'Room', value: 'Single room, twin sharing' },
+  { label: 'Meal plan', value: 'Bed & Breakfast' },
+  { label: 'Booking No.', value: '1755043942' },
+];
 
 export const VoucherCard = () => {
   const [available, setAvailable] = useState(false);
@@ -38,9 +53,35 @@ export const VoucherCard = () => {
       <p className="tag">Accommodation</p>
       <div className="t-title">Your accommodation voucher is ready</div>
       <p className="t-desc">
-        Download your hotel voucher for YPDS Jakarta 2026. Please keep a copy on your phone and
-        present it at check-in.
+        Your room for YPDS Jakarta 2026 has been reserved in your name through our administrative
+        and logistical partner, <strong>Diplomark Limited</strong>.
       </p>
+
+      <div className="pass-bottom" style={{ marginTop: 14 }}>
+        {BOOKING.map((row) => (
+          <div key={row.label} className="pass-field">
+            <span className="pass-field-label">{row.label}</span>
+            <span className="pass-field-value">{row.value}</span>
+          </div>
+        ))}
+      </div>
+
+      <p className="t-desc" style={{ marginTop: 14 }}>
+        <strong>Hotel address.</strong> Jl. Sunda No.3, RT.8/RW.4, Gondangdia, Kec. Menteng, Kota
+        Jakarta Pusat, DKI Jakarta 10350, Indonesia · +62 21 31925888.
+      </p>
+
+      <p className="t-desc" style={{ marginTop: 10 }}>
+        <strong>Visa.</strong> This voucher will be valid for your visa application. Attach the PDF
+        to your application as proof of accommodation in Indonesia.
+      </p>
+
+      <p className="t-desc" style={{ marginTop: 10 }}>
+        <strong>On arrival.</strong> There is no need to contact or confirm anything with the hotel
+        directly — all delegates are grouped internally under the Diplomark reservation. Our team
+        will be on-site to receive you and handle check-in with you personally.
+      </p>
+
       <div className="accept-cta">
         <button className="btn" onClick={download}>
           <Icon name="hotel" size={16} />
