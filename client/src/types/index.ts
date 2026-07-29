@@ -130,6 +130,10 @@ export interface Announcement {
   body: string;
   pinned?: boolean;
   created_at: string;
+  /** Optional deep link — when set the rail renders a button that switches
+   *  to this screen. Must be a valid Screen slug. */
+  link_screen?: Screen | null;
+  link_label?: string | null;
 }
 
 // --- Misc -----------------------------------------------------------------------

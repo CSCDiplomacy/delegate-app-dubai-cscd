@@ -636,6 +636,12 @@ textarea {
   color: var(--ink-faint);
 }
 
+.update-link {
+  margin-top: 12px;
+  width: 100%;
+  justify-content: center;
+}
+
 .menu-user {
   font-weight: 700;
   padding: 14px;
@@ -2014,6 +2020,7 @@ textarea {
 
   .topbar .brand,
   .menu-btn,
+  .bell,
   .bottom-nav {
     display: none;
   }
@@ -2028,6 +2035,30 @@ textarea {
 
   .main-inner {
     padding: 14px 28px 48px;
+    margin: 0; /* left-align beside the rail instead of centering in the column */
+  }
+
+  /* Rail becomes a permanent third column on desktop: static, no shadow,
+     no transform. The mobile drawer's close button has no meaning here. */
+  .rail {
+    position: static;
+    transform: none;
+    box-shadow: none;
+    width: 320px;
+    flex: none;
+    height: 100dvh;
+    position: sticky;
+    top: 0;
+    background: transparent;
+    border-left: 1px solid var(--line);
+  }
+
+  .rail-close {
+    display: none;
+  }
+
+  .rail-head {
+    padding: 26px 20px 14px;
   }
 
   .tile-grid {

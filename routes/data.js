@@ -22,7 +22,7 @@ router.get('/announcements', async (req, res) => {
   if (!ensureDb(res)) return;
   const { data, error } = await serviceClient
     .from('announcements')
-    .select('id, title, body, pinned, created_at')
+    .select('id, title, body, pinned, created_at, link_screen, link_label')
     .eq('active', true)
     .order('pinned', { ascending: false })
     .order('created_at', { ascending: false });
