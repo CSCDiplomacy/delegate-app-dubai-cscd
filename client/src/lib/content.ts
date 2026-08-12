@@ -64,19 +64,19 @@ export const EDITIONS: Array<{
     city: 'Baku',
     year: '2024',
     note: 'The Genesis of Dialogue',
-    report: 'https://thecscd.org/wp-content/uploads/2026/04/CSCD-Journey-2023-Baku.pdf',
+    report: 'https://thecscd.org/events/ypds-baku-2024',
   },
   {
     city: 'Istanbul',
     year: '2024',
     note: 'Crossroads of Diplomacy',
-    report: 'https://thecscd.org/wp-content/uploads/2026/04/CSCD-Journey-2023-2025.pdf-istanbul-.pdf',
+    report: 'https://thecscd.org/events/ypds-istanbul-2024',
   },
   {
     city: 'Tashkent',
     year: '2025',
     note: 'Expanding Horizons',
-    report: 'https://thecscd.org/wp-content/uploads/2026/04/tashkent-report.pdf',
+    report: 'https://thecscd.org/events/ypds-tashkent',
   },
   { city: 'Jakarta', year: '2026', note: 'Convergence of Power', current: true },
 ];
