@@ -80,10 +80,8 @@ export const OrientationCard = () => {
       <p className="tag">Orientation</p>
       <div className="t-title">Official online orientation</div>
       <p className="t-desc">
-        This is a quick reminder that the official online orientation for the Young Public
-        Diplomacy Summit, Jakarta 2026 takes place today. It's your chance to connect with fellow
-        delegates and receive key updates ahead of the Summit. Please join a few minutes early to
-        make sure your connection is working smoothly.
+        Connect with fellow delegates and get key updates ahead of the Summit. Join a few minutes
+        early to make sure your connection is working smoothly.
       </p>
       <div className="pass-field" style={{ marginTop: 12 }}>
         <span className="pass-field-label">Date</span>
@@ -103,11 +101,21 @@ export const OrientationCard = () => {
         </div>
       ) : (
         <>
-          <div className="accept-confirmed">
-            <span className="chip chip-pending">
-              <Icon name="clock" size={14} />
-              Starts in {h}h {m}m {s}s
-            </span>
+          <div className="countdown" role="timer" aria-label={`Orientation starts in ${h} hours ${m} minutes ${s} seconds`}>
+            <div className="countdown-unit">
+              <span className="countdown-value">{String(h).padStart(2, '0')}</span>
+              <span className="countdown-label">hrs</span>
+            </div>
+            <span className="countdown-sep">:</span>
+            <div className="countdown-unit">
+              <span className="countdown-value">{String(m).padStart(2, '0')}</span>
+              <span className="countdown-label">min</span>
+            </div>
+            <span className="countdown-sep">:</span>
+            <div className="countdown-unit">
+              <span className="countdown-value">{String(s).padStart(2, '0')}</span>
+              <span className="countdown-label">sec</span>
+            </div>
           </div>
           <div className="accept-cta">
             <button className="btn ghost" onClick={addToCalendar}>
