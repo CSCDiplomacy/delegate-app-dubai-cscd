@@ -11,6 +11,7 @@ import { useUIStore } from '../../stores/uiStore';
 import { Icon } from '../Icon';
 import type { IconName } from '../Icon';
 import type { Screen } from '../../types';
+import { OrientationCard } from './Orientation';
 import { SelectedBanner, TierResult } from './Results';
 
 const TILES: Array<{ screen: Screen; icon: IconName; title: string; sub: string }> = [
@@ -27,6 +28,7 @@ export const Dashboard = () => {
   const applicant = isApplicant(profile);
   const underReview = isUnderReview(profile);
   const tier = profile?.result_tier || null;
+  const registered = profile?.registration_status === 'submitted' || !!profile?.scholarship_accepted_at;
 
   // Results are published, so anyone with a tier reads "Result announced".
   // Tier — not interview status — is what decides this.
@@ -74,6 +76,9 @@ export const Dashboard = () => {
           </div>
         </div>
       </div>
+
+      {/* Orientation logistics for confirmed delegates only. */}
+      {registered && <OrientationCard />}
 
       {/* Results live inline on the dashboard — there is no separate Results
           screen. Before the announcement moment everyone evaluated sees the
