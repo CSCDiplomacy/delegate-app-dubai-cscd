@@ -71,6 +71,15 @@ export interface HotelInfo {
   checkout?: string;
   /** Booking terms shown under the hotel card (who books, extensions, changes). */
   policy?: string[];
+  /** Dress code by day, shown as a compact card. */
+  dress_code?: { when: string; code: string }[];
+  /** Airport → hotel arrival essentials, shown as a compact card. */
+  arrival?: {
+    airport?: string;
+    distance?: string;
+    options?: { mode: string; cost?: string; time?: string }[];
+    notes?: string[];
+  };
 }
 
 /** One institutional visit or cultural experience (data/visits.json). */

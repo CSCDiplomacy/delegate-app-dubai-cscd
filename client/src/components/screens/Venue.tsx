@@ -109,6 +109,51 @@ export const Venue = () => {
         </div>
       )}
 
+      {/* Dress code by day. */}
+      {!!hotel.dress_code?.length && (
+        <div className="card">
+          <div className="card-eyebrow">Dress code</div>
+          <div className="kv-grid">
+            {hotel.dress_code.map((d) => (
+              <div key={d.when}>
+                <div className="kv-label">{d.when}</div>
+                <div className="kv-value">{d.code}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Arrival essentials — airport, transport options, immigration/currency notes. */}
+      {hotel.arrival && (
+        <div className="card">
+          <div className="card-eyebrow">Arriving in Jakarta</div>
+          {hotel.arrival.airport && (
+            <div className="t-venue">
+              <Icon name="mapPin" size={12} /> {hotel.arrival.airport}
+            </div>
+          )}
+          {hotel.arrival.distance && <p className="card-body-text">{hotel.arrival.distance}</p>}
+          {!!hotel.arrival.options?.length && (
+            <ul className="dot-list">
+              {hotel.arrival.options.map((o) => (
+                <li key={o.mode}>
+                  {o.mode}
+                  {o.cost || o.time ? ` — ${[o.cost, o.time].filter(Boolean).join(' · ')}` : ''}
+                </li>
+              ))}
+            </ul>
+          )}
+          {!!hotel.arrival.notes?.length && (
+            <ul className="dot-list">
+              {hotel.arrival.notes.map((n) => (
+                <li key={n}>{n}</li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+
       {hasBooking && (
         <div className="card">
           <div className="card-eyebrow">Your booking</div>

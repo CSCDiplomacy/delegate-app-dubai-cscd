@@ -16,9 +16,28 @@
       "map": "https://maps.google.com/?q=ARTOTEL+Thamrin+Jakarta,+Jl.+Sunda+No.3,+Menteng,+Jakarta+Pusat",
       "policy": [
         "All bookings are made by CSCD on your behalf — you do not need to book a room yourself.",
-        "If you need to extend your dates, coordinate with us in advance and we will arrange it.",
+        "Rooms are twin-shared by default. A private single-room upgrade is available for an additional $140, subject to availability — contact us as soon as possible to request one.",
+        "Staying beyond August 23? We can arrange extra nights at negotiated group rates — contact us in advance to confirm, as availability requires checking with the hotel.",
         "Room allocation and dates may be adjusted by the management in line with the institutional visit schedule."
-      ]
+      ],
+      "dress_code": [
+        { "when": "August 20 (Evening)", "code": "Smart / semi-casual" },
+        { "when": "August 21–22 (Forum sessions & institutional visits)", "code": "Business formal or semi-formal" }
+      ],
+      "arrival": {
+        "airport": "Soekarno-Hatta International Airport (CGK)",
+        "distance": "~35 km from the hotel · 45–90 min depending on traffic",
+        "options": [
+          { "mode": "Grab (ride-sharing)", "cost": "$10–15", "time": "45–90 min" },
+          { "mode": "MRT to Blok M, then Grab/bus", "cost": "$2–3", "time": "~45 min + transfer" },
+          { "mode": "Transjakarta (BRT)", "cost": "$1–2", "time": "60–90 min" }
+        ],
+        "notes": [
+          "Complete the Indonesian Immigration Arrival Form — available on arrival or downloadable in advance.",
+          "Currency is the Indonesian Rupiah (IDR), approx. 15,000 IDR = 1 USD.",
+          "Download Grab or Go-Jek before you arrive for local rides."
+        ]
+      }
     },
     "jakarta-main": {
       "name": "Tugu Kunstkring Paleis",
