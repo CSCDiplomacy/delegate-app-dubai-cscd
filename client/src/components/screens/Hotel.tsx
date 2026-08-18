@@ -9,6 +9,7 @@
 import { useDelegateStore } from '../../stores/delegateStore';
 import { api } from '../../services/api';
 import { Icon } from '../Icon';
+import { ComingSoon } from '../ComingSoon';
 
 type VoucherResponse = { available: boolean; url?: string };
 
@@ -35,13 +36,11 @@ export const Hotel = () => {
 
   if (!voucherAvailable) {
     return (
-      <div className="coming-soon">
-        <div className="coming-soon-badge">Hotel</div>
-        <h2 className="coming-soon-title">Not available yet</h2>
-        <p className="coming-soon-body">
-          Your accommodation voucher will appear here once your booking is confirmed.
-        </p>
-      </div>
+      <ComingSoon
+        badge="Hotel"
+        title="Not available yet"
+        body="Your accommodation voucher will appear here once your booking is confirmed."
+      />
     );
   }
 

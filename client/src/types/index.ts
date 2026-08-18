@@ -132,21 +132,6 @@ export interface ContactData {
   socials?: ContactEntry[];
 }
 
-// --- Announcements (GET /api/announcements → { announcements: [...] }) ---------
-export interface Announcement {
-  id: string;
-  title: string;
-  body: string;
-  pinned?: boolean;
-  /** Distinct from `pinned` — surfaces with its own "Must read" treatment,
-   *  for things delegates cannot afford to miss (not just noteworthy). */
-  must_read?: boolean;
-  created_at: string;
-  /** Optional deep link — when set the rail renders a button that switches
-   *  to this screen. Must be a valid Screen slug. */
-  link_screen?: Screen | null;
-  link_label?: string | null;
-}
 
 // --- Action items (GET /api/action-items → { action_items: [...] }) ------------
 // Dashboard "Actions To Do" checklist — things a delegate must go *do*

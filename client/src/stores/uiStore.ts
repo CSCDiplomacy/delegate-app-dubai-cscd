@@ -1,11 +1,10 @@
-// UI chrome state: theme, active screen, drawers, read-notification tracking.
+// UI chrome state: theme, active screen, drawer.
 // Theme is applied to <html data-theme> and persisted under the same key the
 // vanilla app used, so returning visitors keep their preference.
 import { create } from 'zustand';
 import type { Screen, Theme } from '../types';
 
 const THEME_KEY = 'cscd_theme';
-const READ_KEY = 'cscd_read_notifications';
 
 const SCREENS: Screen[] = [
   'dashboard',
@@ -34,34 +33,20 @@ function initialScreen(): Screen {
   return SCREENS.includes(hash) ? hash : 'dashboard';
 }
 
-function loadReadIds(): Set<string> {
-  try {
-    return new Set(JSON.parse(localStorage.getItem(READ_KEY) || '[]'));
-  } catch {
-    return new Set();
-  }
-}
-
 interface UIState {
   theme: Theme;
   activeScreen: Screen;
   menuOpen: boolean;
-  railOpen: boolean;
-  readIds: Set<string>;
 
   toggleTheme: () => void;
   switchScreen: (screen: Screen) => void;
   setMenuOpen: (open: boolean) => void;
-  setRailOpen: (open: boolean) => void;
-  markAllRead: (ids: string[]) => void;
 }
 
 export const useUIStore = create<UIState>((set, get) => ({
   theme: initialTheme(),
   activeScreen: initialScreen(),
   menuOpen: false,
-  railOpen: false,
-  readIds: loadReadIds(),
 
   toggleTheme: () => {
     const next: Theme = get().theme === 'dark' ? 'light' : 'dark';
@@ -76,13 +61,6 @@ export const useUIStore = create<UIState>((set, get) => ({
   },
 
   setMenuOpen: (open) => set({ menuOpen: open }),
-  setRailOpen: (open) => set({ railOpen: open }),
-
-  markAllRead: (ids) => {
-    const readIds = new Set([...get().readIds, ...ids]);
-    localStorage.setItem(READ_KEY, JSON.stringify([...readIds]));
-    set({ readIds });
-  },
 }));
 
 // Apply the persisted/initial theme immediately on module load (before first paint

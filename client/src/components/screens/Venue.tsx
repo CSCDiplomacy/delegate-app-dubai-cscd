@@ -7,6 +7,7 @@ import type { HotelInfo, MyHotel, PublicHotel, Visit, VisitsResponse } from '../
 import { api } from '../../services/api';
 import { mapsLink } from '../../lib/utils';
 import { Icon } from '../Icon';
+import { ComingSoon } from '../ComingSoon';
 
 export const Venue = () => {
   const [hotel, setHotel] = useState<HotelInfo | null>(null);
@@ -53,13 +54,11 @@ export const Venue = () => {
 
   if (!hotel) {
     return (
-      <div className="coming-soon">
-        <div className="coming-soon-badge">Visit &amp; Dinner</div>
-        <h2 className="coming-soon-title">Details on the way</h2>
-        <p className="coming-soon-body">
-          Institutional visit and dinner details will appear here soon.
-        </p>
-      </div>
+      <ComingSoon
+        badge="Visit & Dinner"
+        title="Details on the way"
+        body="Institutional visit and dinner details will appear here soon."
+      />
     );
   }
 

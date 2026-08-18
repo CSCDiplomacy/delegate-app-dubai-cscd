@@ -7,7 +7,6 @@ import { useUIStore } from '../../stores/uiStore';
 import { Sidebar } from './Sidebar';
 import { TopBar } from './TopBar';
 import { BottomNav } from './BottomNav';
-import { UpdatesRail } from './UpdatesRail';
 import { MenuDrawer } from './MenuDrawer';
 import { Dashboard } from '../screens/Dashboard';
 import { Interview } from '../screens/Interview';
@@ -32,8 +31,7 @@ const SCREENS = {
 export const AppLayout = () => {
   const { profile } = useAuthStore();
   const { loadAll } = useDelegateStore();
-  const { activeScreen, switchScreen, menuOpen, railOpen, setMenuOpen, setRailOpen } =
-    useUIStore();
+  const { activeScreen, switchScreen, menuOpen, setMenuOpen } = useUIStore();
 
   useEffect(() => {
     loadAll();
@@ -61,18 +59,9 @@ export const AppLayout = () => {
         </div>
       </main>
 
-      <UpdatesRail open={railOpen} onClose={() => setRailOpen(false)} />
       <MenuDrawer open={menuOpen} onClose={() => setMenuOpen(false)} />
 
-      {(menuOpen || railOpen) && (
-        <div
-          className="backdrop"
-          onClick={() => {
-            setMenuOpen(false);
-            setRailOpen(false);
-          }}
-        />
-      )}
+      {menuOpen && <div className="backdrop" onClick={() => setMenuOpen(false)} />}
 
       <BottomNav showInterview={showInterview} />
     </div>

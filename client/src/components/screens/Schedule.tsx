@@ -3,19 +3,18 @@ import { useDelegateStore } from '../../stores/delegateStore';
 import { sessionId } from '../../types';
 import { format12Hour } from '../../lib/utils';
 import { Icon, typeIcon } from '../Icon';
+import { ComingSoon } from '../ComingSoon';
 
 export const Schedule = () => {
   const { rundown, favourites, toggleFavourite } = useDelegateStore();
 
   if (!rundown?.days?.length) {
     return (
-      <div className="coming-soon">
-        <div className="coming-soon-badge">My schedule</div>
-        <h2 className="coming-soon-title">Your personal agenda</h2>
-        <p className="coming-soon-body">
-          Once the programme is published, star the sessions you want and they will gather here.
-        </p>
-      </div>
+      <ComingSoon
+        badge="My schedule"
+        title="Your personal agenda"
+        body="Once the programme is published, star the sessions you want and they will gather here."
+      />
     );
   }
 
@@ -28,14 +27,11 @@ export const Schedule = () => {
 
   if (days.length === 0) {
     return (
-      <div className="coming-soon">
-        <div className="coming-soon-badge">Nothing starred yet</div>
-        <h2 className="coming-soon-title">Build your day</h2>
-        <p className="coming-soon-body">
-          Star sessions in the Rundown (☆ Save) and they will appear here as your personal
-          schedule.
-        </p>
-      </div>
+      <ComingSoon
+        badge="Nothing starred yet"
+        title="Build your day"
+        body="Star sessions in the Rundown (☆ Save) and they will appear here as your personal schedule."
+      />
     );
   }
 
