@@ -3,13 +3,12 @@
 //   GET  /api/rundown        → { timezone, days: [...] }        (static JSON)
 //   GET  /api/contact        → { org, venue, contacts, socials } (static JSON)
 //   GET  /api/hotel          → { hotel }                         (static JSON)
-//   GET  /api/announcements  → { announcements: [...] }
 //   GET  /api/favourites     → { favourites: [{ session_id }] }  (auth)
 //   POST /api/favourites       { session_id }                    (auth)
 //   DEL  /api/favourites/:id                                     (auth)
 //   POST /api/feedback         { comment, rating?, session_id? } (auth)
 import { api } from './api';
-import type { ActionItem, Announcement, ContactData, Rundown } from '../types';
+import type { ActionItem, ContactData, Rundown } from '../types';
 
 export async function loadRundown(): Promise<Rundown | null> {
   try {
@@ -25,15 +24,6 @@ export async function loadContact(): Promise<ContactData | null> {
     return await api<ContactData>('/contact');
   } catch {
     return null;
-  }
-}
-
-export async function loadAnnouncements(): Promise<Announcement[]> {
-  try {
-    const data = await api<{ announcements: Announcement[] }>('/announcements');
-    return Array.isArray(data?.announcements) ? data.announcements : [];
-  } catch {
-    return [];
   }
 }
 

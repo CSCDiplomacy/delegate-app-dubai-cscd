@@ -505,17 +505,6 @@ textarea {
   gap: 8px;
 }
 
-.bell-dot {
-  position: absolute;
-  top: 7px;
-  right: 7px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--signal);
-  border: 2px solid var(--surface);
-}
-
 /* Bottom nav (mobile) */
 .bottom-nav {
   position: fixed;
@@ -553,7 +542,6 @@ textarea {
 }
 
 /* Rail + menu drawer */
-.rail,
 .menu-drawer {
   position: fixed;
   top: 0;
@@ -570,7 +558,6 @@ textarea {
   flex-direction: column;
 }
 
-.rail.open,
 .menu-drawer.open {
   transform: translateX(0);
 }
@@ -588,7 +575,6 @@ textarea {
   font-weight: 600;
 }
 
-.rail-body,
 .menu-body {
   flex: 1;
   overflow-y: auto;
@@ -596,67 +582,6 @@ textarea {
   display: grid;
   gap: 12px;
   align-content: start;
-}
-
-.rail-empty {
-  color: var(--ink-soft);
-  font-size: 0.9rem;
-}
-
-.update-card {
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 15px;
-}
-
-/* Must-read cards get a filled accent edge — distinct from the plain
-   "Pinned" text label, which just orders the card to the top. */
-.update-must-read {
-  border-color: var(--brass);
-  border-left-width: 4px;
-}
-
-.update-flag {
-  display: inline-block;
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  margin: 0 6px 6px 0;
-}
-
-.update-flag-pinned {
-  color: var(--signal);
-}
-
-.update-flag-mustread {
-  color: var(--ink);
-  background: var(--brass);
-  padding: 3px 7px;
-  border-radius: 4px;
-}
-
-.update-title {
-  font-weight: 700;
-  margin-bottom: 5px;
-}
-
-.update-body {
-  font-size: 0.88rem;
-  color: var(--ink-soft);
-  white-space: pre-line;
-}
-
-.update-date {
-  margin-top: 9px;
-  font-size: 0.72rem;
-  color: var(--ink-faint);
-}
-
-.update-link {
-  margin-top: 12px;
-  width: 100%;
-  justify-content: center;
 }
 
 .menu-user {
@@ -1127,50 +1052,6 @@ textarea {
 
 .accept-confirmed .t-desc {
   margin-top: 8px;
-}
-
-/* Orientation countdown — the timer is the point of the card, so it reads at
-   a glance: large tabular digits, small labels underneath. */
-.countdown {
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-  gap: 6px;
-  margin-top: 18px;
-  padding: 16px 0;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-}
-
-.countdown-unit {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 3.2ch;
-}
-
-.countdown-value {
-  font-variant-numeric: tabular-nums;
-  font-size: 2.6rem;
-  line-height: 1;
-  font-weight: 700;
-  color: var(--signal);
-}
-
-.countdown-label {
-  margin-top: 4px;
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-}
-
-.countdown-sep {
-  font-size: 2.2rem;
-  font-weight: 700;
-  color: var(--ink-soft);
-  transform: translateY(-4px);
 }
 
 /* Cognito's loader resizes the frame to its content; this just keeps it from
@@ -2104,7 +1985,6 @@ textarea {
 
   .topbar .brand,
   .menu-btn,
-  .bell,
   .bottom-nav {
     display: none;
   }
@@ -2119,26 +1999,6 @@ textarea {
 
   .main-inner {
     padding: 14px 28px 48px;
-    margin: 0; /* left-align beside the rail instead of centering in the column */
-  }
-
-  /* Rail becomes a permanent third column on desktop: static, no shadow,
-     no transform. The mobile drawer's close button has no meaning here. */
-  .rail {
-    position: static;
-    transform: none;
-    box-shadow: none;
-    width: 320px;
-    flex: none;
-    height: 100dvh;
-    position: sticky;
-    top: 0;
-    background: transparent;
-    border-left: 1px solid var(--line);
-  }
-
-  .rail-close {
-    display: none;
   }
 
   .rail-head {

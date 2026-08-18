@@ -1,7 +1,6 @@
 // Dashboard "WhatsApp groups" box. Both invite links are permanent for this
 // cohort (confirmed by the client) so they're hardcoded here rather than
-// round-tripped through the API — same treatment as the Orientation card's
-// one-off Meet link.
+// round-tripped through the API.
 import { Icon } from '../Icon';
 
 const GROUPS = [

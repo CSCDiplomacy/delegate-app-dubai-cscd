@@ -12,7 +12,6 @@ import { Icon } from '../Icon';
 import type { IconName } from '../Icon';
 import type { Screen } from '../../types';
 import { ActionsToDo } from './ActionsToDo';
-import { OrientationCard } from './Orientation';
 import { SelectedBanner, TierResult } from './Results';
 import { WhatsAppLinks } from './WhatsAppLinks';
 
@@ -30,7 +29,6 @@ export const Dashboard = () => {
   const applicant = isApplicant(profile);
   const underReview = isUnderReview(profile);
   const tier = profile?.result_tier || null;
-  const registered = profile?.registration_status === 'submitted' || !!profile?.scholarship_accepted_at;
 
   // Results are published, so anyone with a tier reads "Result announced".
   // Tier — not interview status — is what decides this.
@@ -82,9 +80,6 @@ export const Dashboard = () => {
       {/* Actions delegates must go do (forms, etc.) — surfaces above
           everything else since these are time-bound, not just informational. */}
       <ActionsToDo />
-
-      {/* Orientation logistics for confirmed delegates only. */}
-      {registered && <OrientationCard />}
 
       {/* Results live inline on the dashboard — there is no separate Results
           screen. Before the announcement moment everyone evaluated sees the
