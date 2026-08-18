@@ -1,10 +1,12 @@
 // Dashboard "Actions To Do" checklist — things a delegate must go *do*
-// (fill out a form, join a group), fed by the `action_items` table.
-// Deliberately separate from the Updates rail: Updates is for things to
-// read, this is for things to act on. Renders nothing when the list is
-// empty so it never leaves a dead heading on the Dashboard.
+// (fill out a form, join a group), fed by the `action_items` table plus the
+// hardcoded WhatsApp groups card. Deliberately separate from the Updates
+// rail: Updates is for things to read, this is for things to act on. The
+// WhatsApp card means this section always has at least one entry, so it no
+// longer needs to hide itself when `action_items` is empty.
 import { useDelegateStore } from '../../stores/delegateStore';
 import { Icon } from '../Icon';
+import { WhatsAppLinks } from './WhatsAppLinks';
 
 function formatDue(dueDate?: string | null): string | null {
   if (!dueDate) return null;
@@ -15,7 +17,6 @@ function formatDue(dueDate?: string | null): string | null {
 
 export const ActionsToDo = () => {
   const { actionItems } = useDelegateStore();
-  if (actionItems.length === 0) return null;
 
   return (
     <div>
@@ -44,6 +45,7 @@ export const ActionsToDo = () => {
             </div>
           );
         })}
+        <WhatsAppLinks />
       </div>
     </div>
   );
