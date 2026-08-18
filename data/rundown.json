@@ -1,30 +1,147 @@
 {
-  "_note": "YPDS Jakarta 2026 Program Structure — Days of Strategy.",
+  "_note": "YPDS Jakarta 2026 — Official Event Rundown & Schedule (Aug 20–23, 2026), single source of truth per CSCD's official rundown document. Subject to slight changes as per agenda changes during the forum.",
   "timezone": "Asia/Jakarta",
   "days": [
     {
       "date": "2026-08-20",
       "label": "August 20, 2026",
-      "title": "Opening & Strategy Modules",
-      "description": "Keynote speeches by diplomats, interactive sessions on strategy and statecraft, networking reception."
+      "title": "Arrival & Networking",
+      "description": "Delegates arrive and check into Artotel Jakarta; the summit opens with a welcome reception and dinner at Tugu Kunstkring Paleis.",
+      "items": [
+        {
+          "time": "09:00",
+          "title": "Hotel Check-in",
+          "venue": "Artotel Jakarta",
+          "type": "ceremony",
+          "description": "Delegates arrive and complete registration at Artotel Jakarta throughout the day. Standard check-in is from 3:00 PM; early check-in around 1:00 PM may be available subject to room availability — if your room isn't ready yet, you're welcome to wait in the lobby."
+        },
+        {
+          "time": "18:00",
+          "end_time": "18:30",
+          "title": "Welcome Reception",
+          "venue": "Artotel Jakarta",
+          "type": "social",
+          "description": "Informal gathering for delegates to meet fellow practitioners and cultural diplomats in an open, reflective environment enabling initial conversations and network formation."
+        },
+        {
+          "time": "19:00",
+          "end_time": "21:00",
+          "title": "Welcome Dinner",
+          "venue": "Tugu Kunstkring Paleis",
+          "type": "social",
+          "description": "Curated dinner experience introducing delegates to Jakarta's cultural atmosphere and diplomatic community. Focus on connection, shared diplomatic journeys, and cross-cultural dialogue."
+        }
+      ]
     },
     {
       "date": "2026-08-21",
       "label": "August 21, 2026",
-      "title": "Peace, Power & Policy",
-      "description": "Workshops on soft power, simulations on diplomacy and conflict resolution, panel discussions."
+      "title": "Institutional Engagement & Strategic Context",
+      "description": "A full day of institutional visits — ASEAN Headquarters, Indonesia's Ministry of Culture, and (tentatively) the Embassy of Pakistan — examining regional cooperation and cultural diplomacy frameworks.",
+      "items": [
+        {
+          "time": "07:30",
+          "end_time": "08:00",
+          "title": "Breakfast",
+          "venue": "Artotel Jakarta",
+          "type": "meal",
+          "description": "Hotel breakfast for all delegates."
+        },
+        {
+          "time": "09:00",
+          "end_time": "11:30",
+          "title": "ASEAN Headquarters",
+          "venue": "ASEAN Headquarters",
+          "type": "visit",
+          "description": "Strategic engagement with the Association of Southeast Asian Nations examining institutional framework, regional cooperation mechanisms, and cultural diplomacy's role in advancing integration. Sets the intellectual ground for the summit. Departure from Artotel Jakarta at 8:30 AM."
+        },
+        {
+          "time": "12:00",
+          "end_time": "13:00",
+          "title": "Lunch Break",
+          "venue": "Jakarta",
+          "type": "meal",
+          "description": "Lunch for delegates."
+        },
+        {
+          "time": "13:30",
+          "end_time": "15:30",
+          "title": "Ministry of Culture",
+          "venue": "Ministry of Culture",
+          "type": "visit",
+          "description": "Exclusive engagement examining government cultural preservation initiatives, artistic development support, and international cultural diplomacy frameworks, exploring policy linkages between culture and diplomatic objectives."
+        },
+        {
+          "time": "16:00",
+          "end_time": "17:00",
+          "title": "Embassy of Pakistan (Tentative)",
+          "venue": "Embassy of Pakistan",
+          "type": "visit",
+          "description": "Diplomatic engagement with Pakistani embassy officials examining bilateral cultural cooperation, public diplomacy practice, and South-South cultural exchanges. Subject to diplomatic confirmation."
+        }
+      ]
     },
     {
       "date": "2026-08-22",
       "label": "August 22, 2026",
-      "title": "Event Check-in & Dinner",
-      "description": "Event check-in begins at 3:00 PM, followed by dinner at 7:00 PM."
+      "title": "Policy Dialogue & Strategic Analysis",
+      "description": "Morning policy sessions at Artotel Jakarta followed by an immersive institutional visit to Gudskul, an independent creative and research institute.",
+      "items": [
+        {
+          "time": "07:30",
+          "end_time": "08:00",
+          "title": "Breakfast",
+          "venue": "Artotel Jakarta",
+          "type": "meal",
+          "description": "Hotel breakfast for all delegates."
+        },
+        {
+          "time": "09:00",
+          "end_time": "13:00",
+          "title": "Policy Sessions",
+          "venue": "Artotel Jakarta",
+          "type": "panel",
+          "description": "Comprehensive program including panel discussions on cultural diplomacy frameworks, policy debates on art's role in peacebuilding, interactive dialogues on youth leadership in international cooperation, and strategic analysis of how cultural practice informs diplomatic strategy."
+        },
+        {
+          "time": "13:00",
+          "end_time": "14:00",
+          "title": "Lunch Break",
+          "venue": "Artotel Jakarta",
+          "type": "meal",
+          "description": "Lunch for all delegates."
+        },
+        {
+          "time": "14:30",
+          "end_time": "17:00",
+          "title": "Gudskul Institutional Visit & Sessions",
+          "venue": "Gudskul",
+          "type": "visit",
+          "description": "Immersive experience at Gudskul, an innovative creative and research institute, combining institutional engagement with continued policy discussions. Examines how independent cultural institutions contribute to public diplomacy, community engagement, and artistic innovation. Departure from Artotel Jakarta at 2:00 PM."
+        }
+      ]
     },
     {
       "date": "2026-08-23",
       "label": "August 23, 2026",
-      "title": "Closing & Declarations",
-      "description": "Closing ceremony, presentation of youth policy recommendations, networking and farewells."
+      "title": "Farewell and Closure",
+      "description": "A final breakfast together before delegates check out and depart, closing the forum.",
+      "items": [
+        {
+          "time": "08:00",
+          "end_time": "09:00",
+          "title": "Farewell Breakfast",
+          "venue": "Artotel Jakarta",
+          "type": "meal",
+          "description": "Final breakfast bringing delegates together for reflection and informal discussion."
+        },
+        {
+          "time": "12:00",
+          "title": "Hotel Checkout",
+          "venue": "Artotel Jakarta",
+          "description": "Delegates complete checkout and depart. Forum concludes."
+        }
+      ]
     }
   ]
 }

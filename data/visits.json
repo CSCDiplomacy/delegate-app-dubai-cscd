@@ -1,34 +1,71 @@
 {
-  "_note": "Institutional visits and experiences during YPDS Jakarta 2026.",
+  "_note": "Institutional visits and experiences during YPDS Jakarta 2026 — from CSCD's official rundown document.",
   "visits": [
     {
       "id": 1,
       "name": "Tugu Kunstkring Paleis",
-      "type": "Cultural & Dining Experience",
-      "description": "Dinner reception at Jakarta's historic Kunstkring Paleis — an architectural gem blending heritage with contemporary diplomacy. Networking opportunity in an authentic Indonesian cultural setting.",
+      "type": "Welcome Dinner",
+      "description": "Curated dinner experience at Jakarta's historic Kunstkring Paleis — an architectural gem blending heritage with contemporary diplomacy, introducing delegates to Jakarta's cultural atmosphere and diplomatic community.",
       "highlights": [
         "Authentic Indonesian cuisine",
         "Historic architecture & cultural ambiance",
         "Intimate networking with peers and mentors",
         "Photography opportunities"
       ],
-      "date": "August 22 (Evening)",
+      "date": "August 20 (Evening)",
       "duration": "2 hours",
       "image": "/img/tugu-kunstkring.webp"
     },
     {
       "id": 2,
-      "name": "Regional Institutions & Policy Centers",
-      "type": "Strategic Engagement",
-      "description": "Guided visits to think tanks, policy institutes, and diplomatic missions in Jakarta showcasing regional cooperation frameworks.",
+      "name": "ASEAN Headquarters",
+      "type": "Institutional Visit",
+      "description": "Strategic engagement with the Association of Southeast Asian Nations examining institutional framework, regional cooperation mechanisms, and cultural diplomacy's role in advancing integration. Sets the intellectual ground for the summit.",
       "highlights": [
-        "Behind-the-scenes access to policy-making",
-        "Conversations with strategists & analysts",
-        "Understanding regional geopolitics",
-        "Exploring Indonesia's diplomatic role"
+        "Multilateral institution coordinating Southeast Asian cooperation",
+        "Regional integration & institutional mechanisms",
+        "Cultural diplomacy's role in ASEAN frameworks"
       ],
-      "date": "TBD",
-      "duration": "Half-day"
+      "date": "August 21, 9:00 – 11:30 AM",
+      "duration": "2.5 hours"
+    },
+    {
+      "id": 3,
+      "name": "Ministry of Culture",
+      "type": "Institutional Visit",
+      "description": "Exclusive engagement examining government cultural preservation initiatives, artistic development support, and international cultural diplomacy frameworks, exploring policy linkages between culture and diplomatic objectives.",
+      "highlights": [
+        "Indonesian agency for cultural preservation & artistic development",
+        "Policy frameworks linking culture to diplomatic objectives"
+      ],
+      "date": "August 21, 1:30 – 3:30 PM",
+      "duration": "2 hours"
+    },
+    {
+      "id": 4,
+      "name": "Embassy of Pakistan",
+      "type": "Institutional Visit (Tentative)",
+      "description": "Diplomatic engagement with Pakistani embassy officials examining bilateral cultural cooperation, public diplomacy practice, and South-South cultural exchanges. Subject to diplomatic confirmation.",
+      "highlights": [
+        "Bilateral diplomatic mission",
+        "South-South cooperation & cultural exchange mechanisms",
+        "Pakistani public diplomacy practice"
+      ],
+      "date": "August 21, 4:00 – 5:00 PM",
+      "duration": "1 hour"
+    },
+    {
+      "id": 5,
+      "name": "Gudskul",
+      "type": "Institutional Visit & Sessions",
+      "description": "Immersive experience at Gudskul, an innovative creative and research institute, combining institutional engagement with continued policy discussions. Examines how independent cultural institutions contribute to public diplomacy, community engagement, and artistic innovation.",
+      "highlights": [
+        "Independent creative research institute",
+        "Innovative approaches to cultural practice",
+        "Continued policy discussions & strategic analysis"
+      ],
+      "date": "August 22, 2:30 – 5:00 PM",
+      "duration": "2.5 hours"
     }
   ]
 }

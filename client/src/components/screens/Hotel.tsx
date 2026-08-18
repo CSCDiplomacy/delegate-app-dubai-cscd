@@ -14,7 +14,7 @@ type VoucherResponse = { available: boolean; url?: string };
 
 const BOOKING = [
   { label: 'Hotel', value: 'ARTOTEL Thamrin — Jakarta' },
-  { label: 'Check-in', value: '20 August 2026' },
+  { label: 'Check-in', value: '20 August 2026, from 3:00 PM' },
   { label: 'Check-out', value: '23 August 2026' },
   { label: 'Room', value: 'Single room, twin sharing' },
   { label: 'Meal plan', value: 'Bed & Breakfast' },
@@ -78,6 +78,12 @@ export const Hotel = () => {
           <strong>On arrival.</strong> There is no need to contact or confirm anything with the
           hotel directly — all delegates are grouped internally under the Diplomark reservation.
           Our team will be on-site to receive you and handle check-in with you personally.
+        </p>
+
+        <p className="t-desc" style={{ marginTop: 10 }}>
+          <strong>Early arrival.</strong> Standard check-in is from 3:00 PM. Early check-in around
+          1:00 PM may be available subject to room availability — if your room isn't ready yet,
+          you're welcome to wait in the lobby.
         </p>
 
         <div className="accept-cta">

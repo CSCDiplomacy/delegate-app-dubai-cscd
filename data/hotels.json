@@ -14,11 +14,14 @@
       ],
       "address": "Jl. Sunda No.3, RT.8/RW.4, Gondangdia, Kec. Menteng, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10350, Indonesia",
       "map": "https://maps.google.com/?q=ARTOTEL+Thamrin+Jakarta,+Jl.+Sunda+No.3,+Menteng,+Jakarta+Pusat",
+      "checkin": "3:00 PM",
+      "checkout": "12:00 PM",
       "policy": [
         "All bookings are made by CSCD on your behalf — you do not need to book a room yourself.",
         "Rooms are twin-shared by default. A private single-room upgrade is available for an additional $140, subject to availability — contact us as soon as possible to request one.",
         "Staying beyond August 23? We can arrange extra nights at negotiated group rates — contact us in advance to confirm, as availability requires checking with the hotel.",
-        "Room allocation and dates may be adjusted by the management in line with the institutional visit schedule."
+        "Room allocation and dates may be adjusted by the management in line with the institutional visit schedule.",
+        "Early check-in is available around 1:00 PM, subject to room availability — if your room isn't ready yet, you're welcome to wait in the lobby."
       ],
       "dress_code": [
         { "when": "August 20 (Evening)", "code": "Smart / semi-casual" },
