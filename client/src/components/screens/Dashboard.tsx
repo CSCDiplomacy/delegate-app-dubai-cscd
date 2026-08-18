@@ -11,8 +11,10 @@ import { useUIStore } from '../../stores/uiStore';
 import { Icon } from '../Icon';
 import type { IconName } from '../Icon';
 import type { Screen } from '../../types';
+import { ActionsToDo } from './ActionsToDo';
 import { OrientationCard } from './Orientation';
 import { SelectedBanner, TierResult } from './Results';
+import { WhatsAppLinks } from './WhatsAppLinks';
 
 const TILES: Array<{ screen: Screen; icon: IconName; title: string; sub: string }> = [
   { screen: 'about', icon: 'globe', title: 'The Summit', sub: 'Themes, story & lineage' },
@@ -77,6 +79,10 @@ export const Dashboard = () => {
         </div>
       </div>
 
+      {/* Actions delegates must go do (forms, etc.) — surfaces above
+          everything else since these are time-bound, not just informational. */}
+      <ActionsToDo />
+
       {/* Orientation logistics for confirmed delegates only. */}
       {registered && <OrientationCard />}
 
@@ -96,6 +102,9 @@ export const Dashboard = () => {
       <div className="dash-banner">
         <img src="/img/ypds-jakarta-2026-banner.png" alt="YPDS Jakarta 2026" loading="lazy" />
       </div>
+
+      {/* Stay-connected links */}
+      <WhatsAppLinks />
 
       {/* Section tiles */}
       <div>

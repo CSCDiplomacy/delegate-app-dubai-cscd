@@ -138,11 +138,29 @@ export interface Announcement {
   title: string;
   body: string;
   pinned?: boolean;
+  /** Distinct from `pinned` — surfaces with its own "Must read" treatment,
+   *  for things delegates cannot afford to miss (not just noteworthy). */
+  must_read?: boolean;
   created_at: string;
   /** Optional deep link — when set the rail renders a button that switches
    *  to this screen. Must be a valid Screen slug. */
   link_screen?: Screen | null;
   link_label?: string | null;
+}
+
+// --- Action items (GET /api/action-items → { action_items: [...] }) ------------
+// Dashboard "Actions To Do" checklist — things a delegate must go *do*
+// (fill out a form, join a group), separate from the Updates feed which is
+// for things to *read*. link_url is typically off-portal (Google Forms,
+// WhatsApp invites) so it's a plain external link, not a Screen deep link.
+export interface ActionItem {
+  id: string;
+  title: string;
+  body?: string | null;
+  link_url?: string | null;
+  link_label?: string | null;
+  due_date?: string | null;
+  created_at: string;
 }
 
 // --- Misc -----------------------------------------------------------------------

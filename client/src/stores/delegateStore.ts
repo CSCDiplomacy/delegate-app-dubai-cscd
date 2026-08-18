@@ -2,13 +2,14 @@
 // the Set updates immediately, the API call runs behind it, and the change is
 // rolled back if the server rejects it.
 import { create } from 'zustand';
-import type { Announcement, ContactData, Rundown } from '../types';
+import type { ActionItem, Announcement, ContactData, Rundown } from '../types';
 import * as dataService from '../services/data';
 
 interface DelegateState {
   rundown: Rundown | null;
   contact: ContactData | null;
   announcements: Announcement[];
+  actionItems: ActionItem[];
   favourites: Set<string>;
   /** Whether an accommodation voucher PDF exists for the caller (gates the
    *  Hotel nav item + screen). Only the 17 delegates on the shared Diplomark
@@ -26,6 +27,7 @@ export const useDelegateStore = create<DelegateState>((set, get) => ({
   rundown: null,
   contact: null,
   announcements: [],
+  actionItems: [],
   favourites: new Set<string>(),
   voucherAvailable: false,
   loaded: false,
@@ -33,10 +35,11 @@ export const useDelegateStore = create<DelegateState>((set, get) => ({
   loadAll: () => {
     if (loadPromise) return loadPromise;
     loadPromise = (async () => {
-      const [rundown, contact, announcements, favourites, voucherAvailable] = await Promise.all([
+      const [rundown, contact, announcements, actionItems, favourites, voucherAvailable] = await Promise.all([
         dataService.loadRundown(),
         dataService.loadContact(),
         dataService.loadAnnouncements(),
+        dataService.loadActionItems(),
         dataService.loadFavourites(),
         dataService.loadVoucherAvailability(),
       ]);
@@ -44,6 +47,7 @@ export const useDelegateStore = create<DelegateState>((set, get) => ({
         rundown,
         contact,
         announcements,
+        actionItems,
         favourites: new Set(favourites),
         voucherAvailable,
         loaded: true,

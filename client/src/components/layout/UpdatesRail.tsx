@@ -36,8 +36,9 @@ export const UpdatesRail = ({ open, onClose }: { open: boolean; onClose: () => v
           <p className="rail-empty">No updates yet — announcements will land here.</p>
         ) : (
           announcements.map((a) => (
-            <div key={a.id} className="update-card">
-              {a.pinned && <span className="update-pin">Pinned</span>}
+            <div key={a.id} className={`update-card${a.must_read ? ' update-must-read' : ''}`}>
+              {a.must_read && <span className="update-flag update-flag-mustread">Must read</span>}
+              {a.pinned && <span className="update-flag update-flag-pinned">Pinned</span>}
               <div className="update-title">{a.title}</div>
               <p className="update-body">{a.body}</p>
               {a.link_screen && (

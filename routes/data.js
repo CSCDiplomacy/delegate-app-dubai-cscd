@@ -22,12 +22,29 @@ router.get('/announcements', async (req, res) => {
   if (!ensureDb(res)) return;
   const { data, error } = await serviceClient
     .from('announcements')
-    .select('id, title, body, pinned, created_at, link_screen, link_label')
+    .select('id, title, body, pinned, must_read, created_at, link_screen, link_label')
     .eq('active', true)
+    .order('must_read', { ascending: false })
     .order('pinned', { ascending: false })
     .order('created_at', { ascending: false });
   if (error) return res.status(500).json({ error: error.message });
   res.json({ announcements: data || [] });
+});
+
+// --- Action items (dashboard "Actions To Do" checklist) — public read -------
+// Distinct from the Updates feed: things a delegate must go *do* (fill out
+// a form, join a group), not just read. External link_url opens as-is;
+// there's no link_screen here since these mostly point off-portal.
+router.get('/action-items', async (req, res) => {
+  if (!ensureDb(res)) return;
+  const { data, error } = await serviceClient
+    .from('action_items')
+    .select('id, title, body, link_url, link_label, due_date, created_at')
+    .eq('active', true)
+    .order('due_date', { ascending: true, nullsFirst: false })
+    .order('created_at', { ascending: false });
+  if (error) return res.status(500).json({ error: error.message });
+  res.json({ action_items: data || [] });
 });
 
 // --- Favourites (My schedule) — owner only ---------------------------------

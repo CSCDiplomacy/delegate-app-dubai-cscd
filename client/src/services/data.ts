@@ -9,7 +9,7 @@
 //   DEL  /api/favourites/:id                                     (auth)
 //   POST /api/feedback         { comment, rating?, session_id? } (auth)
 import { api } from './api';
-import type { Announcement, ContactData, Rundown } from '../types';
+import type { ActionItem, Announcement, ContactData, Rundown } from '../types';
 
 export async function loadRundown(): Promise<Rundown | null> {
   try {
@@ -32,6 +32,15 @@ export async function loadAnnouncements(): Promise<Announcement[]> {
   try {
     const data = await api<{ announcements: Announcement[] }>('/announcements');
     return Array.isArray(data?.announcements) ? data.announcements : [];
+  } catch {
+    return [];
+  }
+}
+
+export async function loadActionItems(): Promise<ActionItem[]> {
+  try {
+    const data = await api<{ action_items: ActionItem[] }>('/action-items');
+    return Array.isArray(data?.action_items) ? data.action_items : [];
   } catch {
     return [];
   }

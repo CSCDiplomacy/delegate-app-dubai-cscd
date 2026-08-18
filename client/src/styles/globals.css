@@ -609,14 +609,31 @@ textarea {
   padding: 15px;
 }
 
-.update-pin {
+/* Must-read cards get a filled accent edge — distinct from the plain
+   "Pinned" text label, which just orders the card to the top. */
+.update-must-read {
+  border-color: var(--brass);
+  border-left-width: 4px;
+}
+
+.update-flag {
   display: inline-block;
-  color: var(--signal);
   font-size: 0.62rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  margin-bottom: 6px;
+  margin: 0 6px 6px 0;
+}
+
+.update-flag-pinned {
+  color: var(--signal);
+}
+
+.update-flag-mustread {
+  color: var(--ink);
+  background: var(--brass);
+  padding: 3px 7px;
+  border-radius: 4px;
 }
 
 .update-title {
@@ -1377,6 +1394,29 @@ textarea {
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   padding: 16px 18px;
+}
+
+/* Actions To Do — brass edge to read as "act on this", distinct from the
+   crimson used for results/awards. */
+.action-card {
+  border-color: var(--brass);
+}
+
+.action-due {
+  font-size: 0.72rem;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+
+.whatsapp-links {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.whatsapp-links .btn {
+  width: auto;
 }
 
 .t-head {
