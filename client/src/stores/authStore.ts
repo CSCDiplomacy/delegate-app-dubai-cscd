@@ -37,6 +37,21 @@ function storeToken(session: Session | null) {
   else localStorage.removeItem(TOKEN_KEY);
 }
 
+// Turn a raw Supabase auth error into copy we're willing to show a delegate.
+// Accounts of non-participants are disabled (banned) in Supabase Auth, which
+// surfaces as a blunt "User is banned" — replace it with a soft, contactable line.
+function loginErrorMessage(err: unknown): string {
+  const raw = err instanceof Error ? err.message : '';
+  const code = (err as { code?: string } | null)?.code ?? '';
+  if (code === 'user_banned' || /banned/i.test(raw)) {
+    return "Access isn't available for this account. If you think this is a mistake, please contact us at contact@thecscd.org.";
+  }
+  if (code === 'invalid_credentials' || /invalid login credentials/i.test(raw)) {
+    return 'Email or password is incorrect. Please try again.';
+  }
+  return raw || 'Sign-in failed. Please try again.';
+}
+
 export const useAuthStore = create<AuthState>((set, get) => ({
   session: null,
   profile: null,
@@ -94,7 +109,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       await get().refreshProfile();
       track('login');
     } catch (err) {
-      set({ error: err instanceof Error ? err.message : 'Sign-in failed. Please try again.' });
+      set({ error: loginErrorMessage(err) });
       throw err;
     } finally {
       set({ busy: false });
