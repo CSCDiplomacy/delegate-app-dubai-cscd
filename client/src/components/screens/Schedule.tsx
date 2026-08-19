@@ -1,7 +1,7 @@
 // My Schedule: the delegate's starred sessions, grouped by day.
 import { useDelegateStore } from '../../stores/delegateStore';
 import { sessionId } from '../../types';
-import { format12Hour } from '../../lib/utils';
+import { formatTimeRange } from '../../lib/utils';
 import { Icon, typeIcon } from '../Icon';
 import { ComingSoon } from '../ComingSoon';
 
@@ -36,7 +36,7 @@ export const Schedule = () => {
   }
 
   return (
-    <div className="stack">
+    <div className="stack rundown">
       <div>
         <div className="eyebrow">Sessions you starred</div>
         <h1 className="screen-title">My Schedule</h1>
@@ -50,19 +50,23 @@ export const Schedule = () => {
               return (
                 <div key={id} className="t-item">
                   <div className="t-time">
-                    <span className="t-hm">{format12Hour(item.time)}</span>
+                    <span className="t-hm">{formatTimeRange(item.time, item.end_time)}</span>
+                  </div>
+                  <div className="t-rail" aria-hidden="true">
+                    <span className="t-dot">
+                      <Icon name={typeIcon(item.type)} size={13} />
+                    </span>
                   </div>
                   <div className="t-card">
                     <div className="t-head">
-                      <span className="t-type">
-                        <Icon name={typeIcon(item.type)} size={12} /> {item.type || 'session'}
-                      </span>
+                      <span className="t-type">{item.type || 'session'}</span>
                       <button
                         className="star-btn starred"
                         onClick={() => toggleFavourite(id)}
+                        aria-pressed={true}
                         title="Remove from my schedule"
                       >
-                        ★ Saved
+                        ★
                       </button>
                     </div>
                     <div className="t-title">{item.title}</div>

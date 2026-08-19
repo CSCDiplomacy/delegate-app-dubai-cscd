@@ -3,12 +3,12 @@
 // Uses Cognito's **seamless** embed, whose official snippet is:
 //   <script src=".../f/seamless.js" data-key="<account>" data-form="<id>"></script>
 // It injects the form into our own DOM (no iframe), so the portal's typography
-// and tokens apply to it — see the .cognito-embed-body rules in globals.css.
+// and tokens apply to it, see the .cognito-embed-body rules in globals.css.
 //
 // IMPORTANT: seamless.js reads its config from `document.currentScript`, and
 // currentScript is null for *async* scripts. A script created with
 // createElement is async by default, which makes the form render as an empty
-// panel. `s.async = false` is therefore load-bearing — don't remove it.
+// panel. `s.async = false` is therefore load-bearing, don't remove it.
 //
 // Requires www.cognitoforms.com in the script/style/font/connect CSP directives
 // in app.js. A direct link is shown if the embed hasn't rendered, so nobody is
@@ -19,9 +19,9 @@ const SEAMLESS_SRC = 'https://www.cognitoforms.com/f/seamless.js';
 const ACCOUNT_KEY = 'ufIsh1RjbUCGYxX0PV-sug';
 
 // Form ids from Cognito, by what the delegate still has to pay:
-//   78 — "Self Financed (With Scholarship)"
-//   79 — "Partial (50% Scholarship)"
-//   81 — Alumni registration
+//   78, "Self Financed (With Scholarship)"
+//   79, "Partial (50% Scholarship)"
+//   81, Alumni registration
 // Full-scholarship delegates have nothing to pay, so there is no form for them.
 export const COGNITO_FORM_IDS = { self: '78', partial: '79', alumni: '81' } as const;
 
@@ -30,7 +30,7 @@ export const COGNITO_FORM_IDS = { self: '78', partial: '79', alumni: '81' } as c
 // a hidden `ApplicantId` field on forms 78/79 so the registration webhook can
 // tie the submission back to the delegate. The param is set on the URL just
 // before seamless.js runs (it reads window.location at execution) and removed on
-// cleanup — there is no router, so mutating the query string is otherwise inert.
+// cleanup, there is no router, so mutating the query string is otherwise inert.
 const PREFILL_FIELD = 'ApplicantId';
 
 export const CognitoForm = ({
@@ -62,7 +62,7 @@ export const CognitoForm = ({
 
     const s = document.createElement('script');
     s.src = SEAMLESS_SRC;
-    s.async = false; // keeps document.currentScript non-null — see above
+    s.async = false; // keeps document.currentScript non-null, see above
     s.dataset.key = ACCOUNT_KEY;
     s.dataset.form = formId;
     el.appendChild(s);

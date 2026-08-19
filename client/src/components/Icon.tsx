@@ -1,6 +1,6 @@
 // 24×24 Feather-style icons, ported from the vanilla app's path map.
 // Inner markup is static app-controlled SVG (multi-element), so it is rendered
-// via dangerouslySetInnerHTML — never with user input.
+// via dangerouslySetInnerHTML, never with user input.
 
 const PATHS = {
   home: '<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>',
@@ -28,10 +28,13 @@ const PATHS = {
   award: '<circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/>',
   download: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>',
   calendar: '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
+  // Used on "action needed" cards instead of a checkmark, a check reads as
+  // "done", which is the wrong signal for something still pending.
+  alert: '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>',
 } as const;
 
 // Brand marks are solid glyphs (fill, no stroke) rather than the Feather
-// outline set above — rendered via `filled` on <Icon>. currentColor keeps
+// outline set above, rendered via `filled` on <Icon>. currentColor keeps
 // them on the token system (no literal brand hex), per the design invariant.
 const FILLED_PATHS = {
   whatsapp:

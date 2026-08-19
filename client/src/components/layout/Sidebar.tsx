@@ -1,6 +1,5 @@
 // Desktop sidebar: brand, nav, user card, theme toggle, sign out.
 import { useAuthStore } from '../../stores/authStore';
-import { useDelegateStore } from '../../stores/delegateStore';
 import { useUIStore } from '../../stores/uiStore';
 import { Icon } from '../Icon';
 import type { IconName } from '../Icon';
@@ -11,6 +10,7 @@ const NAV: Array<{ screen: Screen; label: string; icon: IconName }> = [
   { screen: 'about', label: 'The Summit', icon: 'globe' },
   { screen: 'rundown', label: 'Rundown', icon: 'clock' },
   { screen: 'venue', label: 'Visit & Dinner', icon: 'hotel' },
+  { screen: 'hotel', label: 'Hotel', icon: 'hotel' },
   { screen: 'schedule', label: 'My Schedule', icon: 'star' },
   { screen: 'contact', label: 'Contact', icon: 'phone' },
 ];
@@ -22,18 +22,13 @@ export const Sidebar = ({
 }) => {
   const { profile, eventName, logout } = useAuthStore();
   const { activeScreen, switchScreen, theme, toggleTheme } = useUIStore();
-  const voucherAvailable = useDelegateStore((s) => s.voucherAvailable);
 
   const items: typeof NAV = [
     NAV[0],
     ...(showInterview
       ? ([{ screen: 'interview', label: 'Interview', icon: 'video' }] as typeof NAV)
       : []),
-    ...NAV.slice(1, 4), // about, rundown, venue
-    ...(voucherAvailable
-      ? ([{ screen: 'hotel', label: 'Hotel', icon: 'hotel' }] as typeof NAV)
-      : []),
-    ...NAV.slice(4), // schedule, contact
+    ...NAV.slice(1), // about, rundown, venue, hotel, schedule, contact
   ];
 
   return (

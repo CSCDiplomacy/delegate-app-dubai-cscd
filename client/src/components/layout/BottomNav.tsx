@@ -34,7 +34,7 @@ export const BottomNav = ({
   const { activeScreen, switchScreen } = useUIStore();
   const voucherAvailable = useDelegateStore((s) => s.voucherAvailable);
   // With only 5 mobile slots, we swap Schedule → Hotel for the ~17 delegates
-  // who have a voucher — Hotel is more actionable pre-event than an empty
+  // who have a voucher, Hotel is more actionable pre-event than an empty
   // personal schedule.
   const base = showInterview
     ? WITH_INTERVIEW

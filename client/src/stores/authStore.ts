@@ -19,7 +19,7 @@ interface AuthState {
   /** True while login / reset / update-password is in flight. */
   busy: boolean;
   error: string | null;
-  /** Arrived via a password-recovery link — show the new-password form. */
+  /** Arrived via a password-recovery link, show the new-password form. */
   recoveryMode: boolean;
 
   init: () => Promise<void>;
@@ -164,7 +164,7 @@ export const isApplicant = (profile: Profile | null) =>
   (profile?.status || 'unenrolled') !== 'enrolled';
 
 // Interviews are now closed, so the tab only stays for anyone who already has
-// an in-progress submission path — in practice nobody, since applicants either
+// an in-progress submission path, in practice nobody, since applicants either
 // submitted (→ under review) or missed the window (→ self-finance route).
 export const showInterviewTab = (_profile: Profile | null) => false;
 

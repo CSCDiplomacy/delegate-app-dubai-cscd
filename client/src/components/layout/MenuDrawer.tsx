@@ -1,13 +1,11 @@
 // Mobile menu drawer: secondary links + sign out.
 import { useAuthStore } from '../../stores/authStore';
-import { useDelegateStore } from '../../stores/delegateStore';
 import { useUIStore } from '../../stores/uiStore';
 import { Icon } from '../Icon';
 
 export const MenuDrawer = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
   const { profile, logout } = useAuthStore();
   const { switchScreen } = useUIStore();
-  const voucherAvailable = useDelegateStore((s) => s.voucherAvailable);
 
   return (
     <aside className={`menu-drawer${open ? ' open' : ''}`}>
@@ -30,11 +28,9 @@ export const MenuDrawer = ({ open, onClose }: { open: boolean; onClose: () => vo
         <button className="menu-link" onClick={() => switchScreen('venue')}>
           <Icon name="hotel" size={16} /> Institutional Visit &amp; Dinner
         </button>
-        {voucherAvailable && (
-          <button className="menu-link" onClick={() => switchScreen('hotel')}>
-            <Icon name="hotel" size={16} /> Hotel
-          </button>
-        )}
+        <button className="menu-link" onClick={() => switchScreen('hotel')}>
+          <Icon name="hotel" size={16} /> Hotel
+        </button>
         <button className="menu-link" onClick={() => switchScreen('contact')}>
           <Icon name="phone" size={16} /> Contact us
         </button>

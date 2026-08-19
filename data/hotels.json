@@ -1,5 +1,5 @@
 {
-  "_note": "Hotel + venue information. Key entries by 'jakarta-main' or similar to match delegates.hotel_id.",
+  "_note": "Delegate accommodation reference (data/visits.json has the dinner venue, Tugu Kunstkring Paleis — don't duplicate it here). Key entries to match delegates.hotel_id; 'jakarta-hotel' is the only one in use.",
   "hotels": {
     "jakarta-hotel": {
       "name": "ARTOTEL Thamrin - Jakarta",
@@ -17,11 +17,11 @@
       "checkin": "3:00 PM",
       "checkout": "12:00 PM",
       "policy": [
-        "All bookings are made by CSCD on your behalf — you do not need to book a room yourself.",
-        "Rooms are twin-shared by default. A private single-room upgrade is available for an additional $140, subject to availability — contact us as soon as possible to request one.",
-        "Staying beyond August 23? We can arrange extra nights at negotiated group rates — contact us in advance to confirm, as availability requires checking with the hotel.",
+        "All bookings are made by CSCD on your behalf, you do not need to book a room yourself.",
+        "Rooms are twin-shared by default. A private single-room upgrade is available for an additional $140, subject to availability, contact us as soon as possible to request one.",
+        "Staying beyond August 23? We can arrange extra nights at negotiated group rates, contact us in advance to confirm, as availability requires checking with the hotel.",
         "Room allocation and dates may be adjusted by the management in line with the institutional visit schedule.",
-        "Early check-in is available around 1:00 PM, subject to room availability — if your room isn't ready yet, you're welcome to wait in the lobby."
+        "Early check-in is available around 1:00 PM, subject to room availability, if your room isn't ready yet, you're welcome to wait in the lobby."
       ],
       "dress_code": [
         { "when": "August 20 (Evening)", "code": "Smart / semi-casual" },
@@ -36,28 +36,11 @@
           { "mode": "Transjakarta (BRT)", "cost": "$1–2", "time": "60–90 min" }
         ],
         "notes": [
-          "Complete the Indonesian Immigration Arrival Form — available on arrival or downloadable in advance.",
+          "Complete the Indonesian Immigration Arrival Form, available on arrival or downloadable in advance.",
           "Currency is the Indonesian Rupiah (IDR), approx. 15,000 IDR = 1 USD.",
           "Download Grab or Go-Jek before you arrive for local rides."
         ]
       }
-    },
-    "jakarta-main": {
-      "name": "Tugu Kunstkring Paleis",
-      "subtitle": "Historic Cultural Venue & Restaurant",
-      "location": "Jakarta, Indonesia",
-      "description": "An iconic historical building serving as a venue for dining and cultural experiences. Home to the Kunstkring Paleis (Art Circle Palace), this architectural gem combines Jakarta's rich heritage with contemporary hospitality.",
-      "highlights": [
-        "Authentic Indonesian dining experiences",
-        "Beautifully preserved historic architecture",
-        "Intimate networking spaces",
-        "Cultural ambiance ideal for diplomatic gatherings"
-      ],
-      "image": "/img/tugu-kunstkring.webp",
-      "address": "Jakarta, Indonesia",
-      "map": "https://share.google/yxm98zwNMKdTrnick",
-      "checkin": "Event day",
-      "checkout": "Post-event"
     }
   }
 }

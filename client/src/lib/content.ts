@@ -1,5 +1,5 @@
 // Static summit content, lifted from the YPDS Jakarta 2026 landing page so the
-// portal tells the same story. Marketing copy — safe to hardcode.
+// portal tells the same story. Marketing copy, safe to hardcode.
 
 export const SUMMIT = {
   edition: 'YPDS Jakarta 2026',
@@ -9,7 +9,7 @@ export const SUMMIT = {
   intro:
     'Following successful editions of the Young Public Diplomacy Summit in Baku, Istanbul, and Tashkent, the summit continues to expand as a platform for engaging young leaders in international dialogue and diplomacy.',
   rationale:
-    'Jakarta, as the capital of Indonesia, is a key center of diplomacy, governance, and international cooperation — home to embassies, policy institutions, and academic centers. Its strategic position at the heart of Southeast Asia makes it an ideal setting for discussions on public diplomacy and global engagement.',
+    'Jakarta, as the capital of Indonesia, is a key center of diplomacy, governance, and international cooperation, home to embassies, policy institutions, and academic centers. Its strategic position at the heart of Southeast Asia makes it an ideal setting for discussions on public diplomacy and global engagement.',
   participants:
     'Emerging youth leaders, university students, and young professionals (ages 16–40), representing regions across Asia, Europe, Africa, and the Middle East.',
 };
@@ -23,7 +23,7 @@ export const THEMES: Array<{ numeral: string; title: string; blurb: string }> = 
   {
     numeral: 'II',
     title: 'Asia and the Mediterranean',
-    blurb: 'Past, present & future — regional cooperation and strategic opportunities.',
+    blurb: 'Past, present & future, regional cooperation and strategic opportunities.',
   },
   {
     numeral: 'III',

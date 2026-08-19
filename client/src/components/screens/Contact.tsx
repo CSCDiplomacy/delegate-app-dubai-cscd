@@ -40,7 +40,7 @@ export const Contact = () => {
     try {
       await submitFeedback(comment.trim());
       setComment('');
-      setMsg({ ok: true, text: 'Thank you — the team has your feedback.' });
+      setMsg({ ok: true, text: 'Thank you, the team has your feedback.' });
     } catch (err) {
       setMsg({
         ok: false,

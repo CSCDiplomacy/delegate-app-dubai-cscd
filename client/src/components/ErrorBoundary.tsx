@@ -28,7 +28,7 @@ export class ErrorBoundary extends Component<Props, State> {
           <div className="error-card">
             <h1>Something went wrong</h1>
             <p>
-              An unexpected error occurred. Reloading usually fixes it — if it keeps happening,
+              An unexpected error occurred. Reloading usually fixes it, if it keeps happening,
               contact the CSCD team.
             </p>
             <button className="btn" onClick={() => location.reload()}>

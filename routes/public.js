@@ -40,7 +40,7 @@ router.get('/hotel', (req, res) => {
   try {
     const data = JSON.parse(raw);
     const hotels = data.hotels || {};
-    const hotel = Object.values(hotels)[0] || null;
+    const hotel = hotels['jakarta-hotel'] || Object.values(hotels)[0] || null;
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Cache-Control', 'no-cache');
     res.json({ hotel });

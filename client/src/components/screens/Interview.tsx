@@ -1,7 +1,7 @@
 // Interview screen. The form URL ideally comes from GET /api/me/interview
 // (a per-applicant tokenized URL so the webhook can tie a submission back to
-// the applicant). If the backend can't supply one — env not set, request fails
-// — we fall back to the shared public form so the interview always works.
+// the applicant). If the backend can't supply one, env not set, request fails
+//, we fall back to the shared public form so the interview always works.
 // The AidaForm embed widget script must be injected imperatively: React never
 // executes <script> tags rendered in JSX.
 //
@@ -79,7 +79,7 @@ export const Interview = () => {
         if (!cancelled) setInfo(data);
       })
       .catch(() => {
-        // Network / config failure — treat as "show the form" below.
+        // Network / config failure, treat as "show the form" below.
         if (!cancelled) setInfo(null);
       })
       .finally(() => {
@@ -90,7 +90,7 @@ export const Interview = () => {
     };
   }, []);
 
-  // Submitted / already-enrolled are terminal — no form.
+  // Submitted / already-enrolled are terminal, no form.
   const terminal = info?.state === 'submitted' || info?.state === 'not_applicable';
   const formUrl = SHARED_FORM_URL;
 
@@ -158,7 +158,7 @@ export const Interview = () => {
       <Notice
         done
         title={`Interview submitted${when ? ` · ${when}` : ''}`}
-        body="Thank you. Your responses are in and our team is reviewing them. Watch this portal for the outcome — nothing more is needed from you right now."
+        body="Thank you. Your responses are in and our team is reviewing them. Watch this portal for the outcome, nothing more is needed from you right now."
         footer={<SupportLine />}
       />
     );
@@ -169,7 +169,7 @@ export const Interview = () => {
       <Notice
         done
         title="You are all set"
-        body="Your place is confirmed — the interview stage is behind you. Explore the event sections as they open up."
+        body="Your place is confirmed, the interview stage is behind you. Explore the event sections as they open up."
       />
     );
   }
@@ -197,7 +197,7 @@ export const Interview = () => {
 
       <div className="interview-warning">
         <strong>Before you check the box below:</strong> make sure you have already submitted the
-        form above. Checking this box <strong>locks the form</strong> — you will not be able to
+        form above. Checking this box <strong>locks the form</strong>, you will not be able to
         open or submit it again. If you check it by mistake before submitting, email us right away
         at <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>.
       </div>
@@ -217,7 +217,7 @@ export const Interview = () => {
         <span>
           <strong>Step 2 · I have already submitted the form above</strong>
           <span>
-            This checkbox and the form don&apos;t sync automatically — checking this is what tells
+            This checkbox and the form don&apos;t sync automatically, checking this is what tells
             us you&apos;re done. Only check this after you&apos;ve submitted, not before.
           </span>
         </span>
@@ -237,7 +237,7 @@ export const Interview = () => {
             </h3>
             <p className="modal-body">
               Are you sure you&apos;ve already submitted the interview form above? This will lock
-              the form — you won&apos;t be able to open or submit it again. If you haven&apos;t
+              the form, you won&apos;t be able to open or submit it again. If you haven&apos;t
               submitted yet, click "Not yet" and fill out the form first.
             </p>
             {markError && (

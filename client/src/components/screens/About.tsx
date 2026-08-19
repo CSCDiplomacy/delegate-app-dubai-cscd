@@ -1,5 +1,7 @@
-// About the summit — the story, themes, experience and lineage carried over
+// About the summit, the story, themes, experience and lineage carried over
 // from the YPDS Jakarta 2026 landing page. Explorable by everyone.
+// Accommodation/hotel content lives on its own Hotel screen
+// (client/src/components/screens/Hotel.tsx), not here.
 import { SUMMIT, THEMES, EXPERIENCE, EDITIONS } from '../../lib/content';
 import { Icon } from '../Icon';
 
@@ -43,7 +45,7 @@ export const About = () => (
       <div className="card-eyebrow">The Jakarta experience</div>
       <p className="card-body-text">
         Delegates experience Jakarta not as tourists but as active participants in its enduring
-        legacy of statecraft — exclusive access to historic sites, guided architectural walks on
+        legacy of statecraft, exclusive access to historic sites, guided architectural walks on
         modern governance, and networking set against iconic Indonesian landmarks.
       </p>
       <ul className="dot-list">

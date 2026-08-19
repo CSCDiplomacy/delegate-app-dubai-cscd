@@ -1,11 +1,11 @@
 {
-  "_note": "Institutional visits and experiences during YPDS Jakarta 2026 — from CSCD's official rundown document.",
+  "_note": "Institutional visits and experiences during YPDS Jakarta 2026, from CSCD's official rundown document.",
   "visits": [
     {
       "id": 1,
       "name": "Tugu Kunstkring Paleis",
       "type": "Welcome Dinner",
-      "description": "Curated dinner experience at Jakarta's historic Kunstkring Paleis — an architectural gem blending heritage with contemporary diplomacy, introducing delegates to Jakarta's cultural atmosphere and diplomatic community.",
+      "description": "Curated dinner experience at Jakarta's historic Kunstkring Paleis, an architectural gem blending heritage with contemporary diplomacy, introducing delegates to Jakarta's cultural atmosphere and diplomatic community.",
       "highlights": [
         "Authentic Indonesian cuisine",
         "Historic architecture & cultural ambiance",
@@ -14,7 +14,8 @@
       ],
       "date": "August 20 (Evening)",
       "duration": "2 hours",
-      "image": "/img/tugu-kunstkring.webp"
+      "image": "/img/tugu-kunstkring.webp",
+      "map": "https://share.google/yxm98zwNMKdTrnick"
     },
     {
       "id": 2,

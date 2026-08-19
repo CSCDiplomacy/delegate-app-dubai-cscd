@@ -1,6 +1,6 @@
 // Root: kicks off auth init once, then routes between the login view and the
 // authenticated shell. A splash shows only for returning users whose session
-// is still being restored (a stored Supabase token exists) — brand-new
+// is still being restored (a stored Supabase token exists), brand-new
 // visitors see the login form immediately.
 import { useEffect } from 'react';
 import { useAuthStore } from './stores/authStore';
@@ -15,7 +15,7 @@ function hasStoredSupabaseSession(): boolean {
       if (key.startsWith('sb-') && key.includes('auth-token')) return true;
     }
   } catch {
-    // localStorage unavailable — treat as signed out.
+    // localStorage unavailable, treat as signed out.
   }
   return false;
 }

@@ -1,9 +1,9 @@
-// Results. These render inline on the dashboard — there is no separate Results
+// Results. These render inline on the dashboard - there is no separate Results
 // screen.
 //
 // `result_tier` (from the evaluation workbook, via scripts/reconcile-tiers.js)
 // is the ONLY thing that decides what a delegate sees. Whether they interviewed
-// is irrelevant here — the tier sheets are the authority, and many tiered
+// is irrelevant here - the tier sheets are the authority, and many tiered
 // applicants never interviewed.
 //
 //   full    → scholarship covers the fee; no form, team confirms directly
@@ -53,7 +53,7 @@ const AcceptScholarship = () => {
       <div className="accept-confirmed">
         <span className="chip chip-ok">Scholarship accepted</span>
         <p className="t-desc">
-          Thank you for confirming your place — accepted on {when}. Our team will be in touch
+          Thank you for confirming your place, accepted on {when}. Our team will be in touch
           shortly with your travel and arrival details.
         </p>
       </div>
@@ -92,40 +92,17 @@ export const SelectedBanner = () => (
   </div>
 );
 
-// Shown once the Cognito registration webhook has recorded a partial/self
-// delegate's submission — replaces the embed so they aren't left staring at a
-// form they've already completed. Mirrors the AcceptScholarship confirmed state.
-const RegistrationConfirmed = ({ submittedAt }: { submittedAt: string | null }) => {
-  const when = submittedAt
-    ? new Date(submittedAt).toLocaleDateString(undefined, {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      })
-    : null;
-  return (
-    <div className="accept-confirmed">
-      <span className="chip chip-ok">Registration received</span>
-      <p className="t-desc">
-        Thank you — we've received your registration{when ? ` on ${when}` : ''}. Our team will
-        confirm your place and be in touch with your next steps shortly.
-      </p>
-    </div>
-  );
-};
-
 export const TierResult = ({ tier }: { tier: ResultTier }) => {
   const profile = useAuthStore((s) => s.profile);
   // A full scholarship covers the fee, so there is nothing to pay and no
-  // registration form — the team confirms these places directly.
+  // registration form - the team confirms these places directly.
   if (tier === 'full') {
     return (
       <div className="t-card is-award">
-        <p className="tag">Full scholarship</p>
-        <div className="t-title">Congratulations — we'll see you in Jakarta</div>
+        <div className="t-title">Congratulations, we'll see you in Jakarta</div>
         <p className="t-desc">
           Ten full scholarships were awarded across the whole applicant pool, and one of them is
-          yours. The panel came away genuinely impressed — by the clarity of your thinking and the
+          yours. The panel came away genuinely impressed by the clarity of your thinking and the
           seriousness you brought to the interview. Your place at YPDS Jakarta 2026 is secured in
           full, with nothing further to pay. Confirm your place below and our team will be in touch
           shortly with your travel and arrival details.
@@ -135,58 +112,30 @@ export const TierResult = ({ tier }: { tier: ResultTier }) => {
     );
   }
 
+  // partial/self: the outcome now shows in the credential card, so the
+  // congratulations card is dropped; the registration form (with its own
+  // title) carries the context. Once registered there is nothing to show.
   if (tier === 'partial' || tier === 'self') {
     const partial = tier === 'partial';
     const registered = profile?.registration_status === 'submitted';
+    if (registered) return null;
     return (
-      <div className="stack">
-        <div className="t-card is-award">
-          <p className="tag">{partial ? 'Partial scholarship' : 'Self-financed place'}</p>
-          <div className="t-title">
-            {partial
-              ? 'Congratulations — you have been awarded a partial scholarship'
-              : 'Congratulations — your application was successful'}
-          </div>
-          <p className="t-desc">
-            {partial
-              ? 'Your application impressed the panel and you have been awarded a 50% scholarship to YPDS Jakarta 2026. Complete the registration form below to confirm your place.'
-              : 'You have been accepted to YPDS Jakarta 2026 on a self-financed basis. We were glad to meet you at interview and would be delighted to welcome you to Jakarta. Complete the registration form below to confirm your place.'}
-          </p>
-        </div>
-        {registered ? (
-          <RegistrationConfirmed submittedAt={profile?.registration_submitted_at || null} />
-        ) : (
-          <CognitoForm
-            formId={COGNITO_FORM_IDS[tier]}
-            title={partial ? 'Partial scholarship registration' : 'Self-financed registration'}
-            applicantId={profile?.applicant_id}
-          />
-        )}
-      </div>
+      <CognitoForm
+        formId={COGNITO_FORM_IDS[tier]}
+        title={partial ? 'Partial scholarship registration' : 'Self-financed registration'}
+        applicantId={profile?.applicant_id}
+      />
     );
   }
 
-  // alumni — dedicated registration form (Cognito 81).
+  // alumni: dedicated registration form (Cognito 81); same treatment.
   const registered = profile?.registration_status === 'submitted';
+  if (registered) return null;
   return (
-    <div className="stack">
-      <div className="t-card is-award">
-        <p className="tag">Alumni</p>
-        <div className="t-title">Welcome back</div>
-        <p className="t-desc">
-          You're registered with us as a CSCD alumnus. Complete the registration form below to
-          confirm your place at YPDS Jakarta 2026.
-        </p>
-      </div>
-      {registered ? (
-        <RegistrationConfirmed submittedAt={profile?.registration_submitted_at || null} />
-      ) : (
-        <CognitoForm
-          formId={COGNITO_FORM_IDS.alumni}
-          title="Alumni registration"
-          applicantId={profile?.applicant_id}
-        />
-      )}
-    </div>
+    <CognitoForm
+      formId={COGNITO_FORM_IDS.alumni}
+      title="Alumni registration"
+      applicantId={profile?.applicant_id}
+    />
   );
 };

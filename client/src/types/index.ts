@@ -1,4 +1,4 @@
-// Shapes here mirror the Express API exactly — see routes/ and data/*.json.
+// Shapes here mirror the Express API exactly, see routes/ and data/*.json.
 
 // --- Profile (GET /api/me/profile) -----------------------------------------
 export interface Profile {
@@ -53,7 +53,7 @@ export interface Rundown {
   days: RundownDay[];
 }
 
-/** Favourite/session id for a rundown item — matches the vanilla app + DB rows. */
+/** Favourite/session id for a rundown item, matches the vanilla app + DB rows. */
 export const sessionId = (day: RundownDay, item: RundownItem) => `${day.date}T${item.time}`;
 
 // --- Hotel (GET /api/me/hotel) ------------------------------------------------
@@ -92,16 +92,12 @@ export interface Visit {
   date?: string;
   duration?: string;
   image?: string;
+  map?: string;
 }
 
 /** GET /api/visits (public) */
 export interface VisitsResponse {
   visits: Visit[];
-}
-
-/** GET /api/hotel (public) → the shared venue, no auth required. */
-export interface PublicHotel {
-  hotel: HotelInfo | null;
 }
 
 /** GET /api/me/hotel (auth) → the delegate's booking + shared venue. */
@@ -134,7 +130,7 @@ export interface ContactData {
 
 
 // --- Action items (GET /api/action-items → { action_items: [...] }) ------------
-// Dashboard "Actions To Do" checklist — things a delegate must go *do*
+// Dashboard "Actions To Do" checklist, things a delegate must go *do*
 // (fill out a form, join a group), separate from the Updates feed which is
 // for things to *read*. link_url is typically off-portal (Google Forms,
 // WhatsApp invites) so it's a plain external link, not a Screen deep link.

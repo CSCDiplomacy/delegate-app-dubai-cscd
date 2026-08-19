@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import { useDelegateStore } from '../../stores/delegateStore';
 import { sessionId, type RundownDay } from '../../types';
-import { format12Hour } from '../../lib/utils';
+import { formatTimeRange } from '../../lib/utils';
 import { Icon, typeIcon } from '../Icon';
 import { ComingSoon } from '../ComingSoon';
 
@@ -23,7 +23,7 @@ export const Rundown = () => {
       <ComingSoon
         badge="Programme"
         title="Agenda being finalised"
-        body="The programme for Jakarta is coming together. Check back shortly — it will appear here as it's confirmed."
+        body="The programme for Jakarta is coming together. Check back shortly, it will appear here as it's confirmed."
       />
     );
   }
@@ -32,7 +32,7 @@ export const Rundown = () => {
   const day = days[Math.min(activeDay, days.length - 1)];
 
   return (
-    <div className="stack">
+    <div className="stack rundown">
       <div>
         <div className="eyebrow">Programme</div>
         <h1 className="screen-title">Official Rundown</h1>
@@ -53,10 +53,10 @@ export const Rundown = () => {
       )}
 
       <div>
-        <div className="t-card">
-          <p className="tag">{day.label || day.date}</p>
-          <div className="t-title">{day.title}</div>
-          {day.description && <p className="t-desc">{day.description}</p>}
+        <div className="day-intro">
+          <div className="day-intro-date">{day.label || day.date}</div>
+          <h2 className="day-intro-title">{day.title}</h2>
+          {day.description && <p className="day-intro-desc">{day.description}</p>}
         </div>
 
         {!!day.items?.length && (
@@ -67,19 +67,23 @@ export const Rundown = () => {
               return (
                 <div key={id} className="t-item">
                   <div className="t-time">
-                    <span className="t-hm">{format12Hour(item.time)}</span>
+                    <span className="t-hm">{formatTimeRange(item.time, item.end_time)}</span>
+                  </div>
+                  <div className="t-rail" aria-hidden="true">
+                    <span className="t-dot">
+                      <Icon name={typeIcon(item.type)} size={13} />
+                    </span>
                   </div>
                   <div className="t-card">
                     <div className="t-head">
-                      <span className="t-type">
-                        <Icon name={typeIcon(item.type)} size={12} /> {item.type || 'session'}
-                      </span>
+                      <span className="t-type">{item.type || 'session'}</span>
                       <button
                         className={starred ? 'star-btn starred' : 'star-btn'}
                         onClick={() => toggleFavourite(id)}
+                        aria-pressed={starred}
                         title={starred ? 'Remove from my schedule' : 'Save to my schedule'}
                       >
-                        {starred ? '★ Saved' : '☆ Save'}
+                        {starred ? '★' : '☆'}
                       </button>
                     </div>
                     <div className="t-title">{item.title}</div>

@@ -1,4 +1,4 @@
-// Dashboard. Interviews are now closed and results are published here inline —
+// Dashboard. Interviews are now closed and results are published here inline -
 // there is no separate Results screen. Evaluated applicants get the countdown,
 // then the announcement banner and their own scholarship outcome. Event tiles
 // stay visible but read "Coming soon" until data is published.
@@ -21,6 +21,16 @@ const TILES: Array<{ screen: Screen; icon: IconName; title: string; sub: string 
   { screen: 'schedule', icon: 'star', title: 'My Schedule', sub: 'Sessions you starred' },
 ];
 
+// Short, credential-friendly label for each tier. The result card no longer
+// carries a "Partial scholarship" pill of its own; this is where a delegate
+// reads which category they fall into, right alongside their ID and status.
+const CATEGORY_LABELS: Record<string, string> = {
+  full: 'Full scholarship',
+  partial: 'Partial (50%)',
+  self: 'Self-financed',
+  alumni: 'Alumni',
+};
+
 export const Dashboard = () => {
   const { profile } = useAuthStore();
   const { switchScreen } = useUIStore();
@@ -30,10 +40,14 @@ export const Dashboard = () => {
   const tier = profile?.result_tier || null;
 
   // Results are published, so anyone with a tier reads "Result announced".
-  // Tier — not interview status — is what decides this.
+  // Tier - not interview status - is what decides this.
   const statusLabel = !applicant ? 'Confirmed delegate' : tier ? 'Result announced' : 'Applicant';
   const statusChip = !applicant || tier ? 'chip-ok' : 'chip-pending';
-  const interviewLabel = underReview ? 'Completed' : applicant ? 'Closed' : '—';
+  const interviewLabel = underReview ? 'Completed' : applicant ? 'Closed' : 'N/A';
+  // Once a tier is on record we show the category (e.g. "Partial (50%)") in
+  // the third credential slot instead of interview status, so the result
+  // card itself needs no pill.
+  const categoryLabel = tier ? CATEGORY_LABELS[tier] || 'Confirmed' : null;
 
   return (
     <div className="stack">
@@ -61,7 +75,7 @@ export const Dashboard = () => {
         <div className="pass-bottom">
           <div className="pass-field">
             <span className="pass-field-label">Applicant ID</span>
-            <span className="pass-field-value">{profile?.applicant_id || '—'}</span>
+            <span className="pass-field-value">{profile?.applicant_id || 'N/A'}</span>
           </div>
           <div className="pass-field">
             <span className="pass-field-label">Status</span>
@@ -69,35 +83,34 @@ export const Dashboard = () => {
               <span className={`chip ${statusChip}`}>{statusLabel}</span>
             </span>
           </div>
-          <div className="pass-field">
-            <span className="pass-field-label">Interview</span>
-            <span className="pass-field-value">{interviewLabel}</span>
-          </div>
+          {categoryLabel ? (
+            <div className="pass-field">
+              <span className="pass-field-label">Category</span>
+              <span className="pass-field-value">{categoryLabel}</span>
+            </div>
+          ) : (
+            <div className="pass-field">
+              <span className="pass-field-label">Interview</span>
+              <span className="pass-field-value">{interviewLabel}</span>
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Actions delegates must go do (forms, etc.) — surfaces above
-          everything else since these are time-bound, not just informational. */}
+      {/* Results live inline on the dashboard - there is no separate Results
+          screen. This is the reason most delegates open the dashboard once
+          announcements go out, so it leads, right under identity - ahead of
+          the to-do list below. Anyone without a tier has no outcome on
+          record and sees nothing here. */}
+      {tier && <TierResult tier={tier} />}
+
+      {/* Actions delegates must go do (forms, etc.) - still above the
+          fold, but after their own result rather than before it. */}
       <ActionsToDo />
 
-      {/* Results live inline on the dashboard — there is no separate Results
-          screen. Before the announcement moment everyone evaluated sees the
-          countdown; after it, the banner plus their own scholarship outcome. */}
-      {/* Their own outcome leads; the cohort banner follows it. Anyone without
-          a tier has no outcome on record and sees neither. */}
-      {tier && (
-        <>
-          <TierResult tier={tier} />
-          <SelectedBanner />
-        </>
-      )}
-
-      {/* Featured banner */}
-      <div className="dash-banner">
-        <img src="/img/ypds-jakarta-2026-banner.png" alt="YPDS Jakarta 2026" loading="lazy" />
-      </div>
-
-      {/* Section tiles */}
+      {/* Section tiles - core navigation into the event content, so it
+          stays near the top rather than after the promotional material
+          below. */}
       <div>
         <div className="section-label">Explore</div>
         <div className="tile-grid">
@@ -109,6 +122,15 @@ export const Dashboard = () => {
             </button>
           ))}
         </div>
+      </div>
+
+      {/* Celebratory / brand material - nice to see, nothing to act on, so
+          it sits last rather than competing with the result and to-dos
+          above. The cohort banner also no longer sits directly under a
+          partial/self delegate's own (lesser) result. */}
+      {tier && <SelectedBanner />}
+      <div className="dash-banner">
+        <img src="/img/ypds-jakarta-2026-banner.png" alt="YPDS Jakarta 2026" loading="lazy" />
       </div>
     </div>
   );

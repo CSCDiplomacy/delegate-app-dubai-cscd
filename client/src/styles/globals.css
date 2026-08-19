@@ -1240,34 +1240,115 @@ textarea {
   color: var(--signal-ink);
 }
 
-.timeline {
-  display: grid;
-  gap: 14px;
+/* Cap the reading measure so descriptions don't run the full desktop width;
+   title, tabs, day header and timeline all align to the same column. */
+.rundown {
+  max-width: 760px;
 }
 
+/* Day header framing the timeline — borderless, so it introduces the day
+   rather than reading as one more event card in the sequence. */
+.day-intro {
+  padding: 2px 0 20px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 22px;
+}
+
+.day-intro-date {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--ink-faint);
+  margin-bottom: 6px;
+}
+
+.day-intro-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 1.15;
+  color: var(--ink-strong);
+}
+
+.day-intro-desc {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  max-width: 62ch;
+}
+
+.timeline {
+  display: grid;
+  gap: 0;
+}
+
+/* Three columns: time gutter | spine (rail + type dot) | event card. */
 .t-item {
   display: grid;
-  grid-template-columns: 68px 1fr;
-  gap: 14px;
+  grid-template-columns: 74px 26px minmax(0, 1fr);
+  column-gap: 12px;
+  padding-bottom: 18px;
+  position: relative;
+}
+
+.t-item:last-child {
+  padding-bottom: 0;
 }
 
 .t-time {
-  padding-top: 15px;
-  display: grid;
-  gap: 2px;
-  align-content: start;
+  padding-top: 16px;
   text-align: right;
 }
 
+/* Holds either a single time ("08:30 AM") or a full range that may wrap to two
+   lines ("07:30 -" / "08:00 AM"); sized to sit under the card's top edge. */
 .t-hm {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.82rem;
+  line-height: 1.3;
 }
 
-.t-end {
-  font-size: 0.7rem;
-  color: var(--ink-faint);
+/* Continuous vertical spine with a per-event type dot; the dot's solid fill
+   masks the line so the whole day reads as one rail. */
+.t-rail {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding-top: 16px;
+}
+
+.t-rail::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
+  bottom: -18px;
+  width: 2px;
+  background: var(--line);
+}
+
+.t-item:first-child .t-rail::before {
+  top: 24px;
+}
+
+.t-item:last-child .t-rail::before {
+  bottom: auto;
+  height: 24px;
+}
+
+.t-dot {
+  position: relative;
+  z-index: 1;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1.5px solid var(--line-strong);
+  display: grid;
+  place-items: center;
+  color: var(--ink-soft);
 }
 
 .t-card {
@@ -1277,16 +1358,42 @@ textarea {
   padding: 16px 18px;
 }
 
-/* Actions To Do — brass edge to read as "act on this", distinct from the
-   crimson used for results/awards. */
+/* Actions To Do — one card, brass edge to read as "act on this", distinct
+   from the crimson used for results/awards. */
 .action-card {
   border-color: var(--brass);
+}
+
+/* One row per action inside the single card, split by a hairline rule. */
+.action-row + .action-row {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.action-row-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
 }
 
 .action-due {
   font-size: 0.72rem;
   color: var(--ink-faint);
   white-space: nowrap;
+}
+
+/* Overdue action — the brass "act on this" edge isn't urgent enough once the
+   deadline has actually passed, so the card borrows the signal red used
+   elsewhere for errors/urgency, and the row's due badge turns red too. */
+.action-card.is-overdue {
+  border-color: var(--signal);
+}
+
+.action-due.is-overdue {
+  color: var(--signal);
+  font-weight: 700;
 }
 
 .whatsapp-links {
@@ -1308,40 +1415,37 @@ textarea {
   margin-bottom: 8px;
 }
 
+/* Quiet the type label — the spine dot's icon carries the category now, so the
+   event title stays the focal point rather than a loud crimson badge. */
 .t-type {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.64rem;
+  font-size: 0.62rem;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--signal);
+  color: var(--ink-faint);
 }
 
+/* Icon-only save: a quiet outline star that fills crimson once saved. */
 .star-btn {
-  border: 1px solid var(--line-strong);
-  border-radius: 999px;
+  border: none;
   background: transparent;
-  color: var(--ink-soft);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  padding: 4px 12px;
+  color: var(--ink-faint);
+  font-size: 1.15rem;
+  line-height: 1;
+  padding: 0 2px;
   cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.2s ease;
+  transition: color 0.2s ease, transform 0.15s ease;
 }
 
 .star-btn:hover {
-  color: var(--ink);
-  border-color: var(--ink-soft);
+  color: var(--signal);
+  transform: scale(1.12);
 }
 
 .star-btn.starred {
-  background: color-mix(in srgb, var(--brass) 30%, transparent);
-  border-color: transparent;
-  color: var(--brass-ink);
+  color: var(--signal);
 }
 
 .t-title {
