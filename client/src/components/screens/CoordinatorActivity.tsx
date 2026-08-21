@@ -10,6 +10,7 @@ import {
   regionForEmail,
   GROUP_LOGINS,
   GROUP_MEMBERS,
+  GROUP_LEADERS,
   GROUP_ACTIVITY,
   COORDINATOR_LOGIN_URL,
 } from '../../data/coordinatorGroups';
@@ -49,6 +50,7 @@ export const CoordinatorActivity = () => {
 
   const login = GROUP_LOGINS[region];
   const members = GROUP_MEMBERS[region];
+  const leader = GROUP_LEADERS[region];
 
   return (
     <div>
@@ -66,6 +68,9 @@ export const CoordinatorActivity = () => {
           <p className="t-desc">{GROUP_ACTIVITY.body}</p>
 
           <div className="coord-members">
+            <div className="coord-cred-label">
+              <Icon name="star" size={13} /> Team leader: {leader}
+            </div>
             <div className="coord-cred-label">
               <Icon name="users" size={13} /> {region} group members
             </div>

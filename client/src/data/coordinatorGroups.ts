@@ -23,11 +23,20 @@ export const GROUP_LOGINS: Record<Region, { email: string; password: string }> =
 /** Where the group logs in to run the activity. */
 export const COORDINATOR_LOGIN_URL = 'https://cds.thecscd.org/login';
 
+/** Team leader shown on each group's activity card. */
+export const GROUP_LEADERS: Record<Region, string> = {
+  East: 'Fedro Dasion',
+  West: 'Sarah',
+  North: 'Aayat',
+  South: 'Awan',
+};
+
 /** Display roster per group (clean names, shown on the activity card). */
 export const GROUP_MEMBERS: Record<Region, string[]> = {
-  East: ['Bhavya Agarwal', 'Amir Gafur', 'Garlen Mao', 'Goh Chen How Calvin'],
+  East: ['Bhavya Agarwal', 'Madi Diana', 'Amir Gafur', 'Garlen Mao', 'Goh Chen How Calvin'],
   West: [
     'Theint Thinzar Thaw',
+    'Awil Dek Hussein',
     'Syeda Moneebah Noman',
     'Robiyabegim Mekhrillaeva Ulugbek Kizi',
     'Kia LeClair',
@@ -66,11 +75,13 @@ export const GROUP_ACTIVITY = {
 const MEMBER_EMAIL_TO_REGION: Record<string, Region> = {
   // East
   'agarwalbhavya117@gmail.com': 'East', // Bhavya Agarwal
+  'dianamadi04@gmail.com': 'East', // Madi Diana
   'amirhamzah1810@gmail.com': 'East', // Amir Gafur
   'garlenmao@gmail.com': 'East', // Garlen Mao
   'gohchenhowcalvin@gmail.com': 'East', // Goh Chen How Calvin
   // West
   'theint.insightful@gmail.com': 'West', // Theint Thinzar Thaw
+  'cawildeeq489@gmail.com': 'West', // Awil Dek Hussein
   'moneebah.py@gmail.com': 'West', // Syeda Moneebah Noman
   'robiyabegim_25013096@utp.edu.my': 'West', // Robiyabegim Mekhrillaeva Ulugbek Kizi
   'kialeclair22@gmail.com': 'West', // Kia LeClair
