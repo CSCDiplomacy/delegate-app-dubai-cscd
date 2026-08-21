@@ -74,39 +74,24 @@ export const GROUP_ACTIVITY = {
 export const ACTIVITY_PDF_URL = '/docs/ypds-project-proposal-activity.pdf';
 
 /**
- * The in-portal summary revealed by "View more". The full text lives in the
- * themed PDF (ACTIVITY_PDF_URL); this is the at-a-glance version.
+ * The in-portal summary revealed by "View more" — kept short and glanceable.
+ * The full brief lives in the themed PDF (ACTIVITY_PDF_URL).
  */
 export const GROUP_ACTIVITY_DETAIL = {
-  tagline: 'From field study to a live CDS event',
   theme: 'Cultural Diplomacy and Creative Economy',
-  intro:
-    'This isn’t an exercise on paper. Working under the theme, each delegate ' +
-    'designs one real event proposal; your team then delivers one approved ' +
-    'proposal as a live CDS event in October. Translate what you saw at ASEAN ' +
-    'and the Ministry of Culture into a rigorous, cross-border initiative — ' +
-    'take one element you observed and build something new around it.',
+  summary:
+    'Each delegate designs one real event proposal under the theme; your team ' +
+    'then delivers one approved proposal as a live CDS event in October.',
   steps: [
-    { no: 'Step 1', title: 'Choose your pillar', note: 'individual',
-      text: 'Declare one of the six CDS pillars, and spread your team across different pillars.' },
-    { no: 'Step 2', title: 'Anchor it in October', note: 'individual',
-      text: 'Pick a clear, well-justified October date (building on a UN observance day is optional).' },
-    { no: 'Step 3', title: 'Design the event', note: 'group brainstorm, individual proposal',
-      text: 'Brainstorm together, propose individually — a 60–90 min hybrid or virtual format with an objective, an interactive element and a defined output.' },
-    { no: 'Step 4', title: 'Fill the proposal form', note: 'individual',
-      text: 'Log in to the CDS portal with your group login above and submit your proposal in full.' },
-    { no: 'Step 5', title: 'Present', note: 'YPDS Day 3',
-      text: 'Each team presents as a group — one slide per event, no more than 7 slides total.' },
-    { no: 'Step 6', title: 'CSCD Committee approval', note: '',
-      text: 'The Committee reviews and approves the projects it will officially take forward.' },
-    { no: 'Step 7', title: 'Deliver', note: 'team',
-      text: 'Deliver your approved event live with CSCD on its October date.' },
+    'Choose your CDS pillar',
+    'Anchor your event in October',
+    'Design it — 60–90 min, hybrid or virtual',
+    'Submit your proposal on the CDS portal',
+    'Present on Day 3 — 1 slide each, max 7',
+    'CSCD Committee approval',
+    'Deliver live in October',
   ],
-  deadlines: [
-    { when: 'Tonight', what: 'Individual proposal form submitted on the CDS portal.' },
-    { when: 'Day 3', what: 'Team presentation — one slide per event, max 7 slides.' },
-    { when: 'October', what: 'CSCD-approved projects delivered live with CSCD.' },
-  ],
+  deadlines: 'Proposal tonight · Present Day 3 · Deliver in October',
 } as const;
 
 // Each participant's delegate-account email → their group. Emails were taken

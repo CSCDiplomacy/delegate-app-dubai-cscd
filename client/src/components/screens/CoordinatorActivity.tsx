@@ -90,35 +90,17 @@ export const CoordinatorActivity = () => {
                 <span className="chip">Theme</span>
                 <span>{detail.theme}</span>
               </div>
-              <p className="coord-detail-tagline">{detail.tagline}</p>
-              <p className="coord-detail-intro">{detail.intro}</p>
+              <p className="coord-detail-summary">{detail.summary}</p>
 
-              <div className="coord-cred-label">
-                <Icon name="wrench" size={13} /> How it works
-              </div>
               <ol className="coord-steps">
                 {detail.steps.map((s) => (
-                  <li key={s.no}>
-                    <div className="coord-step-head">
-                      <span className="coord-step-title">{s.title}</span>
-                      {s.note && <span className="coord-step-note">{s.note}</span>}
-                    </div>
-                    <p className="coord-step-text">{s.text}</p>
-                  </li>
+                  <li key={s}>{s}</li>
                 ))}
               </ol>
 
-              <div className="coord-cred-label">
-                <Icon name="clock" size={13} /> Deadlines
-              </div>
-              <ul className="coord-deadlines">
-                {detail.deadlines.map((d) => (
-                  <li key={d.when}>
-                    <span className="coord-deadline-when">{d.when}</span>
-                    <span className="coord-deadline-what">{d.what}</span>
-                  </li>
-                ))}
-              </ul>
+              <p className="coord-detail-deadline">
+                <Icon name="clock" size={12} /> {detail.deadlines}
+              </p>
 
               <a
                 className="btn ghost coord-brief-btn"
@@ -126,7 +108,7 @@ export const CoordinatorActivity = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Icon name="download" size={13} /> Download full brief (PDF)
+                <Icon name="download" size={13} /> Full brief (PDF)
               </a>
             </div>
           )}
