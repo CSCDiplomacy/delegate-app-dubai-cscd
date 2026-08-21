@@ -84,8 +84,8 @@
     {
       "date": "2026-08-22",
       "label": "August 22, 2026",
-      "title": "Policy Dialogue & Strategic Analysis",
-      "description": "Morning policy sessions at Artotel Jakarta followed by an immersive institutional visit to Gudskul, an independent creative and research institute.",
+      "title": "Summit Sessions, Presentations & Closing",
+      "description": "The summit's main day at Artotel Jakarta: opening, a session with CSCD's Director, a guest lecture on public diplomacy in the 21st century, delegate presentations, and the closing ceremony with certificates.",
       "items": [
         {
           "time": "07:30",
@@ -96,28 +96,68 @@
           "description": "Hotel breakfast for all delegates."
         },
         {
-          "time": "09:00",
-          "end_time": "13:00",
-          "title": "Policy Sessions",
+          "time": "10:00",
+          "end_time": "10:15",
+          "title": "Opening",
+          "venue": "Artotel Jakarta",
+          "type": "ceremony",
+          "description": "Opening of the summit's main session day."
+        },
+        {
+          "time": "10:15",
+          "end_time": "11:15",
+          "title": "Session with Mr Hassan, Director CSCD",
           "venue": "Artotel Jakarta",
           "type": "panel",
-          "description": "Comprehensive program including panel discussions on cultural diplomacy frameworks, policy debates on art's role in peacebuilding, interactive dialogues on youth leadership in international cooperation, and strategic analysis of how cultural practice informs diplomatic strategy."
+          "description": "Session led by Mr Hassan, Director of the Center for Strategic and Cultural Diplomacy."
+        },
+        {
+          "time": "11:15",
+          "end_time": "11:30",
+          "title": "Tea Break",
+          "venue": "Artotel Jakarta",
+          "type": "meal",
+          "description": "Short tea break."
+        },
+        {
+          "time": "11:30",
+          "end_time": "13:00",
+          "title": "Guest Lecture: Youth Exchange & People-to-People Diplomacy",
+          "venue": "Artotel Jakarta",
+          "type": "panel",
+          "description": "\"Youth Exchange and People-to-People Diplomacy,\" within the broader module on public diplomacy in the 21st century. Delivered by Mr Made Panji Teguh Santoso, International Relations Study Program, Faculty of Social and Political Sciences, Universitas Singaperbangsa Karawang, Indonesia."
         },
         {
           "time": "13:00",
           "end_time": "14:00",
-          "title": "Lunch Break",
+          "title": "Lunch",
           "venue": "Artotel Jakarta",
           "type": "meal",
           "description": "Lunch for all delegates."
         },
         {
-          "time": "14:30",
-          "end_time": "17:00",
-          "title": "Gudskul Institutional Visit & Sessions",
-          "venue": "Gudskul",
-          "type": "visit",
-          "description": "Immersive experience at Gudskul, an innovative creative and research institute, combining institutional engagement with continued policy discussions. Examines how independent cultural institutions contribute to public diplomacy, community engagement, and artistic innovation. Departure from Artotel Jakarta at 2:00 PM."
+          "time": "14:00",
+          "end_time": "15:00",
+          "title": "Delegate Presentations",
+          "venue": "Artotel Jakarta",
+          "type": "panel",
+          "description": "Delegates present their work to the summit."
+        },
+        {
+          "time": "15:00",
+          "end_time": "15:30",
+          "title": "Closing Remarks",
+          "venue": "Artotel Jakarta",
+          "type": "ceremony",
+          "description": "Closing remarks bringing the summit sessions to a close."
+        },
+        {
+          "time": "15:30",
+          "end_time": "16:00",
+          "title": "Certificates & Group Photos",
+          "venue": "Artotel Jakarta",
+          "type": "ceremony",
+          "description": "Presentation of certificates followed by group pictures."
         }
       ]
     },
