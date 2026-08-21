@@ -1505,23 +1505,35 @@ textarea {
 }
 
 /* "View more" toggle + expanded activity brief inside the group card. */
+/* A clear, tappable accordion header — not a plain text link, so it reads
+   unmistakably as "open the brief". Label left, caret pushed to the right. */
 .coord-more-toggle {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 7px;
-  margin-top: 12px;
-  padding: 0;
-  border: none;
-  background: transparent;
+  gap: 8px;
+  width: 100%;
+  margin-top: 14px;
+  padding: 11px 14px;
+  border: 1.5px solid rgba(var(--signal-rgb), 0.38);
+  border-radius: 12px;
+  background: rgba(var(--signal-rgb), 0.08);
   color: var(--signal);
   font-family: inherit;
-  font-size: 0.82rem;
-  font-weight: 700;
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-align: left;
   cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.coord-more-toggle:hover {
+  background: rgba(var(--signal-rgb), 0.13);
+  border-color: rgba(var(--signal-rgb), 0.55);
 }
 
 .coord-more-caret {
-  font-size: 0.7rem;
+  margin-left: auto;
+  font-size: 0.78rem;
   transition: transform 0.2s ease;
 }
 

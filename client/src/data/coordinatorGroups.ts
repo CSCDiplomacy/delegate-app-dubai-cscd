@@ -67,7 +67,9 @@ export const GROUP_ACTIVITY = {
     'In this live session you’ll work with your group to design an event and ' +
     'submit it as a proposal — a hands-on run through the real coordinator ' +
     'workflow. Your whole group shares one coordinator account. Sign in with ' +
-    'your group’s login below, then create and submit your proposal together.',
+    'your group’s login below, then create and submit your proposal together. ' +
+    'Your team then delivers its presentation tomorrow, and if your event is ' +
+    'approved by CSCD it becomes part of CSCD’s official calendar.',
 } as const;
 
 /** Themed, full-text brief (public/docs) linked from the activity card. */
