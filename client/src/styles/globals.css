@@ -1468,6 +1468,42 @@ textarea {
   flex-shrink: 0;
 }
 
+/* Group roster inside the activity card. */
+.coord-members {
+  margin-top: 14px;
+}
+
+.coord-members-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.coord-members-list li {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.coord-members-initial {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: rgba(var(--signal-rgb), 0.16);
+  color: var(--ink);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
 .t-head {
   display: flex;
   justify-content: space-between;

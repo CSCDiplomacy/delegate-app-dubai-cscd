@@ -9,6 +9,7 @@ import { Icon } from '../Icon';
 import {
   regionForEmail,
   GROUP_LOGINS,
+  GROUP_MEMBERS,
   GROUP_ACTIVITY,
   COORDINATOR_LOGIN_URL,
 } from '../../data/coordinatorGroups';
@@ -47,6 +48,7 @@ export const CoordinatorActivity = () => {
   if (!region) return null;
 
   const login = GROUP_LOGINS[region];
+  const members = GROUP_MEMBERS[region];
 
   return (
     <div>
@@ -62,6 +64,22 @@ export const CoordinatorActivity = () => {
             </span>
           </div>
           <p className="t-desc">{GROUP_ACTIVITY.body}</p>
+
+          <div className="coord-members">
+            <div className="coord-cred-label">
+              <Icon name="users" size={13} /> {region} group members
+            </div>
+            <ul className="coord-members-list">
+              {members.map((name) => (
+                <li key={name}>
+                  <span className="coord-members-initial" aria-hidden>
+                    {name.charAt(0).toUpperCase()}
+                  </span>
+                  {name}
+                </li>
+              ))}
+            </ul>
+          </div>
 
           <div className="coord-cred">
             <div className="coord-cred-label">

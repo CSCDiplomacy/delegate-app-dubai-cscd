@@ -23,6 +23,31 @@ export const GROUP_LOGINS: Record<Region, { email: string; password: string }> =
 /** Where the group logs in to run the activity. */
 export const COORDINATOR_LOGIN_URL = 'https://cds.thecscd.org/login';
 
+/** Display roster per group (clean names, shown on the activity card). */
+export const GROUP_MEMBERS: Record<Region, string[]> = {
+  East: ['Bhavya Agarwal', 'Amir Gafur', 'Garlen Mao', 'Goh Chen How Calvin'],
+  West: [
+    'Theint Thinzar Thaw',
+    'Syeda Moneebah Noman',
+    'Robiyabegim Mekhrillaeva Ulugbek Kizi',
+    'Kia LeClair',
+  ],
+  North: [
+    'Eshan Jaipuriar',
+    'Jad Sandakli',
+    'Ayuanda Sekar Melati',
+    'Nguyễn Thanh Trúc',
+    'Mats Borgen',
+  ],
+  South: [
+    'Shahram Jalal Gharib',
+    'Trang Ha Thach',
+    'Noluthando Sikhakhane',
+    'Amina Bekpulatova',
+    'Yau',
+  ],
+};
+
 /**
  * The activity every group works on. Shared across all four - only the login
  * and group name differ per person.
