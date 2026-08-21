@@ -41,32 +41,6 @@
       ],
       "date": "August 21, 1:30 – 3:30 PM",
       "duration": "2 hours"
-    },
-    {
-      "id": 4,
-      "name": "Embassy of Pakistan",
-      "type": "Institutional Visit (Tentative)",
-      "description": "Diplomatic engagement with Pakistani embassy officials examining bilateral cultural cooperation, public diplomacy practice, and South-South cultural exchanges. Subject to diplomatic confirmation.",
-      "highlights": [
-        "Bilateral diplomatic mission",
-        "South-South cooperation & cultural exchange mechanisms",
-        "Pakistani public diplomacy practice"
-      ],
-      "date": "August 21, 4:00 – 5:00 PM",
-      "duration": "1 hour"
-    },
-    {
-      "id": 5,
-      "name": "Gudskul",
-      "type": "Institutional Visit & Sessions",
-      "description": "Immersive experience at Gudskul, an innovative creative and research institute, combining institutional engagement with continued policy discussions. Examines how independent cultural institutions contribute to public diplomacy, community engagement, and artistic innovation.",
-      "highlights": [
-        "Independent creative research institute",
-        "Innovative approaches to cultural practice",
-        "Continued policy discussions & strategic analysis"
-      ],
-      "date": "August 22, 2:30 – 5:00 PM",
-      "duration": "2.5 hours"
     }
   ]
 }
