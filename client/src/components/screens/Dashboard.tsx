@@ -12,6 +12,7 @@ import { Icon } from '../Icon';
 import type { IconName } from '../Icon';
 import type { Screen } from '../../types';
 import { ActionsToDo } from './ActionsToDo';
+import { CoordinatorActivity } from './CoordinatorActivity';
 import { SelectedBanner, TierResult } from './Results';
 
 const TILES: Array<{ screen: Screen; icon: IconName; title: string; sub: string }> = [
@@ -103,6 +104,11 @@ export const Dashboard = () => {
           the to-do list below. Anyone without a tier has no outcome on
           record and sees nothing here. */}
       {tier && <TierResult tier={tier} />}
+
+      {/* Live test-session group activity - shows the delegate's group + the
+          shared coordinator login for it. Renders nothing for anyone not in
+          the activity. Sits above the to-do list during the session. */}
+      <CoordinatorActivity />
 
       {/* Actions delegates must go do (forms, etc.) - still above the
           fold, but after their own result rather than before it. */}

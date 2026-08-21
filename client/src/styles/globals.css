@@ -1407,6 +1407,67 @@ textarea {
   width: auto;
 }
 
+/* Group-activity shared login block (live test session). Tokened, no literal
+   brand hex — reads as a quiet inset panel inside the action card. */
+.coord-cred {
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md, 12px);
+  background: rgba(var(--signal-rgb), 0.06);
+  padding: 12px 14px;
+}
+
+.coord-cred-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-strong);
+  margin-bottom: 10px;
+}
+
+.coord-cred-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.coord-cred-row + .coord-cred-row {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+.coord-cred-field {
+  min-width: 0;
+}
+
+.coord-cred-k {
+  display: block;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.coord-cred-v {
+  display: block;
+  margin-top: 2px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9rem;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.coord-cred-row .chip {
+  flex-shrink: 0;
+}
+
 .t-head {
   display: flex;
   justify-content: space-between;
