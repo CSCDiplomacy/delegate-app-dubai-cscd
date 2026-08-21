@@ -11,9 +11,8 @@ import { useUIStore } from '../../stores/uiStore';
 import { Icon } from '../Icon';
 import type { IconName } from '../Icon';
 import type { Screen } from '../../types';
-import { ActionsToDo } from './ActionsToDo';
-import { CoordinatorActivity } from './CoordinatorActivity';
-import { SelectedBanner, TierResult } from './Results';
+import { ActivityNotice } from './ActivityNotice';
+import { TierResult } from './Results';
 
 const TILES: Array<{ screen: Screen; icon: IconName; title: string; sub: string }> = [
   { screen: 'about', icon: 'globe', title: 'The Summit', sub: 'Themes, story & lineage' },
@@ -98,21 +97,18 @@ export const Dashboard = () => {
         </div>
       </div>
 
-      {/* Results live inline on the dashboard - there is no separate Results
-          screen. This is the reason most delegates open the dashboard once
-          announcements go out, so it leads, right under identity - ahead of
-          the to-do list below. Anyone without a tier has no outcome on
-          record and sees nothing here. */}
+      {/* Notification for group members: their live-session activity is
+          published. Sits right under identity so it's the first thing they see;
+          the button jumps to the Activity tab. Renders nothing for non-group
+          delegates. */}
+      <ActivityNotice />
+
+      {/* Registration / payment form for partial, self and alumni tiers renders
+          here. (The full-scholarship congratulations card and the recipients
+          banner were removed per request; the group activity now lives in its
+          own "Activity" tab.) The form host stays so un-registered delegates
+          can still register. */}
       {tier && <TierResult tier={tier} />}
-
-      {/* Live test-session group activity - shows the delegate's group + the
-          shared coordinator login for it. Renders nothing for anyone not in
-          the activity. Sits above the to-do list during the session. */}
-      <CoordinatorActivity />
-
-      {/* Actions delegates must go do (forms, etc.) - still above the
-          fold, but after their own result rather than before it. */}
-      <ActionsToDo />
 
       {/* Section tiles - core navigation into the event content, so it
           stays near the top rather than after the promotional material
@@ -130,11 +126,7 @@ export const Dashboard = () => {
         </div>
       </div>
 
-      {/* Celebratory / brand material - nice to see, nothing to act on, so
-          it sits last rather than competing with the result and to-dos
-          above. The cohort banner also no longer sits directly under a
-          partial/self delegate's own (lesser) result. */}
-      {tier && <SelectedBanner />}
+      {/* Brand banner - nice to see, nothing to act on, so it sits last. */}
       <div className="dash-banner">
         <img src="/img/ypds-jakarta-2026-banner.png" alt="YPDS Jakarta 2026" loading="lazy" />
       </div>

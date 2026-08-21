@@ -17,8 +17,10 @@ const NAV: Array<{ screen: Screen; label: string; icon: IconName }> = [
 
 export const Sidebar = ({
   showInterview,
+  showActivity,
 }: {
   showInterview: boolean;
+  showActivity: boolean;
 }) => {
   const { profile, eventName, logout } = useAuthStore();
   const { activeScreen, switchScreen, theme, toggleTheme } = useUIStore();
@@ -27,6 +29,9 @@ export const Sidebar = ({
     NAV[0],
     ...(showInterview
       ? ([{ screen: 'interview', label: 'Interview', icon: 'video' }] as typeof NAV)
+      : []),
+    ...(showActivity
+      ? ([{ screen: 'activity', label: 'Activity', icon: 'award' }] as typeof NAV)
       : []),
     ...NAV.slice(1), // about, rundown, venue, hotel, schedule, contact
   ];

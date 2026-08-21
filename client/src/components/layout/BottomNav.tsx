@@ -28,8 +28,10 @@ const HOTEL_ITEM: NavItem = { screen: 'hotel', label: 'Hotel', icon: 'hotel' };
 
 export const BottomNav = ({
   showInterview,
+  showActivity,
 }: {
   showInterview: boolean;
+  showActivity: boolean;
 }) => {
   const { activeScreen, switchScreen } = useUIStore();
   const voucherAvailable = useDelegateStore((s) => s.voucherAvailable);
@@ -41,7 +43,11 @@ export const BottomNav = ({
     : voucherAvailable
     ? [BASE[0], BASE[1], BASE[2], BASE[3], HOTEL_ITEM]
     : BASE;
-  const items = base;
+  // During the live session the group Activity is high-priority, so it takes the
+  // second slot (after Home) and we cap at the 5 available mobile slots.
+  const items = showActivity
+    ? [base[0], { screen: 'activity', label: 'Activity', icon: 'award' } as NavItem, ...base.slice(1)].slice(0, 5)
+    : base;
 
   return (
     <nav className="bottom-nav">

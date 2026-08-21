@@ -150,6 +150,7 @@ export type Theme = 'light' | 'dark';
 export type Screen =
   | 'dashboard'
   | 'interview'
+  | 'activity'
   | 'about'
   | 'rundown'
   | 'venue'

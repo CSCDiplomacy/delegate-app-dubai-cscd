@@ -64,12 +64,10 @@ export const GROUP_MEMBERS: Record<Region, string[]> = {
 export const GROUP_ACTIVITY = {
   title: 'Propose your group’s event',
   body:
-    'In this live session you’ll work with your group to design an event and ' +
-    'submit it as a proposal — a hands-on run through the real coordinator ' +
-    'workflow. Your whole group shares one coordinator account. Sign in with ' +
-    'your group’s login below, then create and submit your proposal together. ' +
-    'Your team then delivers its presentation tomorrow, and if your event is ' +
-    'approved by CSCD it becomes part of CSCD’s official calendar.',
+    'Work with your group to design an event and submit it as a proposal. You ' +
+    'all share one login — sign in below, then create and submit it together. ' +
+    'Your team presents tomorrow, and if CSCD approves your event, it joins ' +
+    'CSCD’s official calendar.',
 } as const;
 
 /** Themed, full-text brief (public/docs) linked from the activity card. */
@@ -82,18 +80,18 @@ export const ACTIVITY_PDF_URL = '/docs/ypds-project-proposal-activity.pdf';
 export const GROUP_ACTIVITY_DETAIL = {
   theme: 'Cultural Diplomacy and Creative Economy',
   summary:
-    'Each delegate designs one real event proposal under the theme; your team ' +
-    'then delivers one approved proposal as a live CDS event in October.',
+    'Each person designs one event proposal. As a team you pick one, and if ' +
+    'CSCD approves it, it runs as a real event in October.',
   steps: [
-    'Choose your CDS pillar',
-    'Anchor your event in October',
-    'Design it — 60–90 min, hybrid or virtual',
+    'Pick your CDS pillar (topic area)',
+    'Choose a date in October',
+    'Design the event — 60–90 min, online or hybrid',
     'Submit your proposal on the CDS portal',
-    'Present on Day 3 — 1 slide each, max 7',
-    'CSCD Committee approval',
-    'Deliver live in October',
+    'Present it on Day 3 — 1 slide each, max 7',
+    'CSCD reviews and approves',
+    'Run your event live in October',
   ],
-  deadlines: 'Proposal tonight · Present Day 3 · Deliver in October',
+  deadlines: 'Proposal tonight · Present Day 3 · Runs in October',
 } as const;
 
 // Each participant's delegate-account email → their group. Emails were taken

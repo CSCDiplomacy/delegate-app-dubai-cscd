@@ -1505,6 +1505,49 @@ textarea {
 }
 
 /* "View more" toggle + expanded activity brief inside the group card. */
+/* Dashboard notification: group activity published. Brass-accented so it reads
+   as an alert without competing with the crimson primary actions. */
+.activity-notice {
+  display: flex;
+  gap: 13px;
+  align-items: flex-start;
+  padding: 15px 16px;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--brass);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--brass) 12%, var(--surface-2));
+}
+
+.activity-notice-icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--brass) 34%, transparent);
+  color: var(--ink-strong);
+}
+
+.activity-notice-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.activity-notice-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--ink-strong);
+}
+
+.activity-notice-text {
+  margin: 5px 0 12px;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
 /* A clear, tappable accordion header — not a plain text link, so it reads
    unmistakably as "open the brief". Label left, caret pushed to the right. */
 .coord-more-toggle {

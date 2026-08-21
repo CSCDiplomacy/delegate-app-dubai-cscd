@@ -47,7 +47,6 @@ const CopyField = ({ label, value }: { label: string; value: string }) => {
 
 export const CoordinatorActivity = () => {
   const { profile } = useAuthStore();
-  const [showDetail, setShowDetail] = useState(false);
   const region = regionForEmail(profile?.email);
   if (!region) return null;
 
@@ -71,47 +70,32 @@ export const CoordinatorActivity = () => {
           </div>
           <p className="t-desc">{GROUP_ACTIVITY.body}</p>
 
-          <button
-            type="button"
-            className="coord-more-toggle"
-            aria-expanded={showDetail}
-            onClick={() => setShowDetail((v) => !v)}
-          >
-            <Icon name="eye" size={13} />
-            {showDetail ? 'View less' : 'View more — full activity brief'}
-            <span className={`coord-more-caret${showDetail ? ' open' : ''}`} aria-hidden>
-              ▾
-            </span>
-          </button>
-
-          {showDetail && (
-            <div className="coord-detail">
-              <div className="coord-detail-theme">
-                <span className="chip">Theme</span>
-                <span>{detail.theme}</span>
-              </div>
-              <p className="coord-detail-summary">{detail.summary}</p>
-
-              <ol className="coord-steps">
-                {detail.steps.map((s) => (
-                  <li key={s}>{s}</li>
-                ))}
-              </ol>
-
-              <p className="coord-detail-deadline">
-                <Icon name="clock" size={12} /> {detail.deadlines}
-              </p>
-
-              <a
-                className="btn ghost coord-brief-btn"
-                href={ACTIVITY_PDF_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Icon name="download" size={13} /> Full brief (PDF)
-              </a>
+          <div className="coord-detail">
+            <div className="coord-detail-theme">
+              <span className="chip">Theme</span>
+              <span>{detail.theme}</span>
             </div>
-          )}
+            <p className="coord-detail-summary">{detail.summary}</p>
+
+            <ol className="coord-steps">
+              {detail.steps.map((s) => (
+                <li key={s}>{s}</li>
+              ))}
+            </ol>
+
+            <p className="coord-detail-deadline">
+              <Icon name="clock" size={12} /> {detail.deadlines}
+            </p>
+
+            <a
+              className="btn ghost coord-brief-btn"
+              href={ACTIVITY_PDF_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Icon name="download" size={13} /> Full brief (PDF)
+            </a>
+          </div>
 
           <div className="coord-members">
             <div className="coord-cred-label">

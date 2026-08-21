@@ -9,6 +9,7 @@ const THEME_KEY = 'cscd_theme';
 const SCREENS: Screen[] = [
   'dashboard',
   'interview',
+  'activity',
   'about',
   'rundown',
   'venue',
