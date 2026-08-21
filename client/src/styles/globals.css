@@ -1504,6 +1504,158 @@ textarea {
   font-weight: 800;
 }
 
+/* "View more" toggle + expanded activity brief inside the group card. */
+.coord-more-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 12px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--signal);
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.coord-more-caret {
+  font-size: 0.7rem;
+  transition: transform 0.2s ease;
+}
+
+.coord-more-caret.open {
+  transform: rotate(180deg);
+}
+
+.coord-detail {
+  margin-top: 12px;
+  padding: 14px 15px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.coord-detail-theme {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--ink-strong);
+}
+
+.coord-detail-tagline {
+  margin: 8px 0 0;
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 0.98rem;
+  color: var(--ink-soft);
+}
+
+.coord-detail-intro {
+  margin: 8px 0 14px;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.coord-detail .coord-cred-label {
+  margin-top: 14px;
+}
+
+.coord-steps {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  counter-reset: coordstep;
+}
+
+.coord-steps li {
+  position: relative;
+  padding: 8px 0 8px 30px;
+  border-top: 1px solid var(--line);
+}
+
+.coord-steps li:first-child {
+  border-top: none;
+}
+
+.coord-steps li::before {
+  counter-increment: coordstep;
+  content: counter(coordstep);
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  background: var(--ink-strong);
+  color: var(--brass);
+  font-size: 0.7rem;
+  font-weight: 900;
+}
+
+.coord-step-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.coord-step-title {
+  font-weight: 800;
+  font-size: 0.84rem;
+  color: var(--ink-strong);
+}
+
+.coord-step-note {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+}
+
+.coord-step-text {
+  margin: 3px 0 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.coord-deadlines {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.coord-deadlines li {
+  display: flex;
+  gap: 10px;
+  font-size: 0.82rem;
+}
+
+.coord-deadline-when {
+  flex-shrink: 0;
+  width: 68px;
+  font-weight: 800;
+  color: var(--signal);
+}
+
+.coord-deadline-what {
+  color: var(--ink-soft);
+}
+
+.coord-brief-btn {
+  margin-top: 16px;
+}
+
 .t-head {
   display: flex;
   justify-content: space-between;

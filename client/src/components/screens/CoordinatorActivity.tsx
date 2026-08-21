@@ -12,6 +12,8 @@ import {
   GROUP_MEMBERS,
   GROUP_LEADERS,
   GROUP_ACTIVITY,
+  GROUP_ACTIVITY_DETAIL,
+  ACTIVITY_PDF_URL,
   COORDINATOR_LOGIN_URL,
 } from '../../data/coordinatorGroups';
 
@@ -45,12 +47,14 @@ const CopyField = ({ label, value }: { label: string; value: string }) => {
 
 export const CoordinatorActivity = () => {
   const { profile } = useAuthStore();
+  const [showDetail, setShowDetail] = useState(false);
   const region = regionForEmail(profile?.email);
   if (!region) return null;
 
   const login = GROUP_LOGINS[region];
   const members = GROUP_MEMBERS[region];
   const leader = GROUP_LEADERS[region];
+  const detail = GROUP_ACTIVITY_DETAIL;
 
   return (
     <div>
@@ -66,6 +70,66 @@ export const CoordinatorActivity = () => {
             </span>
           </div>
           <p className="t-desc">{GROUP_ACTIVITY.body}</p>
+
+          <button
+            type="button"
+            className="coord-more-toggle"
+            aria-expanded={showDetail}
+            onClick={() => setShowDetail((v) => !v)}
+          >
+            <Icon name="eye" size={13} />
+            {showDetail ? 'View less' : 'View more — full activity brief'}
+            <span className={`coord-more-caret${showDetail ? ' open' : ''}`} aria-hidden>
+              ▾
+            </span>
+          </button>
+
+          {showDetail && (
+            <div className="coord-detail">
+              <div className="coord-detail-theme">
+                <span className="chip">Theme</span>
+                <span>{detail.theme}</span>
+              </div>
+              <p className="coord-detail-tagline">{detail.tagline}</p>
+              <p className="coord-detail-intro">{detail.intro}</p>
+
+              <div className="coord-cred-label">
+                <Icon name="wrench" size={13} /> How it works
+              </div>
+              <ol className="coord-steps">
+                {detail.steps.map((s) => (
+                  <li key={s.no}>
+                    <div className="coord-step-head">
+                      <span className="coord-step-title">{s.title}</span>
+                      {s.note && <span className="coord-step-note">{s.note}</span>}
+                    </div>
+                    <p className="coord-step-text">{s.text}</p>
+                  </li>
+                ))}
+              </ol>
+
+              <div className="coord-cred-label">
+                <Icon name="clock" size={13} /> Deadlines
+              </div>
+              <ul className="coord-deadlines">
+                {detail.deadlines.map((d) => (
+                  <li key={d.when}>
+                    <span className="coord-deadline-when">{d.when}</span>
+                    <span className="coord-deadline-what">{d.what}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <a
+                className="btn ghost coord-brief-btn"
+                href={ACTIVITY_PDF_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Icon name="download" size={13} /> Download full brief (PDF)
+              </a>
+            </div>
+          )}
 
           <div className="coord-members">
             <div className="coord-cred-label">
