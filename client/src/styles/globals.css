@@ -384,8 +384,11 @@ textarea {
 }
 
 .brand-logo {
-  width: 52px;
-  height: 52px;
+  /* Logo art is a wide wordmark (400x84), not a square icon - size by height
+     with auto width so it isn't squashed down to a sliver by object-fit. */
+  height: 44px;
+  width: auto;
+  max-width: 100%;
   object-fit: contain;
 }
 
@@ -510,8 +513,8 @@ textarea {
 }
 
 .topbar .brand-logo {
-  width: 32px;
-  height: 32px;
+  height: 28px;
+  width: auto;
 }
 
 .topbar-actions {
