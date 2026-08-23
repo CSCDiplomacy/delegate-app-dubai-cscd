@@ -146,13 +146,21 @@ const staticOpts = {
   etag: true,
   lastModified: true,
   setHeaders(res, filePath) {
-    // Shell and SW must never be stale — browser must revalidate every time.
-    if (filePath.endsWith('index.html') || filePath.endsWith('sw.js')) {
-      res.setHeader('Cache-Control', 'no-cache');
-    } else if (/\.(css|js|png|jpg|webp|svg|woff2?)$/.test(filePath)) {
-      // Fingerprinted/versioned assets can cache aggressively.
-      res.setHeader('Cache-Control', 'public, max-age=604800, stale-while-revalidate=86400');
-    }
+    // Only Vite's own /assets/*.{js,css} are content-hashed — a content
+    // change gives them a new filename, so caching those hard is safe and
+    // free (old URL just stops being referenced). Everything else (images,
+    // manifest.json, fonts, index.html, sw.js) keeps the same filename across
+    // edits, and we're actively iterating on exactly that content (banners,
+    // rundown/visits/hotels JSON, branding) — so always revalidate instead of
+    // trusting a stale cached copy. `no-cache` still lets the browser cache
+    // the bytes, it just forces a conditional GET (304 if unchanged) rather
+    // than skipping the network entirely.
+    const isHashedBundleAsset =
+      filePath.includes(`${path.sep}assets${path.sep}`) && /\.(css|js|woff2?)$/.test(filePath);
+    res.setHeader(
+      'Cache-Control',
+      isHashedBundleAsset ? 'public, max-age=604800, immutable' : 'no-cache'
+    );
   },
 };
 
