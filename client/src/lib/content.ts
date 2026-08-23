@@ -1,56 +1,57 @@
-// Static summit content, lifted from the YPDS Jakarta 2026 landing page so the
-// portal tells the same story. Marketing copy, safe to hardcode.
+// Static summit content, lifted from the Youth Strategic Forum, Dubai 2026
+// marketing site so the portal tells the same story. Marketing copy, safe to
+// hardcode.
 
 export const SUMMIT = {
-  edition: 'YPDS Jakarta 2026',
-  dates: 'August 20–23, 2026',
-  location: 'Jakarta, Indonesia',
-  tagline: 'Convergence of Power',
+  edition: 'Youth Strategic Forum, Dubai 2026',
+  dates: 'September 22–25, 2026',
+  location: 'Dubai, United Arab Emirates',
+  tagline: 'Convergence of Innovation',
   intro:
-    'Following successful editions of the Young Public Diplomacy Summit in Baku, Istanbul, and Tashkent, the summit continues to expand as a platform for engaging young leaders in international dialogue and diplomacy.',
+    'Four days in Dubai where emerging leaders and creatives from 50+ nations meet to shape what comes next. The Youth Strategic Forum explores technology, culture, creativity, and human connection — moving delegates between panel discussions, hands-on workshops, city innovation visits, and structured networking.',
   rationale:
-    'Jakarta, as the capital of Indonesia, is a key center of diplomacy, governance, and international cooperation, home to embassies, policy institutions, and academic centers. Its strategic position at the heart of Southeast Asia makes it an ideal setting for discussions on public diplomacy and global engagement.',
+    "Dubai is a global crossroads of culture, technology, and ambition — a city built on reinvention. Hosting the forum at the Mohammed Bin Rashid Library, designed in the shape of an open book and one of the Arab world's most iconic cultural landmarks, situates the conversation inside a living symbol of knowledge and strategic vision.",
   participants:
-    'Emerging youth leaders, university students, and young professionals (ages 16–40), representing regions across Asia, Europe, Africa, and the Middle East.',
+    'Emerging leaders, creators, innovators, and entrepreneurs from diverse backgrounds, representing more than 50 nations.',
 };
 
 export const THEMES: Array<{ numeral: string; title: string; blurb: string }> = [
   {
     numeral: 'I',
-    title: 'Public Diplomacy in the 21st Century',
-    blurb: 'Understanding the intersection of culture and governance.',
+    title: 'Global Platform',
+    blurb: 'Create an international, non-political platform for youth dialogue and collaboration.',
   },
   {
     numeral: 'II',
-    title: 'Asia and the Mediterranean',
-    blurb: 'Past, present & future, regional cooperation and strategic opportunities.',
+    title: 'Tech Meets Culture',
+    blurb: 'Explore the intersection of technology, creativity, and contemporary culture.',
   },
   {
     numeral: 'III',
-    title: 'Peace by Peaceful Means',
-    blurb: 'Youth roles in conflict resolution and diplomacy.',
+    title: 'Strategic Thinking',
+    blurb: 'Encourage innovative and strategic thinking among young people.',
   },
   {
     numeral: 'IV',
-    title: 'Soft, Smart, and Hard Power',
-    blurb: 'Analyzing the tools of influence in international relations.',
+    title: 'Cross-Cultural Exchange',
+    blurb: 'Promote cross-cultural understanding through storytelling, art, media, and digital engagement.',
   },
   {
     numeral: 'V',
-    title: 'Strategic Communication',
-    blurb: 'Techniques for effective advocacy, public diplomacy, and media engagement.',
+    title: 'Connect Leaders',
+    blurb: 'Connect emerging leaders, creators, innovators, and entrepreneurs from diverse backgrounds.',
   },
   {
     numeral: 'VI',
-    title: 'Grand Strategy vs Economic Strategy',
-    blurb: 'Balancing national interests, regional cooperation, and global challenges.',
+    title: 'Future Vision',
+    blurb: 'Inspire future-oriented perspectives on culture, technology, and society.',
   },
 ];
 
 export const EXPERIENCE: string[] = [
-  'Exclusive venue hosting inside a prominent policy institution.',
-  'Curated cultural excursions including historic Jakarta and its iconic landmarks.',
-  'Authentic Indonesian culinary experiences and networking dinners.',
+  "Exclusive forum sessions inside the Mohammed Bin Rashid Library, one of the Arab world's most iconic cultural landmarks.",
+  'A Dubai Marina dinner cruise and a desert safari under the stars.',
+  'Skyline views and downtime at the Gevora Hotel, the tallest hotel in the world.',
 ];
 
 export const EDITIONS: Array<{
@@ -78,5 +79,6 @@ export const EDITIONS: Array<{
     note: 'Expanding Horizons',
     report: 'https://thecscd.org/events/ypds-tashkent',
   },
-  { city: 'Jakarta', year: '2026', note: 'Convergence of Power', current: true },
+  { city: 'Jakarta', year: '2026', note: 'Convergence of Power' },
+  { city: 'Dubai', year: '2026', note: 'Convergence of Innovation', current: true },
 ];

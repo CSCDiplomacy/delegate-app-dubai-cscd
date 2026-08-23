@@ -23,10 +23,13 @@ import requests
 
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY")
 FROM_EMAIL = os.environ.get("FROM_EMAIL", "noreply@programs.thecscd.org")
-APP_URL = os.environ.get("APP_URL", "https://portal.thecscd.org/")
-EVENT_NAME = os.environ.get("EVENT_NAME", "YPDS Jakarta 2026")
-PORTAL_URL = os.environ.get("PORTAL_URL", "https://portal.thecscd.org/")
-INTERVIEW_DEADLINE = os.environ.get("INTERVIEW_DEADLINE", "17 July 2026, 11:00 PM (GMT+7, Jakarta time)")
+APP_URL = os.environ.get("APP_URL", "https://delegate.thecscd.org/")
+EVENT_NAME = os.environ.get("EVENT_NAME", "Youth Strategic Forum, Dubai 2026")
+PORTAL_URL = os.environ.get("PORTAL_URL", "https://delegate.thecscd.org/")
+# No confirmed interview deadline exists for Dubai yet (unlike Jakarta's fixed
+# date) — set INTERVIEW_DEADLINE in the environment once the client confirms
+# one. This default is a deliberate placeholder, not a real date.
+INTERVIEW_DEADLINE = os.environ.get("INTERVIEW_DEADLINE", "TBD — check the Interview tab in your portal for the current date")
 
 RESEND_ENDPOINT = "https://api.resend.com/emails"
 TEMPLATE_PATH = Path(__file__).with_name("credential-email.html")
@@ -39,6 +42,7 @@ def render_template(name: str, email: str, password: str) -> str:
         "{{email}}": email,
         "{{password}}": password,
         "{{portal_url}}": PORTAL_URL,
+        "{{interview_deadline}}": INTERVIEW_DEADLINE,
     }
     for placeholder, value in replacements.items():
         template = template.replace(placeholder, value)
@@ -54,32 +58,29 @@ def build_text(name: str, email: str, password: str) -> str:
     return (
         f"Welcome to {EVENT_NAME} — Your Portal Is Ready\n\n"
         f"Dear {greeting},\n\n"
-        "Congratulations, and welcome to the Young Public Diplomacy Summit — Jakarta 2026.\n\n"
-        "By applying to YPDS, you have already joined an exceptional community of scholars, young diplomats, and leaders from across the world. We are delighted to have you with us and wish you the very best as we begin reviewing applications.\n\n"
-        "Your portal is now active. From here you can complete your interview, explore the summit program, and prepare for the days ahead.\n\n"
+        "Congratulations, and welcome to the Youth Strategic Forum — Dubai 2026.\n\n"
+        "By applying to the forum, you have already joined an exceptional community of creators, technologists, and young strategists from across the world. We are delighted to have you with us and wish you the very best as we begin reviewing applications.\n\n"
+        "Your portal is now active. From here you can complete your interview, explore the forum program, and prepare for the days ahead.\n\n"
         "Login Details\n"
         f"Portal: {PORTAL_URL}\n"
         f"Email: {email}\n"
         f"Password: {password}\n\n"
         "[ ] Mark interview taken\n\n"
         "Your Interview\n"
-        "The video and text interview form is ready under the Interview tab, and it is the next step in the review for scholarship consideration. This is your opportunity to share your vision for public diplomacy and strategic leadership.\n\n"
-        "Please respond to the following question:\n"
-        "\u201cWhy did you choose to join the Young Public Diplomacy Summit \u2014 Jakarta 2026? What does public diplomacy mean to you, and what are you hoping to learn from this experience in order to better understand and address today\u2019s global challenges?\u201d\n\n"
-        "Maximum video length: 2 minutes\n"
+        "The video and text interview form is ready under the Interview tab, and it is the next step in the review for scholarship consideration. This is your opportunity to share your vision for creativity, technology, and strategic leadership. The form itself walks you through the questions and format.\n\n"
         "Total time to complete the form: a few minutes\n"
         f"Deadline: {INTERVIEW_DEADLINE}\n\n"
         "Missing this deadline will affect your eligibility for scholarship evaluation. You will, however, still be considered for the self-financed option.\n\n"
         "What Else You Can Do\n"
-        "Explore the summit program — Browse the full four-day agenda: opening keynotes from diplomatic leaders, workshops on public diplomacy and peace-building, youth policy labs, and closing presentations.\n\n"
-        "Discover venues and speakers — Learn about Tugu Kunstkring Paleis, our historic Jakarta venue, and meet the diplomatic experts leading the summit.\n\n"
+        "Explore the forum program — Browse the full four-day agenda: AI, creativity, and design modules, a Dubai Marina dinner cruise, a desert safari, and the closing certification ceremony.\n\n"
+        "Discover the venue and hotel — Learn about the Mohammed Bin Rashid Library, our Dubai venue, and the Gevora Hotel, where delegates stay.\n\n"
         "Save sessions — Star any session to keep it handy for easy reference.\n\n"
         "Next Steps\n"
         f"1. Visit {PORTAL_URL}\n"
         "2. Sign in with your email and password\n"
         "3. Complete your interview before the deadline\n"
-        "4. Explore the summit program\n\n"
-        "If you have any questions, simply reply to this email. We look forward to your participation at YPDS Jakarta 2026.\n\n"
+        "4. Explore the forum program\n\n"
+        "If you have any questions, simply reply to this email. We look forward to your participation at the Youth Strategic Forum, Dubai 2026.\n\n"
         "Warm regards,\nThe CSCD Team\nCenter for Strategic and Cultural Diplomacy"
     )
 

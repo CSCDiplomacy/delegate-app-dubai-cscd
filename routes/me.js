@@ -37,10 +37,10 @@ router.get('/hotel', requireAuth, async (req, res) => {
   const hotels = loadHotels();
   // delegate.hotel_id lets a specific delegate be pinned to a different entry;
   // it's unset for the whole cohort today, so fall back to the shared
-  // 'jakarta-hotel' reference (matches routes/public.js's /hotel fallback) —
+  // 'dubai-hotel' reference (matches routes/public.js's /hotel fallback) —
   // otherwise this 404s into "Details on the way" for every delegate.
   const hotel =
-    (delegate.hotel_id && hotels[delegate.hotel_id]) || hotels['jakarta-hotel'] || null;
+    (delegate.hotel_id && hotels[delegate.hotel_id]) || hotels['dubai-hotel'] || null;
   res.json({
     delegate: {
       name: delegate.name,

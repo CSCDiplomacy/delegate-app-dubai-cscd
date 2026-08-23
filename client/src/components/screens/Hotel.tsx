@@ -3,7 +3,7 @@
 // code, arrival essentials — data/hotels.json, via the authenticated
 // /api/me/hotel endpoint) shown to every delegate who opens this screen, plus
 // the voucher download and personal booking (room, dates) that only apply to
-// the ~17 delegates on the shared Diplomark booking.
+// delegates on the shared hotel booking.
 //
 // Reachable by every delegate via the sidebar/menu; the mobile bottom bar
 // only has 5 slots, so it keeps swapping Schedule → Hotel for the voucher
@@ -11,11 +11,12 @@
 // personal schedule) — everyone else still gets there via the ☰ menu.
 //
 // The booking summary below (dates, room type, meal plan, booking number) is
-// constant across all delegates for YPDS Jakarta 2026 (shared Diplomark
-// booking No. 1755043942) and stays hardcoded here rather than in
-// hotels.json, which holds the reusable hotel reference info instead. If a
-// future cohort has varying bookings, thread these values through the
-// /me/voucher payload.
+// meant to be constant across all delegates for the Youth Strategic Forum,
+// Dubai 2026 and stays hardcoded here rather than in hotels.json, which
+// holds the reusable hotel reference info instead. The logistics partner and
+// booking number are TBD — they arrive with the delegate roster, not
+// invented here. If a future cohort has varying bookings, thread these
+// values through the /me/voucher payload.
 import { useEffect, useState } from 'react';
 import { useDelegateStore } from '../../stores/delegateStore';
 import { api } from '../../services/api';
@@ -27,12 +28,12 @@ import type { MyHotel } from '../../types';
 type VoucherResponse = { available: boolean; url?: string };
 
 const BOOKING = [
-  { label: 'Hotel', value: 'ARTOTEL Thamrin, Jakarta' },
-  { label: 'Check-in', value: '20 August 2026, from 3:00 PM' },
-  { label: 'Check-out', value: '23 August 2026' },
-  { label: 'Room', value: 'Single room, twin sharing' },
-  { label: 'Meal plan', value: 'Bed & Breakfast' },
-  { label: 'Booking No.', value: '1755043942' },
+  { label: 'Hotel', value: 'Gevora Hotel, Dubai' },
+  { label: 'Check-in', value: '22 September 2026, from 3:00 PM' },
+  { label: 'Check-out', value: '25 September 2026' },
+  { label: 'Room', value: 'TBD' },
+  { label: 'Meal plan', value: 'TBD' },
+  { label: 'Booking No.', value: 'TBD' },
 ];
 
 export const Hotel = () => {
@@ -119,15 +120,15 @@ export const Hotel = () => {
         )}
       </div>
 
-      {/* Voucher download + booking summary — only the ~17 delegates on the
-          shared Diplomark booking have a voucher PDF. */}
+      {/* Voucher download + booking summary — only delegates on the shared
+          hotel booking have a voucher PDF. */}
       {voucherAvailable && (
         <div className="t-card">
           <p className="tag">Your voucher</p>
           <div className="t-title">Your accommodation voucher is ready</div>
           <p className="t-desc">
-            Your room for YPDS Jakarta 2026 has been reserved in your name through our
-            administrative and logistical partner, <strong>Diplomark Limited</strong>.
+            Your room for the Youth Strategic Forum, Dubai 2026 will be reserved in your name
+            through our administrative and logistical partner — details on the way.
           </p>
 
           <div className="pass-bottom" style={{ marginTop: 14 }}>
@@ -141,13 +142,13 @@ export const Hotel = () => {
 
           <p className="t-desc" style={{ marginTop: 14 }}>
             <strong>Visa.</strong> This voucher will be valid for your visa application. Attach
-            the PDF to your application as proof of accommodation in Indonesia.
+            the PDF to your application as proof of accommodation in the United Arab Emirates.
           </p>
 
           <p className="t-desc" style={{ marginTop: 10 }}>
             <strong>On arrival.</strong> There is no need to contact or confirm anything with the
-            hotel directly, all delegates are grouped internally under the Diplomark reservation.
-            Our team will be on-site to receive you and handle check-in with you personally.
+            hotel directly, all delegates are grouped internally under a shared reservation. Our
+            team will be on-site to receive you and handle check-in with you personally.
           </p>
 
           <div className="accept-cta">
@@ -222,7 +223,7 @@ export const Hotel = () => {
       {/* Arrival essentials — airport, transport options, immigration/currency notes. */}
       {hotel.arrival && (
         <div className="card">
-          <div className="card-eyebrow">Arriving in Jakarta</div>
+          <div className="card-eyebrow">Arriving in Dubai</div>
           {hotel.arrival.airport && (
             <div className="t-venue">
               <Icon name="mapPin" size={12} /> {hotel.arrival.airport}

@@ -1,29 +1,29 @@
 {
-  "_note": "Notable speakers and thought leaders at YPDS Jakarta 2026. Updates as speakers are confirmed.",
+  "_note": "Notable speakers and thought leaders at the Youth Strategic Forum, Dubai 2026. No named speakers are confirmed yet — these are generic placeholder panels matching the six forum modules; update as speakers are announced.",
   "speakers": [
     {
       "id": 1,
-      "name": "Diplomatic Leaders & Regional Experts",
-      "title": "YPDS Keynote Panel",
-      "bio": "Leading diplomats, policy makers, and strategists from Asia, Europe, Africa, and the Mediterranean region sharing insights on international affairs, regional security, and cross-cultural diplomacy.",
-      "expertise": ["Public Diplomacy", "Regional Strategy", "Statecraft"],
-      "day": "August 20-21"
+      "name": "Forum Keynote Speakers",
+      "title": "Opening Keynote",
+      "bio": "Leaders in technology, culture, and strategy setting the tone for the forum's modules.",
+      "expertise": ["Strategy", "Innovation", "Cultural Diplomacy"],
+      "day": "September 23"
     },
     {
       "id": 2,
-      "name": "Conflict Resolution & Peace Studies Specialists",
-      "title": "Peace by Peaceful Means Workshop",
-      "bio": "Experts in negotiation, mediation, and conflict resolution sharing frameworks for youth leaders to engage in peace-building initiatives.",
-      "expertise": ["Peace & Conflict Resolution", "Negotiation", "Mediation"],
-      "day": "August 21"
+      "name": "Speakers & Practitioners — Technology & Creativity",
+      "title": "Modules 1–4 Panel",
+      "bio": "Technologists, designers, and cultural strategists sharing insights on AI, storytelling, smart cities, and the aesthetics of technology.",
+      "expertise": ["AI & Creativity", "Digital Storytelling", "Urban Innovation"],
+      "day": "September 23"
     },
     {
       "id": 3,
-      "name": "Communications & Advocacy Leaders",
-      "title": "Strategic Communication Masterclass",
-      "bio": "Veteran communicators and media strategists revealing techniques for effective advocacy, narrative-building, and influence in modern diplomacy.",
-      "expertise": ["Strategic Communication", "Media Relations", "Public Affairs"],
-      "day": "August 21"
+      "name": "Speakers & Practitioners — Travel & Cultural Influence",
+      "title": "Modules 5–6 Panel",
+      "bio": "Voices from tourism, media, and the arts exploring virtual escapism, immersive travel, and the cultural power of art and media.",
+      "expertise": ["Immersive Travel", "Media & Culture", "Storytelling"],
+      "day": "September 24"
     }
   ]
 }

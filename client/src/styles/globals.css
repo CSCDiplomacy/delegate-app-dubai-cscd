@@ -1,49 +1,60 @@
-/* CSCD Delegate App — YPDS Jakarta 2026.
-   Tailwind v4 (CSS-first config). Design system matched to the YPDS landing
-   page: an editorial "vintage Roman" treatment — warm charcoal ink (#2c2825,
-   not pure black), thin hairline rules, soft blurred shadows, small radii, and
-   crimson / electric-yellow used sparingly as accents. Cinzel (display),
-   Cormorant Garamond (italic accent), Lato (body).
+/* CSCD Delegate App — Youth Strategic Forum, Dubai 2026.
+   Tailwind v4 (CSS-first config). Design system matched to the YSF Dubai
+   marketing site: a muted "library / strategic" treatment — warm near-black
+   ink, thin hairline rules, soft blurred shadows, small radii, and maroon /
+   gold used sparingly as accents. Archivo (display), Fraunces (italic
+   accent), Inter (body), DM Mono (kickers/labels).
    Invariant: no literal brand hex below the two token blocks. */
 @import 'tailwindcss';
 
 /* ============================ TOKENS ==================================== */
 :root {
-  --surface: #f9f6f0;      /* cream page ground */
-  --surface-2: #fffdf8;    /* warm white cards */
-  --ink: #2c2825;          /* warm charcoal — text */
-  --ink-strong: #1a1714;   /* headings */
-  --ink-soft: rgba(44, 40, 37, 0.60);
-  --ink-faint: rgba(44, 40, 37, 0.42);
-  --line: rgba(44, 40, 37, 0.14);
-  --line-strong: rgba(44, 40, 37, 0.24);
-  --signal: #ea0558;       /* crimson — primary action / accent */
+  --surface: #fbfaf6;      /* ysf-cream — page ground */
+  --surface-2: #f4eeee;    /* ysf-mist — card-tint background */
+  --ink: #1c231f;          /* text */
+  --ink-strong: #10140f;   /* headings */
+  --ink-soft: rgba(28, 35, 31, 0.60);
+  --ink-faint: rgba(28, 35, 31, 0.42);
+  --line: rgba(28, 35, 31, 0.14);
+  --line-strong: rgba(28, 35, 31, 0.24);
+  --signal: #8c2231;       /* forest — maroon, primary action / accent */
   --signal-ink: #ffffff;
-  --brass: #e6eb1c;        /* electric yellow — sparing accent */
-  --brass-ink: #2c2825;
+  --signal-rgb: 140, 34, 49;
+  --brass: #d9a521;        /* gold — secondary accent */
+  /* Deep-forest text on gold, matching the marketing site's own gold-wipe
+     button hover ("text flips to deep-forest"). */
+  --brass-ink: #3a0e14;
   --ok: #2f7d54;
   /* The embedded Cognito form renders on pure white; it gets its own token so
      the no-literal-hex invariant holds and dark mode can override it. */
   --form-surface: #ffffff;
-  --shadow-sm: 0 6px 16px -10px rgba(44, 40, 37, 0.45);
-  --shadow: 0 18px 40px -22px rgba(44, 40, 37, 0.45);
+  --shadow-sm: 0 6px 16px -10px rgba(28, 35, 31, 0.45);
+  --shadow: 0 18px 40px -22px rgba(28, 35, 31, 0.45);
   --radius: 6px;
   --radius-lg: 10px;
 }
 
+/* No dark-mode source exists for Dubai (the marketing site has none). Derived
+   here by the same method Jakarta used — lift the primary accent for
+   contrast, keep card surfaces a step lighter than the page. --surface-2 and
+   --signal both reuse hexes the Dubai palette already defines for exactly
+   these darker/lighter roles (--deep-forest, --ysf-mint) rather than
+   inventing new ones; --surface is --deep-forest darkened further so cards
+   still read as "lifted." Revisit if the client supplies real dark-mode art. */
 [data-theme='dark'] {
-  --surface: #14110c;      /* deep warm near-black page ground */
-  --surface-2: #211d16;    /* cards — clearly lifted off the page */
-  --ink: #ece4d5;
-  --ink-strong: #faf5eb;
-  --ink-soft: rgba(236, 228, 213, 0.66);
-  --ink-faint: rgba(236, 228, 213, 0.44);
-  --line: rgba(236, 228, 213, 0.12);
-  --line-strong: rgba(236, 228, 213, 0.22);
-  --signal: #ff4d80;       /* crimson lifted for contrast on dark */
-  --signal-ink: #17130d;
-  --brass: #e6eb1c;
-  --brass-ink: #17130d;
+  --surface: #1d070a;      /* deep-forest, darkened further — page ground */
+  --surface-2: #3a0e14;    /* deep-forest — cards, lifted off the page */
+  --ink: #f2ece3;
+  --ink-strong: #fbfaf6;
+  --ink-soft: rgba(242, 236, 227, 0.66);
+  --ink-faint: rgba(242, 236, 227, 0.44);
+  --line: rgba(242, 236, 227, 0.12);
+  --line-strong: rgba(242, 236, 227, 0.22);
+  --signal: #c24c58;       /* ysf-mint — lighter maroon accent, lifted for dark-mode contrast */
+  --signal-ink: #3a0e14;
+  --signal-rgb: 194, 76, 88;
+  --brass: #d9a521;
+  --brass-ink: #3a0e14;
   --ok: #5ac98d;
   --form-surface: #ffffff;
   --shadow-sm: 0 8px 22px -12px rgba(0, 0, 0, 0.85);
@@ -61,9 +72,10 @@
   --color-ink: var(--ink);
   --color-signal: var(--signal);
   --color-brass: var(--brass);
-  --font-display: 'Cinzel', serif;
-  --font-accent: 'Cormorant Garamond', serif;
-  --font-body: 'Lato', system-ui, sans-serif;
+  --font-display: 'Archivo', sans-serif;
+  --font-accent: 'Fraunces', serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'DM Mono', ui-monospace, monospace;
 }
 
 /* ============================ BASE ====================================== */
@@ -93,7 +105,7 @@ h3 {
   text-wrap: balance;
 }
 
-/* Cormorant italic — the landing page's signature accent voice. */
+/* Fraunces italic — the landing page's signature accent voice. */
 .tag {
   font-family: var(--font-accent);
   font-style: italic;
@@ -102,9 +114,11 @@ h3 {
   margin: 6px 0 20px;
 }
 
+/* DM Mono — matches the marketing site's kicker pattern (uppercase, wide
+   tracking, small-caps label ahead of a heading). */
 .eyebrow,
 .section-label {
-  font-family: var(--font-body);
+  font-family: var(--font-mono);
   font-size: 0.66rem;
   font-weight: 700;
   letter-spacing: 0.22em;

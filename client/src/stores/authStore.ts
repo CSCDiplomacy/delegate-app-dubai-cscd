@@ -55,7 +55,7 @@ function loginErrorMessage(err: unknown): string {
 export const useAuthStore = create<AuthState>((set, get) => ({
   session: null,
   profile: null,
-  eventName: 'YPDS Jakarta 2026',
+  eventName: 'Youth Strategic Forum, Dubai 2026',
   initializing: true,
   busy: false,
   error: null,
@@ -178,10 +178,12 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 export const isApplicant = (profile: Profile | null) =>
   (profile?.status || 'unenrolled') !== 'enrolled';
 
-// Interviews are now closed, so the tab only stays for anyone who already has
-// an in-progress submission path, in practice nobody, since applicants either
-// submitted (→ under review) or missed the window (→ self-finance route).
-export const showInterviewTab = (_profile: Profile | null) => false;
+// Dubai's interview stage is open: any applicant (unenrolled/underprocessing)
+// sees the tab. It stays visible after they submit too — Interview.tsx itself
+// renders the terminal "submitted" notice in that state — and disappears once
+// they're enrolled (routes/me.js's GET /interview mirrors this with the
+// 'not_applicable' state for enrolled delegates).
+export const showInterviewTab = (profile: Profile | null) => isApplicant(profile);
 
 // A submitted applicant awaiting the results decision. `result_status` is the
 // authoritative signal once scripts/reconcile-interviews.js has run; the

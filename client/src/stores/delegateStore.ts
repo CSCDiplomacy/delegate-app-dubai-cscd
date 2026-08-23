@@ -11,8 +11,8 @@ interface DelegateState {
   actionItems: ActionItem[];
   favourites: Set<string>;
   /** Whether an accommodation voucher PDF exists for the caller (gates the
-   *  Hotel nav item + screen). Only the 17 delegates on the shared Diplomark
-   *  booking have one. */
+   *  Hotel nav item + screen). Only delegates on the shared hotel booking
+   *  have one. */
   voucherAvailable: boolean;
   loaded: boolean;
 

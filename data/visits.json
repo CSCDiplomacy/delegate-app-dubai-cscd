@@ -1,46 +1,33 @@
 {
-  "_note": "Institutional visits and experiences during YPDS Jakarta 2026, from CSCD's official rundown document.",
+  "_note": "Excursions and shared experiences during the Youth Strategic Forum, Dubai 2026, sourced from the CSCD marketing site's Agenda section. Dubai's programme is modules-based rather than built around named institutional visits, so this list covers the forum's two shared excursions instead of embassy/ministry visits like Jakarta's.",
   "visits": [
     {
       "id": 1,
-      "name": "Tugu Kunstkring Paleis",
+      "name": "Dubai Marina Cruise Dinner",
       "type": "Welcome Dinner",
-      "description": "Curated dinner experience at Jakarta's historic Kunstkring Paleis, an architectural gem blending heritage with contemporary diplomacy, introducing delegates to Jakarta's cultural atmosphere and diplomatic community.",
+      "description": "An evening on the water at Dubai Marina dedicated to breaking the ice and building cross-cultural understanding among delegates.",
       "highlights": [
-        "Authentic Indonesian cuisine",
-        "Historic architecture & cultural ambiance",
-        "Intimate networking with peers and mentors",
-        "Photography opportunities"
+        "Dinner cruise along Dubai Marina",
+        "Skyline views at sunset",
+        "Icebreaker networking with fellow delegates"
       ],
-      "date": "August 20 (Evening)",
+      "date": "September 22 (Evening)",
       "duration": "2 hours",
-      "image": "/img/tugu-kunstkring.webp",
-      "map": "https://share.google/yxm98zwNMKdTrnick"
+      "map": "https://www.google.com/maps/search/?api=1&query=Dubai+Marina"
     },
     {
       "id": 2,
-      "name": "ASEAN Headquarters",
-      "type": "Institutional Visit",
-      "description": "Strategic engagement with the Association of Southeast Asian Nations examining institutional framework, regional cooperation mechanisms, and cultural diplomacy's role in advancing integration. Sets the intellectual ground for the summit.",
+      "name": "Desert Safari",
+      "type": "Excursion",
+      "description": "A dune drive into the Dubai desert with a cultural camp and dinner under the stars.",
       "highlights": [
-        "Multilateral institution coordinating Southeast Asian cooperation",
-        "Regional integration & institutional mechanisms",
-        "Cultural diplomacy's role in ASEAN frameworks"
+        "Dune drive into the Dubai desert",
+        "Cultural camp experience",
+        "Dinner under the stars"
       ],
-      "date": "August 21, 9:00 – 11:30 AM",
-      "duration": "2.5 hours"
-    },
-    {
-      "id": 3,
-      "name": "Ministry of Culture",
-      "type": "Institutional Visit",
-      "description": "Exclusive engagement examining government cultural preservation initiatives, artistic development support, and international cultural diplomacy frameworks, exploring policy linkages between culture and diplomatic objectives.",
-      "highlights": [
-        "Indonesian agency for cultural preservation & artistic development",
-        "Policy frameworks linking culture to diplomatic objectives"
-      ],
-      "date": "August 21, 1:30 – 3:30 PM",
-      "duration": "2 hours"
+      "date": "September 23 (Evening)",
+      "duration": "~4 hours",
+      "map": "https://www.google.com/maps/search/?api=1&query=Dubai+Desert+Safari"
     }
   ]
 }

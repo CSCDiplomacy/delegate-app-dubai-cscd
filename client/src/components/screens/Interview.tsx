@@ -16,7 +16,7 @@ import { api, track } from '../../services/api';
 import { useAuthStore } from '../../stores/authStore';
 import { Icon } from '../Icon';
 
-const SHARED_FORM_URL = 'https://15158.aidaform.com/interview-copy';
+const SHARED_FORM_URL = 'https://15158.aidaform.com/interview-ysf-dubai-2026';
 const FORM_ID = 'form202405';
 const WIDGET_SRC = 'https://widget.aidaform.com/embed.js';
 const WIDGET_ID = 'aidaform-app';
@@ -92,7 +92,11 @@ export const Interview = () => {
 
   // Submitted / already-enrolled are terminal, no form.
   const terminal = info?.state === 'submitted' || info?.state === 'not_applicable';
-  const formUrl = SHARED_FORM_URL;
+  // Prefer the server's per-applicant tokenized URL (carries candidate_token so
+  // the AidaForm webhook can match the submission back to this delegate) —
+  // fall back to the shared public form only if the server couldn't supply one
+  // (env not configured, or the /me/interview request itself failed).
+  const formUrl = (info?.state === 'open' && info.url) || SHARED_FORM_URL;
 
   // Poll so a webhook-driven submission (AidaForm → server) is reflected here,
   // and mirror it into the shared profile so the dashboard status updates too.

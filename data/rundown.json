@@ -1,185 +1,153 @@
 {
-  "_note": "YPDS Jakarta 2026, Official Event Rundown & Schedule (Aug 20–23, 2026), single source of truth per CSCD's official rundown document. Subject to slight changes as per agenda changes during the forum.",
-  "timezone": "Asia/Jakarta",
+  "_note": "Youth Strategic Forum, Dubai 2026 — event rundown (Sep 22–25, 2026). Day-level structure and start times sourced from the CSCD marketing site's Agenda section (cscd_website/src/components/events/ysf-dubai-2026/AgendaSection.tsx). Exact session end-times and room numbers within the venue are not yet confirmed and are omitted rather than invented — update once the client confirms the delegate-facing schedule.",
+  "timezone": "Asia/Dubai",
   "days": [
     {
-      "date": "2026-08-20",
-      "label": "August 20, 2026",
-      "title": "Arrival & Networking",
-      "description": "Delegates arrive and check into Artotel Jakarta; the summit opens with a welcome reception and dinner at Tugu Kunstkring Paleis.",
+      "date": "2026-09-22",
+      "label": "September 22, 2026",
+      "title": "Arrivals & Orientation",
+      "description": "Delegates arrive and check into the Gevora Hotel; the forum opens with an orientation and welcome address, followed by a dinner cruise at Dubai Marina.",
       "items": [
         {
-          "time": "09:00",
-          "title": "Hotel Check-in",
-          "venue": "Artotel Jakarta",
+          "time": "15:00",
+          "title": "Delegate arrivals & check-in",
+          "venue": "Gevora Hotel",
           "type": "ceremony",
-          "description": "Delegates arrive and complete registration at Artotel Jakarta throughout the day. Standard check-in is from 3:00 PM; early check-in around 1:00 PM may be available subject to room availability, if your room isn't ready yet, you're welcome to wait in the lobby."
+          "description": "Official check-in, forum materials and settling into the venue."
         },
         {
           "time": "18:00",
-          "end_time": "18:30",
-          "title": "Welcome Reception",
-          "venue": "Artotel Jakarta",
-          "type": "social",
-          "description": "Informal gathering for delegates to meet fellow practitioners and cultural diplomats in an open, reflective environment enabling initial conversations and network formation."
-        },
-        {
-          "time": "19:00",
-          "end_time": "21:00",
-          "title": "Welcome Dinner",
-          "venue": "Tugu Kunstkring Paleis",
-          "type": "social",
-          "description": "Curated dinner experience introducing delegates to Jakarta's cultural atmosphere and diplomatic community. Focus on connection, shared diplomatic journeys, and cross-cultural dialogue."
-        }
-      ]
-    },
-    {
-      "date": "2026-08-21",
-      "label": "August 21, 2026",
-      "title": "Institutional Engagement & Strategic Context",
-      "description": "A full day of institutional visits, ASEAN Headquarters, Indonesia's Ministry of Culture, and (tentatively) the Embassy of Pakistan, examining regional cooperation and cultural diplomacy frameworks.",
-      "items": [
-        {
-          "time": "07:30",
-          "end_time": "08:00",
-          "title": "Breakfast",
-          "venue": "Artotel Jakarta",
-          "type": "meal",
-          "description": "Hotel breakfast for all delegates."
-        },
-        {
-          "time": "09:00",
-          "end_time": "11:30",
-          "title": "ASEAN Headquarters",
-          "venue": "ASEAN Headquarters",
-          "type": "visit",
-          "description": "Strategic engagement with the Association of Southeast Asian Nations examining institutional framework, regional cooperation mechanisms, and cultural diplomacy's role in advancing integration. Sets the intellectual ground for the summit. Departure from Artotel Jakarta at 8:30 AM."
-        },
-        {
-          "time": "12:00",
-          "end_time": "13:00",
-          "title": "Lunch Break",
-          "venue": "Jakarta",
-          "type": "meal",
-          "description": "Lunch for delegates."
-        },
-        {
-          "time": "13:30",
-          "end_time": "15:30",
-          "title": "Ministry of Culture",
-          "venue": "Ministry of Culture",
-          "type": "visit",
-          "description": "Exclusive engagement examining government cultural preservation initiatives, artistic development support, and international cultural diplomacy frameworks, exploring policy linkages between culture and diplomatic objectives."
-        },
-        {
-          "time": "16:00",
-          "end_time": "17:00",
-          "title": "Embassy of Pakistan (Tentative)",
-          "venue": "Embassy of Pakistan",
-          "type": "visit",
-          "description": "Diplomatic engagement with Pakistani embassy officials examining bilateral cultural cooperation, public diplomacy practice, and South-South cultural exchanges. Subject to diplomatic confirmation."
-        }
-      ]
-    },
-    {
-      "date": "2026-08-22",
-      "label": "August 22, 2026",
-      "title": "Summit Sessions, Presentations & Closing",
-      "description": "The summit's main day at Artotel Jakarta: opening, a session with CSCD's Director, a guest lecture on public diplomacy in the 21st century, delegate presentations, and the closing ceremony with certificates.",
-      "items": [
-        {
-          "time": "07:30",
-          "end_time": "08:00",
-          "title": "Breakfast",
-          "venue": "Artotel Jakarta",
-          "type": "meal",
-          "description": "Hotel breakfast for all delegates."
-        },
-        {
-          "time": "10:00",
-          "end_time": "10:15",
-          "title": "Opening",
-          "venue": "Artotel Jakarta",
+          "title": "Orientation & welcome address",
+          "venue": "Gevora Hotel",
           "type": "ceremony",
-          "description": "Opening of the summit's main session day."
+          "description": "An introduction to the forum, its expectations and overarching objectives."
+        },
+        {
+          "time": "20:00",
+          "title": "Cruise Dinner at Marina",
+          "venue": "Dubai Marina",
+          "type": "social",
+          "description": "An evening on the water at Dubai Marina dedicated to breaking the ice and building cross-cultural understanding."
+        }
+      ]
+    },
+    {
+      "date": "2026-09-23",
+      "label": "September 23, 2026",
+      "title": "Modules 1–4 & Desert Safari",
+      "description": "A full day of forum modules at the Mohammed Bin Rashid Library, from AI and creativity to smart cities and design, closing with a desert safari.",
+      "items": [
+        {
+          "time": "09:30",
+          "title": "Forum opening & keynote",
+          "venue": "Mohammed Bin Rashid Library",
+          "type": "keynote",
+          "description": "The strategic outlook for the days ahead, setting the tone for the modules."
         },
         {
           "time": "10:15",
-          "end_time": "11:15",
-          "title": "Session with Mr Hassan, Director CSCD",
-          "venue": "Artotel Jakarta",
-          "type": "panel",
-          "description": "Session led by Mr Hassan, Director of the Center for Strategic and Cultural Diplomacy."
+          "title": "Module 01 — AI, Creativity & Human Expression",
+          "venue": "Mohammed Bin Rashid Library",
+          "type": "workshop",
+          "description": "How AI is transforming creativity, communication and the future of human expression."
         },
         {
-          "time": "11:15",
-          "end_time": "11:30",
-          "title": "Tea Break",
-          "venue": "Artotel Jakarta",
-          "type": "meal",
-          "description": "Short tea break."
-        },
-        {
-          "time": "11:30",
-          "end_time": "13:00",
-          "title": "Guest Lecture: Youth Exchange & People-to-People Diplomacy",
-          "venue": "Artotel Jakarta",
-          "type": "panel",
-          "description": "\"Youth Exchange and People-to-People Diplomacy,\" within the broader module on public diplomacy in the 21st century. Delivered by Mr Made Panji Teguh Santoso, International Relations Study Program, Faculty of Social and Political Sciences, Universitas Singaperbangsa Karawang, Indonesia."
-        },
-        {
-          "time": "13:00",
-          "end_time": "14:00",
-          "title": "Lunch",
-          "venue": "Artotel Jakarta",
-          "type": "meal",
-          "description": "Lunch for all delegates."
+          "time": "11:45",
+          "title": "Module 02 — Digital Storytelling & Youth Culture",
+          "venue": "Mohammed Bin Rashid Library",
+          "type": "workshop",
+          "description": "Social media, cinema, gaming and streaming shaping global youth trends."
         },
         {
           "time": "14:00",
-          "end_time": "15:00",
-          "title": "Delegate Presentations",
-          "venue": "Artotel Jakarta",
-          "type": "panel",
-          "description": "Delegates present their work to the summit."
+          "title": "Module 03 — Smart Cities & Creative Communities",
+          "venue": "Mohammed Bin Rashid Library",
+          "type": "workshop",
+          "description": "Technology-driven urban development and innovation ecosystems that shape societies."
         },
         {
-          "time": "15:00",
-          "end_time": "15:30",
-          "title": "Closing Remarks",
-          "venue": "Artotel Jakarta",
-          "type": "ceremony",
-          "description": "Closing remarks bringing the summit sessions to a close."
+          "time": "15:45",
+          "title": "Module 04 — Aesthetics of Technology & Lifestyle",
+          "venue": "Mohammed Bin Rashid Library",
+          "type": "workshop",
+          "description": "Visual culture, branding, photography and design in modern lifestyles."
         },
         {
-          "time": "15:30",
-          "end_time": "16:00",
-          "title": "Certificates & Group Photos",
-          "venue": "Artotel Jakarta",
-          "type": "ceremony",
-          "description": "Presentation of certificates followed by group pictures."
+          "time": "19:00",
+          "title": "Desert Safari",
+          "venue": "Dubai Desert",
+          "type": "social",
+          "description": "A dune drive into the Dubai desert with a cultural camp and dinner under the stars."
         }
       ]
     },
     {
-      "date": "2026-08-23",
-      "label": "August 23, 2026",
-      "title": "Farewell and Closure",
-      "description": "A final breakfast together before delegates check out and depart, closing the forum.",
+      "date": "2026-09-24",
+      "label": "September 24, 2026",
+      "title": "Modules 5–6 & Farewell",
+      "description": "The final module sessions, a policy lab, the certification ceremony, and a closing address at the Mohammed Bin Rashid Library.",
       "items": [
         {
-          "time": "08:00",
-          "end_time": "09:00",
-          "title": "Farewell Breakfast",
-          "venue": "Artotel Jakarta",
-          "type": "meal",
-          "description": "Final breakfast bringing delegates together for reflection and informal discussion."
+          "time": "09:30",
+          "title": "Module 05 — Virtual Escapism & Immersive Travel",
+          "venue": "Mohammed Bin Rashid Library",
+          "type": "workshop",
+          "description": "Tourism, virtual experiences and digital lifestyles across borders."
+        },
+        {
+          "time": "10:45",
+          "title": "Module 06 — Art, Media & Cultural Influence",
+          "venue": "Mohammed Bin Rashid Library",
+          "type": "workshop",
+          "description": "Music, film, theatre and online media as tools of storytelling and influence."
         },
         {
           "time": "12:00",
-          "title": "Hotel Checkout",
-          "venue": "Artotel Jakarta",
-          "description": "Delegates complete checkout and depart. Forum concludes."
+          "title": "Policy lab & group presentations",
+          "venue": "Mohammed Bin Rashid Library",
+          "type": "panel",
+          "description": "Delegates present the ideas and strategies shaped across the forum."
+        },
+        {
+          "time": "14:00",
+          "title": "Certification ceremony",
+          "venue": "Mohammed Bin Rashid Library",
+          "type": "ceremony",
+          "description": "Recognition of participation and the Ideal Strategist endorsement."
+        },
+        {
+          "time": "15:30",
+          "title": "Closing address & group photograph",
+          "venue": "Mohammed Bin Rashid Library",
+          "type": "ceremony",
+          "description": "A final word and a group photograph to close the forum."
+        }
+      ]
+    },
+    {
+      "date": "2026-09-25",
+      "label": "September 25, 2026",
+      "title": "Check-out",
+      "description": "A final breakfast together before delegates check out of the Gevora Hotel and depart Dubai.",
+      "items": [
+        {
+          "time": "09:00",
+          "title": "Final breakfast",
+          "venue": "Gevora Hotel",
+          "type": "meal",
+          "description": "A last breakfast together before delegates go their separate ways."
+        },
+        {
+          "time": "11:00",
+          "title": "Hotel check-out",
+          "venue": "Gevora Hotel",
+          "description": "Delegates settle any accounts and check out of the forum hotel."
+        },
+        {
+          "time": "12:00",
+          "title": "Delegate departures",
+          "venue": "Dubai",
+          "description": "Onward travel as delegates depart Dubai."
         }
       ]
     }

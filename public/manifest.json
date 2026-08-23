@@ -1,13 +1,13 @@
 {
-  "name": "YPDS Jakarta 2026",
-  "short_name": "YPDS JKT",
-  "description": "CSCD YPDS Jakarta 2026 - rundown, visits, speakers, hotel & updates in one place.",
+  "name": "Youth Strategic Forum, Dubai 2026",
+  "short_name": "YSF Dubai",
+  "description": "CSCD Youth Strategic Forum, Dubai 2026 - rundown, visits, speakers, hotel & updates in one place.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#F9F6F0",
-  "theme_color": "#050505",
+  "background_color": "#FBFAF6",
+  "theme_color": "#3A0E14",
   "icons": [
     { "src": "/img/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
     { "src": "/img/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }

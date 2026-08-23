@@ -1,44 +1,33 @@
 {
-  "_note": "Delegate accommodation reference (data/visits.json has the dinner venue, Tugu Kunstkring Paleis — don't duplicate it here). Key entries to match delegates.hotel_id; 'jakarta-hotel' is the only one in use.",
+  "_note": "Delegate accommodation reference for the Youth Strategic Forum, Dubai 2026. Key entries must match delegates.hotel_id; 'dubai-hotel' is the only one in use (see routes/me.js, routes/public.js). Facts sourced from the CSCD marketing site's StaySection; room type, sharing arrangement, and exact booking terms are operational details that arrive with the delegate roster and are marked TBD below rather than invented.",
   "hotels": {
-    "jakarta-hotel": {
-      "name": "ARTOTEL Thamrin - Jakarta",
+    "dubai-hotel": {
+      "name": "Gevora Hotel",
       "subtitle": "Delegate accommodation",
-      "location": "Menteng, Central Jakarta",
-      "description": "Your accommodation for YPDS Jakarta 2026. An art-led hotel in Menteng, walking distance from Thamrin and the summit venues.",
+      "location": "Sheikh Zayed Road, Dubai, United Arab Emirates",
+      "description": "Your accommodation for the Youth Strategic Forum, Dubai 2026 — the tallest hotel in the world, rising 75 floors above Dubai's iconic Sheikh Zayed Road, minutes from the forum venue.",
       "highlights": [
-        "Art-themed rooms, each by an Indonesian artist",
-        "Rooftop bar and restaurant",
-        "Central Menteng location, close to the summit venues",
-        "Eco-certified, 4.5★ from 6.2k reviews"
+        "Tallest hotel in the world — 75 floors, 356m",
+        "Rooftop infinity pool and skyline views",
+        "Fine-dining restaurants, spa, gym & wellness",
+        "On Sheikh Zayed Road, minutes from the venue"
       ],
-      "address": "Jl. Sunda No.3, RT.8/RW.4, Gondangdia, Kec. Menteng, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10350, Indonesia",
-      "map": "https://maps.google.com/?q=ARTOTEL+Thamrin+Jakarta,+Jl.+Sunda+No.3,+Menteng,+Jakarta+Pusat",
+      "address": "Sheikh Zayed Road, Dubai, United Arab Emirates",
+      "map": "https://www.google.com/maps/search/?api=1&query=Gevora+Hotel+Dubai",
       "checkin": "3:00 PM",
-      "checkout": "12:00 PM",
+      "checkout": "11:00 AM",
       "policy": [
         "All bookings are made by CSCD on your behalf, you do not need to book a room yourself.",
-        "Rooms are twin-shared by default. A private single-room upgrade is available for an additional $140, subject to availability, contact us as soon as possible to request one.",
-        "Staying beyond August 23? We can arrange extra nights at negotiated group rates, contact us in advance to confirm, as availability requires checking with the hotel.",
-        "Room allocation and dates may be adjusted by the management in line with the institutional visit schedule.",
-        "Early check-in is available around 1:00 PM, subject to room availability, if your room isn't ready yet, you're welcome to wait in the lobby."
-      ],
-      "dress_code": [
-        { "when": "August 20 (Evening)", "code": "Smart / semi-casual" },
-        { "when": "August 21–22 (Forum sessions & institutional visits)", "code": "Business formal or semi-formal" }
+        "Room type and sharing arrangement: TBD, to be confirmed with the delegate roster.",
+        "Staying beyond September 25? Contact us in advance so we can check availability and rates.",
+        "Room allocation and dates may be adjusted by the hotel in line with the forum schedule."
       ],
       "arrival": {
-        "airport": "Soekarno-Hatta International Airport (CGK)",
-        "distance": "~35 km from the hotel · 45–90 min depending on traffic",
-        "options": [
-          { "mode": "Grab (ride-sharing)", "cost": "$10–15", "time": "45–90 min" },
-          { "mode": "MRT to Blok M, then Grab/bus", "cost": "$2–3", "time": "~45 min + transfer" },
-          { "mode": "Transjakarta (BRT)", "cost": "$1–2", "time": "60–90 min" }
-        ],
+        "airport": "Dubai International Airport (DXB)",
         "notes": [
-          "Complete the Indonesian Immigration Arrival Form, available on arrival or downloadable in advance.",
-          "Currency is the Indonesian Rupiah (IDR), approx. 15,000 IDR = 1 USD.",
-          "Download Grab or Go-Jek before you arrive for local rides."
+          "Complete UAE entry requirements before travel — check visa requirements for your nationality in advance.",
+          "Currency is the UAE Dirham (AED), pegged at approximately 3.67 AED = 1 USD.",
+          "Taxis, ride-hailing (Careem/Uber), and the Dubai Metro connect the airport to the city; transfer arrangements for delegates are TBD."
         ]
       }
     }

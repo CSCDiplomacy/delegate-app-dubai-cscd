@@ -63,9 +63,9 @@ export const Dashboard = () => {
           </div>
           <div className="seal">
             <span>
-              YPDS
+              YSF
               <br />
-              JKT
+              DXB
               <br />
               2026
             </span>
@@ -128,7 +128,7 @@ export const Dashboard = () => {
 
       {/* Brand banner - nice to see, nothing to act on, so it sits last. */}
       <div className="dash-banner">
-        <img src="/img/ypds-jakarta-2026-banner.png" alt="YPDS Jakarta 2026" loading="lazy" />
+        <img src="/img/ysf-dubai-2026-banner.webp" alt="Youth Strategic Forum, Dubai 2026" loading="lazy" />
       </div>
     </div>
   );

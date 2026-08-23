@@ -60,3 +60,8 @@ missing-interviews-report.json
 
 # Reconcile output (PII)
 reponses/unmatched.csv
+
+# Dubai delegate roster export (PII) and derived seed inputs — never commit
+delegate-list-ysf-dubai.csv
+dubai-seed-input.csv
+dubai-flagged-needs-id.csv

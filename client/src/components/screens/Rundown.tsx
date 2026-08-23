@@ -23,7 +23,7 @@ export const Rundown = () => {
       <ComingSoon
         badge="Programme"
         title="Agenda being finalised"
-        body="The programme for Jakarta is coming together. Check back shortly, it will appear here as it's confirmed."
+        body="The programme for Dubai is coming together. Check back shortly, it will appear here as it's confirmed."
       />
     );
   }

@@ -104,7 +104,7 @@ app.get('/api/ics', (req, res) => {
   const ics = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//CSCD//YPDS Jakarta 2026//EN',
+    'PRODID:-//CSCD//Youth Strategic Forum Dubai 2026//EN',
     'METHOD:PUBLISH',
     'BEGIN:VEVENT',
     `UID:${uid}`,
