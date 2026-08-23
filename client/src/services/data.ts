@@ -1,8 +1,8 @@
 // Data loaders for the app's API. Endpoints and response shapes mirror the
 // Express routes exactly:
-//   GET  /api/rundown        → { timezone, days: [...] }        (static JSON)
+//   GET  /api/rundown        → { timezone, days: [...] }        (static JSON, redacts the hotel name unless the caller is an enrolled delegate)
 //   GET  /api/contact        → { org, venue, contacts, socials } (static JSON)
-//   GET  /api/hotel          → { hotel }                         (static JSON)
+//   GET  /api/me/hotel       → { delegate, hotel, locked? }      (auth, enrolled-only — see routes/me.js)
 //   GET  /api/favourites     → { favourites: [{ session_id }] }  (auth)
 //   POST /api/favourites       { session_id }                    (auth)
 //   DEL  /api/favourites/:id                                     (auth)

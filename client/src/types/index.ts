@@ -112,6 +112,8 @@ export interface MyHotel {
     meals?: string;
   } | null;
   hotel: HotelInfo | null;
+  /** True for applicants — the hotel is confidential, confirmed delegates only. */
+  locked?: boolean;
 }
 
 // --- Contact (GET /api/contact) ------------------------------------------------

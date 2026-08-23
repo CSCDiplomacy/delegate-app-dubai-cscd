@@ -29,10 +29,15 @@ async function getDelegate(userId) {
 }
 
 // Combined hotel view: the delegate's booking row + the shared hotel reference.
+// Locked to confirmed delegates — the hotel (Gevora Hotel) is confidential and
+// must not be revealed to applicants still awaiting a decision.
 router.get('/hotel', requireAuth, async (req, res) => {
   const delegate = await getDelegate(req.user.id);
   if (!delegate) {
     return res.status(404).json({ error: 'No delegate profile found' });
+  }
+  if (delegate.status !== 'enrolled') {
+    return res.json({ delegate: null, hotel: null, locked: true });
   }
   const hotels = loadHotels();
   // delegate.hotel_id lets a specific delegate be pinned to a different entry;

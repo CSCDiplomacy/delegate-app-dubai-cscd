@@ -27,8 +27,11 @@ import type { MyHotel } from '../../types';
 
 type VoucherResponse = { available: boolean; url?: string };
 
-const BOOKING = [
-  { label: 'Hotel', value: 'Gevora Hotel, Dubai' },
+// Hotel name comes from the fetched `hotel.name` (confidential, only ever
+// returned to an enrolled delegate) — never hardcode it here, that would ship
+// it in the JS bundle for anyone to read regardless of who's logged in.
+const bookingRows = (hotelName: string) => [
+  { label: 'Hotel', value: `${hotelName}, Dubai` },
   { label: 'Check-in', value: '22 September 2026, from 3:00 PM' },
   { label: 'Check-out', value: '25 September 2026' },
   { label: 'Room', value: 'TBD' },
@@ -40,6 +43,7 @@ export const Hotel = () => {
   const voucherAvailable = useDelegateStore((s) => s.voucherAvailable);
   const [hotel, setHotel] = useState<MyHotel['hotel']>(null);
   const [booking, setBooking] = useState<MyHotel['delegate']>(null);
+  const [locked, setLocked] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -49,6 +53,7 @@ export const Hotel = () => {
         if (cancelled) return;
         setHotel(d.hotel);
         if (d.delegate) setBooking(d.delegate);
+        setLocked(!!d.locked);
       })
       .catch(() => {})
       .finally(() => {
@@ -74,6 +79,16 @@ export const Hotel = () => {
         <div className="skel" style={{ height: 220 }} />
         <div className="skel" style={{ height: 120 }} />
       </div>
+    );
+  }
+
+  if (locked) {
+    return (
+      <ComingSoon
+        badge="Hotel"
+        title="Confirmed delegates only"
+        body="Accommodation details unlock once your place at the forum is confirmed."
+      />
     );
   }
 
@@ -132,7 +147,7 @@ export const Hotel = () => {
           </p>
 
           <div className="pass-bottom" style={{ marginTop: 14 }}>
-            {BOOKING.map((row) => (
+            {bookingRows(hotel.name).map((row) => (
               <div key={row.label} className="pass-field">
                 <span className="pass-field-label">{row.label}</span>
                 <span className="pass-field-value">{row.value}</span>

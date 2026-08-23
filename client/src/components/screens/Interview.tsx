@@ -70,6 +70,7 @@ export const Interview = () => {
   const [loaded, setLoaded] = useState(false);
   const embedRef = useRef<HTMLDivElement>(null);
   const refreshProfile = useAuthStore((s) => s.refreshProfile);
+  const applicantId = useAuthStore((s) => s.profile?.applicant_id);
 
   useEffect(() => {
     let cancelled = false;
@@ -166,6 +167,16 @@ export const Interview = () => {
         <div className="eyebrow">Selection · your interview</div>
         <h1 className="screen-title">The Interview</h1>
         <p className="tag">Fill out and submit the interview below.</p>
+      </div>
+      {applicantId && (
+        <div className="interview-warning">
+          <strong>Your Applicant ID:</strong> {applicantId} — write it down carefully, you'll need
+          it to be entered correctly.
+        </div>
+      )}
+      <div className="interview-warning">
+        <strong>Recording tip:</strong> try to record your interview on a laptop/desktop browser
+        rather than a phone, it tends to be more reliable.
       </div>
       <div className="interview-embed-wrap">
         <div className="interview-embed-clip">

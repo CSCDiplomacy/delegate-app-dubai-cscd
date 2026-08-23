@@ -51,7 +51,7 @@ export const THEMES: Array<{ numeral: string; title: string; blurb: string }> = 
 export const EXPERIENCE: string[] = [
   "Exclusive forum sessions inside the Mohammed Bin Rashid Library, one of the Arab world's most iconic cultural landmarks.",
   'A Dubai Marina dinner cruise and a desert safari under the stars.',
-  'Skyline views and downtime at the Gevora Hotel, the tallest hotel in the world.',
+  'Skyline views and downtime at your Dubai hotel between sessions.',
 ];
 
 export const EDITIONS: Array<{
