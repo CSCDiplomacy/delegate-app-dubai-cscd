@@ -26,7 +26,9 @@ function applyTheme(theme: Theme) {
 function initialTheme(): Theme {
   const stored = localStorage.getItem(THEME_KEY);
   if (stored === 'dark' || stored === 'light') return stored;
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  // Light by default, regardless of system preference - dark is opt-in only
+  // (matches the pre-paint script in index.html).
+  return 'light';
 }
 
 function initialScreen(): Screen {
