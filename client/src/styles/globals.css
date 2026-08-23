@@ -44,11 +44,16 @@
   --signal: #8e2631;       /* official crest-banner maroon — primary action / accent */
   --signal-ink: #ffffff;
   --signal-rgb: 142, 38, 49;
-  --brass: #e7c673;        /* medium gold — secondary accent (badges, chips, buttons) */
+  --brass: #e7c673;        /* medium gold — secondary accent (badges, chips, deadline banner) */
   /* Maroon ink on gold, matching the credential email's badge/chip/deadline-
      banner treatment exactly (color:#8e2631 on background:#e7c673) — not a
      separate "deep-forest" ink, that was a Jakarta-era assumption. */
   --brass-ink: #8e2631;
+  /* Crest-banner sand — the color "FRONTIER" is set in on the official crest
+     artwork (maroon field, sand type). Reserved specifically for the primary
+     button's hover fill, per the client, distinct from --brass (the email's
+     badge/chip gold) — the two are visually close but not the same swatch. */
+  --sand: #fce2c3;
   --ok: #2f7d54;
   /* The embedded Cognito form renders on pure white; it gets its own token so
      the no-literal-hex invariant holds and dark mode can override it. */
@@ -97,6 +102,7 @@
   --signal-rgb: 194, 76, 88;
   --brass: #e7c673;        /* medium gold — already light enough for dark-mode contrast, no lift needed */
   --brass-ink: #8e2631;
+  --sand: #fce2c3;         /* crest-banner sand — already light enough for dark-mode contrast, no lift needed */
   --ok: #5ac98d;
   --form-surface: #ffffff;
   --shadow-sm: 0 10px 26px -14px rgba(0, 0, 0, 0.7);
@@ -208,15 +214,20 @@ h3 {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   cursor: pointer;
-  box-shadow: var(--shadow-sm);
+  /* Maroon-tinted, matching the credential email's CTA button exactly
+     (box-shadow:0 10px 24px rgba(142,38,49,.22)) instead of a neutral shadow. */
+  box-shadow: 0 10px 24px rgba(var(--signal-rgb), 0.22);
   transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
 }
 
+/* Hover fill is the crest-banner sand (--sand) with maroon text — the color
+   "FRONTIER" is set in on the official crest artwork, per the client — not
+   the email's badge gold (--brass), which is a different, separate accent. */
 .btn:hover {
-  background: var(--brass);
-  color: var(--brass-ink);
+  background: var(--sand);
+  color: var(--signal);
   transform: translateY(-1px);
-  box-shadow: var(--shadow);
+  box-shadow: 0 14px 30px rgba(var(--signal-rgb), 0.28);
 }
 
 .btn:active {

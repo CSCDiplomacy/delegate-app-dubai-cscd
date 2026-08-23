@@ -203,6 +203,32 @@ reverted.
 Re-verified: `npm run build` clean, fresh Playwright screenshot of the login
 screen confirms sharp corners throughout.
 
+## 2026-08-23, later still — primary button recolored to the crest pair, new `--sand` token
+
+Client pointed at the crest-banner artwork directly (maroon field, "FRONTIER"
+set in a pale sand type) and asked for the primary button to be maroon by
+default, hovering to that sand color specifically — not the email's badge
+gold (`--brass`, `#e7c673`). Those two light accents are visually close but
+are not the same swatch, so rather than overload `--brass` with a second
+meaning, added a new token:
+
+- **`--sand: #fce2c3`** (light and dark, theme-invariant like `--brass`) —
+  reserved for this hover fill. `--brass` keeps its existing, email-matched
+  role (badges, chips, deadline banner) untouched.
+- `.btn`'s default shadow switched from the neutral `--shadow-sm` to a
+  maroon-tinted one, matching the email's CTA button exactly:
+  `0 10px 24px rgba(var(--signal-rgb), .22)`.
+- `.btn:hover` now: `background: var(--sand); color: var(--signal);` (maroon
+  text on sand, for contrast — white text doesn't work on a pale fill), with
+  a deepened version of the same maroon-tinted shadow on hover for lift
+  feedback. Nothing else changed `--brass`/`--brass-ink` usages elsewhere
+  (badges, chips, deadline-style banners) still read the gold, as verified
+  against the email.
+
+Verified: `npm run build` clean; Playwright screenshots of both the resting
+and `:hover` state of the login screen's Sign In button confirm maroon
+default → sand hover with maroon text, and the maroon-tinted shadow.
+
 ## Related
 
 [[Jakarta Branding Inventory]] · [[Design System]] · [[Dubai Fork Plan]] · [[Dubai Fork Progress]] · [[Results and Tiers]]
