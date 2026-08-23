@@ -179,6 +179,10 @@ export const Interview = () => {
           />
         </div>
       </div>
+      <div className="interview-warning">
+        <strong>After submitting,</strong> refresh this page and check your email for a
+        confirmation that we've received your interview.
+      </div>
     </div>
   );
 };
