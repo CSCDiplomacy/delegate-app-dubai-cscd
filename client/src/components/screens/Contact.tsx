@@ -57,7 +57,7 @@ export const Contact = () => {
     <div className="stack">
       <div className="card">
         <div className="card-eyebrow">Contact</div>
-        <h2 className="card-title">{contact?.org || 'Center for Strategic and Cultural Diplomacy'}</h2>
+        <h2 className="card-title">{contact?.org || 'Center for Strategy and Cultural Diplomacy'}</h2>
         {contact?.venue?.name && (
           <p className="card-body-text">
             {contact.venue.name}

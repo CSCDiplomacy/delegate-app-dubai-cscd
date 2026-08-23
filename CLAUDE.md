@@ -4,7 +4,7 @@ Guidance for Claude Code when working in this repository.
 
 ## What this is
 
-A mobile-first **web app / PWA** for **CSCD** (Center for Strategic and Cultural
+A mobile-first **web app / PWA** for **CSCD** (Center for Strategy and Cultural
 Diplomacy) — **YPDS Jakarta 2026**. Node/Express backend + a **React 19 +
 TypeScript + Vite** frontend in [client/](client/) (Zustand stores, Tailwind v4
 CSS-first config, no router — screen switching via `uiStore`). Build with

@@ -29,7 +29,7 @@ PORTAL_URL = os.environ.get("PORTAL_URL", "https://delegate.thecscd.org/")
 # No confirmed interview deadline exists for Dubai yet (unlike Jakarta's fixed
 # date) — set INTERVIEW_DEADLINE in the environment once the client confirms
 # one. This default is a deliberate placeholder, not a real date.
-INTERVIEW_DEADLINE = os.environ.get("INTERVIEW_DEADLINE", "TBD — check the Interview tab in your portal for the current date")
+INTERVIEW_DEADLINE = os.environ.get("INTERVIEW_DEADLINE", "TBD, check the Interview tab in your portal for the current date")
 
 RESEND_ENDPOINT = "https://api.resend.com/emails"
 TEMPLATE_PATH = Path(__file__).with_name("credential-email.html")
@@ -56,32 +56,24 @@ def build_html(name: str, email: str, password: str) -> str:
 def build_text(name: str, email: str, password: str) -> str:
     greeting = name or "Delegate"
     return (
-        f"Welcome to {EVENT_NAME} — Your Portal Is Ready\n\n"
-        f"Dear {greeting},\n\n"
-        "Congratulations, and welcome to the Youth Strategic Forum — Dubai 2026.\n\n"
-        "By applying to the forum, you have already joined an exceptional community of creators, technologists, and young strategists from across the world. We are delighted to have you with us and wish you the very best as we begin reviewing applications.\n\n"
-        "Your portal is now active. From here you can complete your interview, explore the forum program, and prepare for the days ahead.\n\n"
-        "Login Details\n"
-        f"Portal: {PORTAL_URL}\n"
-        f"Email: {email}\n"
+        f"Welcome to {EVENT_NAME}: Complete Your Interview\n\n"
+        f"Hi {greeting},\n\n"
+        "Congratulations, you're part of the Youth Strategic Forum, Dubai 2026 community. Your delegate portal is now live, and your interview for scholarship consideration is ready to complete inside it.\n\n"
+        "YOUR LOGIN\n"
+        f"Portal:   {PORTAL_URL}\n"
+        f"Email:    {email}\n"
         f"Password: {password}\n\n"
-        "[ ] Mark interview taken\n\n"
-        "Your Interview\n"
-        "The video and text interview form is ready under the Interview tab, and it is the next step in the review for scholarship consideration. This is your opportunity to share your vision for creativity, technology, and strategic leadership. The form itself walks you through the questions and format.\n\n"
-        "Total time to complete the form: a few minutes\n"
-        f"Deadline: {INTERVIEW_DEADLINE}\n\n"
-        "Missing this deadline will affect your eligibility for scholarship evaluation. You will, however, still be considered for the self-financed option.\n\n"
-        "What Else You Can Do\n"
-        "Explore the forum program — Browse the full four-day agenda: AI, creativity, and design modules, a Dubai Marina dinner cruise, a desert safari, and the closing certification ceremony.\n\n"
-        "Discover the venue and hotel — Learn about the Mohammed Bin Rashid Library, our Dubai venue, and the Gevora Hotel, where delegates stay.\n\n"
-        "Save sessions — Star any session to keep it handy for easy reference.\n\n"
-        "Next Steps\n"
-        f"1. Visit {PORTAL_URL}\n"
-        "2. Sign in with your email and password\n"
-        "3. Complete your interview before the deadline\n"
-        "4. Explore the forum program\n\n"
-        "If you have any questions, simply reply to this email. We look forward to your participation at the Youth Strategic Forum, Dubai 2026.\n\n"
-        "Warm regards,\nThe CSCD Team\nCenter for Strategic and Cultural Diplomacy"
+        "NEXT STEPS\n"
+        f"1. Sign in at {PORTAL_URL}\n"
+        f"2. Open the Interview tab and complete your interview. It takes a few minutes. Interview form submission deadline: {INTERVIEW_DEADLINE}\n"
+        "3. Explore the program, hotel, and venue in your portal\n\n"
+        "Missing the interview deadline affects scholarship eligibility. You'll still be considered for the self-financed option.\n\n"
+        "YOUR PORTAL IS YOUR MAIN CHANNEL FROM HERE\n"
+        "We'll use it for all further communication, including schedule updates and announcements, not just email. Sign in regularly and check it.\n\n"
+        "ABOUT YOUR PORTAL\n"
+        "Explore the portal to see full details of the program, hotel, venue, and the 4 day agenda. You can also star any session to save it for quick reference.\n\n"
+        "This is a no-reply email. For questions, contact us at contact@thecscd.org.\n\n"
+        "Welcome aboard,\nThe CSCD Team\nCenter for Strategy and Cultural Diplomacy"
     )
 
 
@@ -92,7 +84,7 @@ def send(to_email: str, name: str, password: str) -> bool:
     payload = {
         "from": f"CSCD <{FROM_EMAIL}>",
         "to": [to_email],
-        "subject": f"Welcome to {EVENT_NAME} — Your Portal Is Ready",
+        "subject": f"Welcome to {EVENT_NAME}: Complete Your Interview",
         "html": build_html(name, to_email, password),
         "text": build_text(name, to_email, password),
     }
