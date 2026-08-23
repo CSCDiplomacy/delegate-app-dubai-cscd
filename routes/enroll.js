@@ -99,8 +99,12 @@ function findName(value, depth = 0) {
   return null;
 }
 
-function genPassword() {
-  return crypto.randomBytes(12).toString('base64url').slice(0, 16);
+// Matches the convention already used for every delegate seeded so far
+// (scripts/seed-delegates.js batches): ysfcscdff<N>, where N is the numeric
+// suffix of their applicant_id (YSF-DXB-2026-FF37 -> ysfcscdff37).
+function passwordFromApplicantId(applicantId) {
+  const m = applicantId.match(/(\d+)$/);
+  return `ysfcscdff${m ? m[1] : ''}`;
 }
 
 const webhookLimiter = rateLimit({
@@ -182,7 +186,7 @@ router.post('/webhook/:secret?', webhookLimiter, async (req, res) => {
   }
 
   let created = false;
-  let password = genPassword();
+  let password = passwordFromApplicantId(applicantId);
   if (!delegate) {
     const { data: userData, error: userErr } = await serviceClient.auth.admin.createUser({
       email,
