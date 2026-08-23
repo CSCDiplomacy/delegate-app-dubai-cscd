@@ -1,7 +1,10 @@
-// Dashboard. Interviews are now closed and results are published here inline -
-// there is no separate Results screen. Evaluated applicants get the countdown,
-// then the announcement banner and their own scholarship outcome. Event tiles
-// stay visible but read "Coming soon" until data is published.
+// Dashboard. Results (once tiered) publish here inline - there is no separate
+// Results screen. Evaluated applicants get the announcement banner and their
+// own scholarship outcome. Event tiles stay visible but read "Coming soon"
+// until data is published. Note: this was ported from Jakarta's post-interview
+// phase; Dubai's interview window is still open (see interviewLabel below),
+// so don't assume interviews-closed copy elsewhere in this file without
+// checking against the current phase.
 import {
   isApplicant,
   isUnderReview,
@@ -43,7 +46,11 @@ export const Dashboard = () => {
   // Tier - not interview status - is what decides this.
   const statusLabel = !applicant ? 'Confirmed delegate' : tier ? 'Result announced' : 'Applicant';
   const statusChip = !applicant || tier ? 'chip-ok' : 'chip-pending';
-  const interviewLabel = underReview ? 'Completed' : applicant ? 'Closed' : 'N/A';
+  // 'Closed' would be wrong while the interview window is still open (Dubai's
+  // current phase) - only say that once there's an actual deadline-passed
+  // signal to check against. For now, an applicant who hasn't submitted yet
+  // just has an open interview.
+  const interviewLabel = underReview ? 'Completed' : applicant ? 'Open' : 'N/A';
   // Once a tier is on record we show the category (e.g. "Partial (50%)") in
   // the third credential slot instead of interview status, so the result
   // card itself needs no pill.
