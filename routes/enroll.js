@@ -182,8 +182,8 @@ router.post('/webhook/:secret?', webhookLimiter, async (req, res) => {
   }
 
   let created = false;
+  let password = genPassword();
   if (!delegate) {
-    const password = genPassword();
     const { data: userData, error: userErr } = await serviceClient.auth.admin.createUser({
       email,
       password,
@@ -223,7 +223,9 @@ router.post('/webhook/:secret?', webhookLimiter, async (req, res) => {
     return res.json({ ok: true, already: true, created });
   }
 
-  const password = created ? null : genPassword();
+  // `password` already holds the one generated above — reused as-is if this
+  // delegate was just created (it's already their real account password),
+  // otherwise pushed to Supabase now so the email below stays accurate.
   if (!created) {
     const { error: pwErr } = await serviceClient.auth.admin.updateUserById(delegate.id, { password });
     if (pwErr) {
@@ -243,7 +245,7 @@ router.post('/webhook/:secret?', webhookLimiter, async (req, res) => {
     return res.status(500).json({ error: 'Update failed' });
   }
 
-  sendCredentialEmail({ email, name: delegate.name || name, password: password || '(see original welcome email)' }); // fire-and-forget
+  sendCredentialEmail({ email, name: delegate.name || name, password }); // fire-and-forget
 
   serviceClient
     .from('usage_events')
