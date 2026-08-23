@@ -229,6 +229,48 @@ Verified: `npm run build` clean; Playwright screenshots of both the resting
 and `:hover` state of the login screen's Sign In button confirm maroon
 default → sand hover with maroon text, and the maroon-tinted shadow.
 
+## 2026-08-23, later still — headings uppercase, nav colors, pulsing CTA
+
+Client compared several more screens (Interview header, About header, the
+Dashboard interview card) against the email and asked for the app to match
+it more fully, plus explicit asks for the sidebar nav and a pulsing "Start
+your interview" button. Three changes:
+
+1. **Headings bold-uppercase, matching the email's H1.** The base `h1, h2,
+   h3` rule was `font-weight:600`, title case — the email's headings are
+   `font-weight:800; text-transform:uppercase; letter-spacing:-0.02em`. Base
+   rule updated to match; every "-title"/"-hero"/"-heading" class that
+   redundantly redeclared `font-weight: 600` had that removed (so it inherits
+   800/uppercase from the base h1/h2/h3 rule when it's a real heading tag) or
+   updated directly with the same three properties (when the class is on a
+   `<div>`/`<span>`, which doesn't cascade from the element selector). Applies
+   to: `.screen-title`, `.about-hero`, `.pass-title`, `.card-title`,
+   `.tile-title`, `.day-intro-title`, `.t-title`, `.theme-title`,
+   `.edition-city`, `.modal-title`, `.rail-head h3`, `.login-body h1`,
+   `.coming-soon-title`/`.interview-notice-title`, `.result-cta-title`,
+   `.interview-cta-title`, `.countdown-title`, `.remind-title`,
+   `.activity-notice-title`. Left alone: numeric/timestamp display classes
+   (`.countdown-num`, `.countdown-colon`, `.t-hm`, `.theme-numeral` —
+   uppercase is a no-op on digits) and the Cognito embed's forced heading
+   styles (third-party form content, risk of an awkward all-caps read on
+   copy CSCD doesn't control).
+2. **Sidebar/drawer nav color.** `.nav-link:hover` and `.menu-link:hover`
+   were a neutral ink-tinted hover with no brand color at all — now
+   `background: var(--sand); color: var(--signal);`, matching the
+   maroon/sand interaction language established for buttons. `.nav-link.active`
+   (already maroon-tinted, confirmed correct against a live screenshot) is
+   unchanged; added `.nav-link.active:hover` so an active item's hover
+   doesn't get overridden by the new plain-hover rule.
+3. **Pulsing "Start your interview" pill.** `.interview-cta-go` (the
+   Dashboard interview-reminder card's button) gets a slow 3s
+   scale(1)↔scale(1.06) breathing animation (`@keyframes cta-pulse`) to draw
+   the eye without being frantic. Respects the existing
+   `prefers-reduced-motion` block (animation-duration forced to 0.01ms there
+   already).
+
+Verified: `npm run build` clean; Playwright screenshot of the login screen
+confirms uppercase bold headings.
+
 ## Related
 
 [[Jakarta Branding Inventory]] · [[Design System]] · [[Dubai Fork Plan]] · [[Dubai Fork Progress]] · [[Results and Tiers]]
