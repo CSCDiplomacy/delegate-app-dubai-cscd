@@ -1,0 +1,218 @@
+{
+  "main": {
+    "id": "ad54a92ee5d83264",
+    "type": "split",
+    "children": [
+      {
+        "id": "29e0d5c76e9fb2d3",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e18103143ee3bc1f",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "baec62d3196f99ae",
+    "type": "split",
+    "children": [
+      {
+        "id": "1d5f6bc98d40ce61",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "015ac5ba3e75cd04",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "b61f37c567c9779f",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "98968dff0f233872",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "8d89f2a7e4082b56",
+    "type": "split",
+    "children": [
+      {
+        "id": "2f945ee81d200b03",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0e8c2942699b73bd",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Architecture.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "5227d9242763ec73",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Architecture.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "711a13fe78f06cf0",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "3e7b69756ad9f08c",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "735e5e75e3910a21",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Architecture.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "e18103143ee3bc1f",
+  "lastOpenFiles": [
+    "Dubai Fork Progress.md.tmp.209174.5985d31fee48",
+    "Dubai Fork Progress.md.tmp.209174.893c0daa47e6",
+    "Dubai Fork Plan.md.tmp.209174.8f1f4e2cb83f",
+    "Dubai Fork Plan.md.tmp.209174.71a0a2083e28",
+    "Dubai Fork Progress.md.tmp.182319.7db9c5f98e8c",
+    "Dubai Fork Plan.md.tmp.209174.a47af35bfa00",
+    "Dubai Fork Progress.md.tmp.209174.8664e4085299",
+    "Dubai Fork Progress.md.tmp.209174.dd330ac03db3",
+    "Dubai Fork Plan.md.tmp.209174.bcc99985b0f8",
+    "Home.md.tmp.209174.c659624d8a86",
+    "Home.md",
+    "Dubai Fork Progress.md",
+    "Dubai Fork Progress.md.tmp.209174.03f0a9ef6664",
+    "Architecture.md",
+    "Auth and Gating.md",
+    "Data Model.md",
+    "Deployment.md",
+    "Design System.md",
+    "Dubai Design System.md",
+    "Operational Scripts.md",
+    "Dubai Fork Plan.md",
+    "Untitled.canvas",
+    "Known Issues and Dead Code.md",
+    "Jakarta Email Toolkit.md",
+    "Jakarta Branding Inventory.md",
+    "Interview System.md",
+    "Frontend Structure.md",
+    "Event Lifecycle Stages.md"
+  ]
+}
