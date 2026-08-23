@@ -45,7 +45,7 @@ export const About = () => (
       <div className="card-eyebrow">The Dubai experience</div>
       <p className="card-body-text">
         Delegates experience Dubai not as tourists but as active participants in a city built on
-        reinvention — panel discussions and hands-on workshops inside an architectural landmark,
+        reinvention: panel discussions and hands-on workshops inside an architectural landmark,
         a Marina dinner cruise, and a desert safari under the stars.
       </p>
       <ul className="dot-list">

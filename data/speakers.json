@@ -11,7 +11,7 @@
     },
     {
       "id": 2,
-      "name": "Speakers & Practitioners — Technology & Creativity",
+      "name": "Speakers & Practitioners: Technology & Creativity",
       "title": "Modules 1–4 Panel",
       "bio": "Technologists, designers, and cultural strategists sharing insights on AI, storytelling, smart cities, and the aesthetics of technology.",
       "expertise": ["AI & Creativity", "Digital Storytelling", "Urban Innovation"],
@@ -19,7 +19,7 @@
     },
     {
       "id": 3,
-      "name": "Speakers & Practitioners — Travel & Cultural Influence",
+      "name": "Speakers & Practitioners: Travel & Cultural Influence",
       "title": "Modules 5–6 Panel",
       "bio": "Voices from tourism, media, and the arts exploring virtual escapism, immersive travel, and the cultural power of art and media.",
       "expertise": ["Immersive Travel", "Media & Culture", "Storytelling"],

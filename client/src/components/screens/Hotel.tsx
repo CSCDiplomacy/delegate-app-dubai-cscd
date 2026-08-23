@@ -143,7 +143,7 @@ export const Hotel = () => {
           <div className="t-title">Your accommodation voucher is ready</div>
           <p className="t-desc">
             Your room for the Youth Strategic Forum, Dubai 2026 will be reserved in your name
-            through our administrative and logistical partner — details on the way.
+            through our administrative and logistical partner. Details on the way.
           </p>
 
           <div className="pass-bottom" style={{ marginTop: 14 }}>

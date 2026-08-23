@@ -170,7 +170,7 @@ export const Interview = () => {
       </div>
       {applicantId && (
         <div className="interview-warning">
-          <strong>Your Applicant ID:</strong> {applicantId} — write it down carefully, you'll need
+          <strong>Your Applicant ID:</strong> {applicantId}. Write it down carefully, you'll need
           it to be entered correctly.
         </div>
       )}

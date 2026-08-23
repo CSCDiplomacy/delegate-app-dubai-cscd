@@ -8,9 +8,9 @@ export const SUMMIT = {
   location: 'Dubai, United Arab Emirates',
   tagline: 'Convergence of Innovation',
   intro:
-    'Four days in Dubai where emerging leaders and creatives from 50+ nations meet to shape what comes next. The Youth Strategic Forum explores technology, culture, creativity, and human connection — moving delegates between panel discussions, hands-on workshops, city innovation visits, and structured networking.',
+    'Four days in Dubai where emerging leaders and creatives from 50+ nations meet to shape what comes next. The Youth Strategic Forum explores technology, culture, creativity, and human connection, moving delegates between panel discussions, hands-on workshops, city innovation visits, and structured networking.',
   rationale:
-    "Dubai is a global crossroads of culture, technology, and ambition — a city built on reinvention. Hosting the forum at the Mohammed Bin Rashid Library, designed in the shape of an open book and one of the Arab world's most iconic cultural landmarks, situates the conversation inside a living symbol of knowledge and strategic vision.",
+    "Dubai is a global crossroads of culture, technology, and ambition: a city built on reinvention. Hosting the forum at the Mohammed Bin Rashid Library, designed in the shape of an open book and one of the Arab world's most iconic cultural landmarks, situates the conversation inside a living symbol of knowledge and strategic vision.",
   participants:
     'Emerging leaders, creators, innovators, and entrepreneurs from diverse backgrounds, representing more than 50 nations.',
 };

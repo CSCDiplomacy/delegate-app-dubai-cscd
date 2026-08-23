@@ -46,28 +46,28 @@
         },
         {
           "time": "10:15",
-          "title": "Module 01 — AI, Creativity & Human Expression",
+          "title": "Module 01: AI, Creativity & Human Expression",
           "venue": "Mohammed Bin Rashid Library",
           "type": "workshop",
           "description": "How AI is transforming creativity, communication and the future of human expression."
         },
         {
           "time": "11:45",
-          "title": "Module 02 — Digital Storytelling & Youth Culture",
+          "title": "Module 02: Digital Storytelling & Youth Culture",
           "venue": "Mohammed Bin Rashid Library",
           "type": "workshop",
           "description": "Social media, cinema, gaming and streaming shaping global youth trends."
         },
         {
           "time": "14:00",
-          "title": "Module 03 — Smart Cities & Creative Communities",
+          "title": "Module 03: Smart Cities & Creative Communities",
           "venue": "Mohammed Bin Rashid Library",
           "type": "workshop",
           "description": "Technology-driven urban development and innovation ecosystems that shape societies."
         },
         {
           "time": "15:45",
-          "title": "Module 04 — Aesthetics of Technology & Lifestyle",
+          "title": "Module 04: Aesthetics of Technology & Lifestyle",
           "venue": "Mohammed Bin Rashid Library",
           "type": "workshop",
           "description": "Visual culture, branding, photography and design in modern lifestyles."
@@ -89,14 +89,14 @@
       "items": [
         {
           "time": "09:30",
-          "title": "Module 05 — Virtual Escapism & Immersive Travel",
+          "title": "Module 05: Virtual Escapism & Immersive Travel",
           "venue": "Mohammed Bin Rashid Library",
           "type": "workshop",
           "description": "Tourism, virtual experiences and digital lifestyles across borders."
         },
         {
           "time": "10:45",
-          "title": "Module 06 — Art, Media & Cultural Influence",
+          "title": "Module 06: Art, Media & Cultural Influence",
           "venue": "Mohammed Bin Rashid Library",
           "type": "workshop",
           "description": "Music, film, theatre and online media as tools of storytelling and influence."

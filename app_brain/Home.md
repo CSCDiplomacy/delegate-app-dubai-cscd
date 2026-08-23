@@ -30,6 +30,10 @@ Start with [[Event Lifecycle Stages]] — it's the spine. The portal isn't one s
 - [[Design System]] — colors, fonts, tokens, the Jakarta neo-brutalist theme
 - [[Operational Scripts]] — the scripts/ toolbox, mapped to lifecycle stage
 - [[Deployment]] — Hostinger/Passenger quirks
+- [[Writing Style]] — no em dashes, anywhere, ever
+
+**Admin tooling**
+- [[Admin Dashboard]] — separate Next.js app (`admin_app_dubai`, deployed on Vercel) for searching delegates, awarding scholarship tiers, and managing announcements/action items under a real admin login
 
 **For the Dubai fork specifically**
 - [[Dubai Fork Plan]] — the phased execution plan and the open product decisions that need a call before Phase 3/4 can start

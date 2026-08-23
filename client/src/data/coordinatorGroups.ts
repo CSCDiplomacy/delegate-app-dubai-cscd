@@ -65,7 +65,7 @@ export const GROUP_ACTIVITY = {
   title: 'Propose your group’s event',
   body:
     'Work with your group to design an event and submit it as a proposal. You ' +
-    'all share one login — sign in below, then create and submit it together. ' +
+    'all share one login. Sign in below, then create and submit it together. ' +
     'Your team presents tomorrow, and if CSCD approves your event, it joins ' +
     'CSCD’s official calendar.',
 } as const;
@@ -85,9 +85,9 @@ export const GROUP_ACTIVITY_DETAIL = {
   steps: [
     'Pick your CDS pillar (topic area)',
     'Choose a date in October',
-    'Design the event — 60–90 min, online or hybrid',
+    'Design the event (60–90 min, online or hybrid)',
     'Submit your proposal on the CDS portal',
-    'Present it on Day 3 — 1 slide each, max 7',
+    'Present it on Day 3 (1 slide each, max 7)',
     'CSCD reviews and approves',
     'Run your event live in October',
   ],

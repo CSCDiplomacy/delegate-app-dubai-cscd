@@ -23,7 +23,7 @@ export const ActivityNotice = () => {
       <div className="activity-notice-body">
         <div className="activity-notice-title">Your group activity is ready</div>
         <p className="activity-notice-text">
-          Your activity has been uploaded — check it out and contact your team leader,{' '}
+          Your activity has been uploaded. Check it out and contact your team leader,{' '}
           {leader}, to get started.
         </p>
         <button className="btn" onClick={() => switchScreen('activity')}>
