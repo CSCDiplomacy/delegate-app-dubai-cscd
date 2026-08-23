@@ -692,6 +692,16 @@ textarea {
   overflow-wrap: anywhere;
 }
 
+/* The card's faint/soft text tokens (42%/60% opacity) were tuned for a flat
+   surface - one step darker here since they now sit on the skyline photo. */
+.pass .pass-sub {
+  color: var(--ink);
+}
+
+.pass .pass-field-label {
+  color: var(--ink-soft);
+}
+
 /* Upright, quiet seal — the landing page's thin double-rule motif, no rotation. */
 .seal {
   flex: none;
