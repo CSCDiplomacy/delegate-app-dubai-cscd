@@ -58,6 +58,45 @@ function collectMatches(value, regex, found = new Set(), depth = 0) {
   return found;
 }
 
+// Real submissions routinely carry a second, DIFFERENT email under an
+// "alternate email" field (JotForm's own field for exactly that purpose) —
+// treating every email-shaped string as equally valid meant that alone was
+// enough to make the payload look "ambiguous" and get rejected, even though
+// there's an obvious primary. So: collect emails with their key context,
+// keep whichever ones aren't under a key that says "alternate"/"alt", and
+// only fall back to the full unfiltered set if that filtering leaves
+// nothing. The "pretty" field (JotForm's human-readable summary string) is
+// skipped entirely — it flattens primary + alternate into one string with no
+// key to distinguish them.
+const ALTERNATE_KEY_RE = /alt(ernate)?/i;
+const SKIP_KEY_RE = /^pretty$/i;
+
+function collectEmails(value, keyHint, primary, alternate, depth = 0) {
+  if (depth > 8) return;
+  if (typeof value === 'string') {
+    const matches = value.match(EMAIL_RE);
+    if (matches) {
+      const bucket = keyHint && ALTERNATE_KEY_RE.test(keyHint) ? alternate : primary;
+      matches.forEach((m) => bucket.add(m.toLowerCase()));
+    }
+    const trimmed = value.trim();
+    if (trimmed.length > 1 && (trimmed[0] === '{' || trimmed[0] === '[')) {
+      try {
+        collectEmails(JSON.parse(trimmed), keyHint, primary, alternate, depth + 1);
+      } catch {
+        // not JSON, nothing more to do with this string
+      }
+    }
+  } else if (Array.isArray(value)) {
+    value.forEach((v) => collectEmails(v, keyHint, primary, alternate, depth + 1));
+  } else if (value && typeof value === 'object') {
+    Object.entries(value).forEach(([k, v]) => {
+      if (SKIP_KEY_RE.test(k.trim())) return;
+      collectEmails(v, k, primary, alternate, depth + 1);
+    });
+  }
+}
+
 // Name has no fixed pattern to regex for, so we look it up by key instead —
 // walk the payload for the first key that looks like a name field. Matches
 // n8n's cleaned-up shape (personal_information.full_name) as well as raw
@@ -128,8 +167,15 @@ router.post('/webhook/:secret?', webhookLimiter, async (req, res) => {
   if (!serviceClient) return res.status(503).json({ error: 'Database not configured' });
 
   const applicantIds = [...collectMatches(req.body, APPLICANT_ID_RE)];
-  const emails = [...collectMatches(req.body, EMAIL_RE)].map((e) => e.toLowerCase());
-  const uniqueEmails = [...new Set(emails)];
+
+  const primaryEmails = new Set();
+  const alternateEmails = new Set();
+  collectEmails(req.body, null, primaryEmails, alternateEmails);
+  // Prefer emails NOT under an "alternate"-flagged key; only fall back to
+  // the full set (primary + alternate together) if that leaves nothing —
+  // e.g. a payload where the only email present happens to be alternate_email.
+  const uniqueEmails = primaryEmails.size ? [...primaryEmails] : [...new Set([...primaryEmails, ...alternateEmails])];
+
   const name = findName(req.body) || 'Delegate';
 
   if (applicantIds.length !== 1 || uniqueEmails.length !== 1) {
