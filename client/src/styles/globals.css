@@ -1,15 +1,15 @@
 /* CSCD Delegate App — Youth Strategic Forum, Dubai 2026.
    Tailwind v4 (CSS-first config). Design system matched to the YSF Dubai
    marketing site: a muted "library / strategic" treatment — warm near-black
-   ink, thin hairline rules, soft diffuse shadows, generous soft radii, and
-   maroon / warm sand used sparingly as accents. Archivo (display), Fraunces
-   (italic accent), Inter (body), DM Mono (kickers/labels).
-   Radius/shadow/card-surface scale verified 2026-08-23 against the live
-   "About the Forum" section markup (`ysfReference.ts` / `#ysf2026`) — see
+   ink, thin hairline rules, soft diffuse shadows, sharp (0-radius) corners,
+   and maroon / warm sand used sparingly as accents. Archivo (display),
+   Fraunces (italic accent), Inter (body), DM Mono (kickers/labels).
+   Shadow/card-surface scale verified 2026-08-23 against the live "About the
+   Forum" section markup (`ysfReference.ts` / `#ysf2026`) — see
    app_brain/Dubai Design System.md. Content cards there are white
    (`.ysf-about__box`, fact tiles' neighbor surfaces) on the cream page, with
-   18–36px radii and large low-opacity shadows, not the tighter 6/10px +
-   dark-tint scale this file started with.
+   large low-opacity shadows, not the tighter dark-tint shadow this file
+   started with.
    Ink/line/surface-2/shadow hues and the --brass hex corrected the same day
    to match `scripts/credential-email.html` (already built against this exact
    palette, colors verified by the client): warm near-black ink (#241417, not
@@ -19,10 +19,13 @@
    not the pale crest-banner sand (#fce2c3), which the email itself only uses
    for light label *text* on a maroon background, never as a fill. --signal
    stays the crest maroon (#8e2631), confirmed by the same email.
-   The email intentionally uses `border-radius:0` throughout — read as an
-   Outlook-compatibility default for HTML email, not a squared-corner brand
-   statement, so it was NOT carried into the soft-radius scale below (that
-   scale has its own direct source, the live web card geometry).
+   Radius history: the live web section's card geometry (18-36px) was tried
+   first, on the theory that the email's own `border-radius:0` was just an
+   Outlook-compatibility default. Once the two were compared side by side,
+   the client chose to flatten the portal to match the email instead — see
+   the --radius tokens below. The soft-radius source is still real, just not
+   what shipped; if a future pass wants it back, app_brain/Dubai Design
+   System.md has the original 18/28/36px values and their sourcing.
    Invariant: no literal brand hex below the two token blocks. */
 @import 'tailwindcss';
 
@@ -56,9 +59,16 @@
      not a tight drop shadow. */
   --shadow-sm: 0 1px 2px rgba(15, 31, 24, 0.06), 0 8px 30px rgba(15, 31, 24, 0.08);
   --shadow: 0 30px 60px -20px rgba(15, 31, 24, 0.30);
-  --radius: 6px;            /* buttons, inputs, chips — kept tight/functional */
-  --radius-lg: 18px;        /* cards, tiles — matches the live fact-tile/bento-tile radius */
-  --radius-xl: 28px;        /* hero cards (credential pass, login, countdown) — scaled down from the live section's 36px card for a compact mobile column */
+  /* Flattened to 0 on 2026-08-23, per the client, to match
+     scripts/credential-email.html's hard-edged look (every box in that email
+     is border-radius:0). This reverses the soft 18-36px scale tried earlier
+     the same day off the live "About the Forum" web section — that source is
+     still real (see app_brain/Dubai Design System.md), it just lost to the
+     email's sharper aesthetic once the two were compared side by side.
+     Tokens kept (not deleted) in case a future pass wants a scale again. */
+  --radius: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
 }
 
 /* No dark-mode source exists for Dubai (the marketing site has none, and the

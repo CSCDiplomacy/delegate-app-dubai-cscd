@@ -181,6 +181,28 @@ discrepancies rather than assuming the two should just match on principle:
 Re-verified after this pass: `npm run build` clean, fresh Playwright
 screenshot of the login screen.
 
+## 2026-08-23, later same day — radius question resolved: flattened to match the email
+
+The `border-radius:0` conflict flagged as an open question above was put to
+the client directly (screenshot of the portal next to a screenshot of the
+rendered email). **Decision: flatten the portal, not round the email.**
+`--radius`/`--radius-lg`/`--radius-xl` all set to `0` in
+`client/src/styles/globals.css` — every card, tile, button, chip, input, and
+modal in the portal is now sharp-cornered, matching
+`scripts/credential-email.html` exactly.
+
+The tokens themselves were kept (not deleted) with their original 6/18/28px
+values preserved in comments, so the soft-radius direction — which does have
+real sourcing, the live "About the Forum" web section's actual card geometry
+— can be revisited without re-deriving it, if a future design pass wants it.
+Everything else from the two passes above (white `--card`, parchment
+`--surface-2`, the `--signal`/`--brass` crest-email pair, the softened
+diffuse shadows, the ✦ kicker) is unaffected — only the corner radius
+reverted.
+
+Re-verified: `npm run build` clean, fresh Playwright screenshot of the login
+screen confirms sharp corners throughout.
+
 ## Related
 
 [[Jakarta Branding Inventory]] · [[Design System]] · [[Dubai Fork Plan]] · [[Dubai Fork Progress]] · [[Results and Tiers]]
