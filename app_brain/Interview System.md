@@ -46,6 +46,21 @@ whose webhook silently fails now has no way to self-correct from the UI —
 they'd need to be caught manually (e.g. cross-checking AidaForm's own
 submission list against `delegates.interview_status`).
 
+**2026-08-23 (later)**: the live Dubai AidaForm has no hidden `candidate_token`
+field, so every real submission was falling through to a fallback in
+`extractFallbackIdentity`/the webhook handler that read the visible
+"Applicant ID" answer plus the email answer and only matched if **both**
+agreed with the same delegate row. Per the client, this was dropping
+legitimate submissions (typo'd/personal email vs. the registered email) — no
+status flip and no confirmation email. Changed to try the visible applicant_id
+first, then fall back to the email answer if applicant_id doesn't match
+anything — no cross-check between the two. `sendInterviewReceivedEmail`
+(`lib/email.js`) already fires unconditionally once a delegate is matched and
+the status update succeeds — it wasn't reaching that code because the match
+itself was failing, not because sending was gated separately. The webhook
+secret path remains the actual access control; applicant_id is a small
+guessable sequence but isn't treated as a secret on its own.
+
 ## Related
 
 [[Event Lifecycle Stages]] · [[Auth and Gating]] · [[Data Model]]

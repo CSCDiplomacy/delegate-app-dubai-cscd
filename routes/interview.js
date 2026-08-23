@@ -48,23 +48,25 @@ function collectUuids(value, found = new Set(), depth = 0) {
 // candidate_token field — every submission fails the UUID match above. AidaForm
 // answers come back as `fields: [{ type, label, value }]`. We pull the visible
 // "Applicant ID" short-text answer (prefilled from our URL, but editable) and
-// the email answer, and only accept the pair if BOTH point at the same
-// delegate row — matching the cross-check-or-skip approach already used by
-// scripts/reconcile-tiers.js, since applicant_id alone is a small guessable
-// sequence (YSF-DXB-2026-FF1, FF2, ...) and isn't a secret.
+// the email answer, and try applicant_id first, then email — no cross-check
+// between the two. Applicant_id-only-or-email matching was a deliberate call
+// by the client over the earlier cross-check-or-skip approach: the cross-check
+// was silently dropping legitimate submissions (typo'd or personal email vs.
+// registered email) and neither updating status nor sending the confirmation
+// email. The webhook secret path is still the actual access control here.
 function extractFallbackIdentity(body) {
   const fields = Array.isArray(body && body.fields) ? body.fields : [];
-  let email = null;
   let applicantId = null;
+  let email = null;
   for (const f of fields) {
     if (!f || typeof f !== 'object') continue;
-    if (f.type === 'email' && typeof f.value === 'string') {
-      email = f.value.trim().toLowerCase();
-    } else if (typeof f.label === 'string' && /applicant\s*id/i.test(f.label) && typeof f.value === 'string') {
+    if (typeof f.label === 'string' && /applicant\s*id/i.test(f.label) && typeof f.value === 'string') {
       applicantId = f.value.trim();
+    } else if (f.type === 'email' && typeof f.value === 'string') {
+      email = f.value.trim().toLowerCase();
     }
   }
-  return { email, applicantId };
+  return { applicantId, email };
 }
 
 const webhookLimiter = rateLimit({
@@ -107,9 +109,10 @@ router.post('/webhook/:secret?', webhookLimiter, async (req, res) => {
 
   if (!delegate) {
     // No hidden-field token in this payload (or it matched nothing) — fall
-    // back to the visible applicant_id + email answers, cross-checked.
-    const { email, applicantId } = extractFallbackIdentity(req.body);
-    if (email && applicantId) {
+    // back to the visible applicant_id answer, then to the email answer if
+    // applicant_id didn't match anything.
+    const { applicantId, email } = extractFallbackIdentity(req.body);
+    if (applicantId) {
       const { data: byId, error: byIdErr } = await serviceClient
         .from('delegates')
         .select('id, email, name, interview_status')
@@ -119,11 +122,24 @@ router.post('/webhook/:secret?', webhookLimiter, async (req, res) => {
         console.error('[interview] fallback lookup failed', byIdErr.message);
         return res.status(500).json({ error: 'Lookup failed' });
       }
-      if (byId && typeof byId.email === 'string' && byId.email.trim().toLowerCase() === email) {
+      if (byId) {
         delegate = byId;
-        matchedBy = 'applicant_id+email fallback';
-      } else if (byId) {
-        console.warn(`[interview] fallback applicant_id ${applicantId} matched a delegate but email disagreed — skipped`);
+        matchedBy = 'applicant_id fallback';
+      }
+    }
+    if (!delegate && email) {
+      const { data: byEmail, error: byEmailErr } = await serviceClient
+        .from('delegates')
+        .select('id, email, name, interview_status')
+        .eq('email', email)
+        .maybeSingle();
+      if (byEmailErr) {
+        console.error('[interview] fallback lookup failed', byEmailErr.message);
+        return res.status(500).json({ error: 'Lookup failed' });
+      }
+      if (byEmail) {
+        delegate = byEmail;
+        matchedBy = 'email fallback';
       }
     }
   }
