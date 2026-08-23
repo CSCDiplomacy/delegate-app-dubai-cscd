@@ -1,64 +1,96 @@
 /* CSCD Delegate App — Youth Strategic Forum, Dubai 2026.
    Tailwind v4 (CSS-first config). Design system matched to the YSF Dubai
    marketing site: a muted "library / strategic" treatment — warm near-black
-   ink, thin hairline rules, soft blurred shadows, small radii, and maroon /
-   gold used sparingly as accents. Archivo (display), Fraunces (italic
-   accent), Inter (body), DM Mono (kickers/labels).
+   ink, thin hairline rules, soft diffuse shadows, generous soft radii, and
+   maroon / warm sand used sparingly as accents. Archivo (display), Fraunces
+   (italic accent), Inter (body), DM Mono (kickers/labels).
+   Radius/shadow/card-surface scale verified 2026-08-23 against the live
+   "About the Forum" section markup (`ysfReference.ts` / `#ysf2026`) — see
+   app_brain/Dubai Design System.md. Content cards there are white
+   (`.ysf-about__box`, fact tiles' neighbor surfaces) on the cream page, with
+   18–36px radii and large low-opacity shadows, not the tighter 6/10px +
+   dark-tint scale this file started with.
+   Ink/line/surface-2/shadow hues and the --brass hex corrected the same day
+   to match `scripts/credential-email.html` (already built against this exact
+   palette, colors verified by the client): warm near-black ink (#241417, not
+   a greenish #1c231f), a parchment tinted-panel tone (#faf8f4, not the mist
+   #f4eeee — mist is reserved for an even-quieter outer tier), and the
+   secondary accent is a medium gold (#e7c673) used with maroon ink on top —
+   not the pale crest-banner sand (#fce2c3), which the email itself only uses
+   for light label *text* on a maroon background, never as a fill. --signal
+   stays the crest maroon (#8e2631), confirmed by the same email.
+   The email intentionally uses `border-radius:0` throughout — read as an
+   Outlook-compatibility default for HTML email, not a squared-corner brand
+   statement, so it was NOT carried into the soft-radius scale below (that
+   scale has its own direct source, the live web card geometry).
    Invariant: no literal brand hex below the two token blocks. */
 @import 'tailwindcss';
 
 /* ============================ TOKENS ==================================== */
 :root {
   --surface: #fbfaf6;      /* ysf-cream — page ground */
-  --surface-2: #f4eeee;    /* ysf-mist — card-tint background */
-  --ink: #1c231f;          /* text */
-  --ink-strong: #10140f;   /* headings */
-  --ink-soft: rgba(28, 35, 31, 0.60);
-  --ink-faint: rgba(28, 35, 31, 0.42);
-  --line: rgba(28, 35, 31, 0.14);
-  --line-strong: rgba(28, 35, 31, 0.24);
-  --signal: #8c2231;       /* forest — maroon, primary action / accent */
+  --surface-2: #faf8f4;    /* parchment — tinted accent panels (callouts, CTA cards, inset boxes) */
+  --surface-3: #f4eeee;    /* ysf-mist — quieter outer tier (e.g. a footer-style strip); not yet consumed in the portal, kept for palette parity with the email/live site */
+  --card: #ffffff;         /* plain content-card background — white, per the live site's cards */
+  --ink: #241417;          /* text */
+  --ink-strong: #170d0e;   /* headings — darkened proportionally from --ink */
+  --ink-soft: #5b6660;
+  --ink-faint: #8a7e7a;
+  --line: rgba(26, 51, 38, 0.14);
+  --line-strong: rgba(26, 51, 38, 0.24);
+  --signal: #8e2631;       /* official crest-banner maroon — primary action / accent */
   --signal-ink: #ffffff;
-  --signal-rgb: 140, 34, 49;
-  --brass: #d9a521;        /* gold — secondary accent */
-  /* Deep-forest text on gold, matching the marketing site's own gold-wipe
-     button hover ("text flips to deep-forest"). */
-  --brass-ink: #3a0e14;
+  --signal-rgb: 142, 38, 49;
+  --brass: #e7c673;        /* medium gold — secondary accent (badges, chips, buttons) */
+  /* Maroon ink on gold, matching the credential email's badge/chip/deadline-
+     banner treatment exactly (color:#8e2631 on background:#e7c673) — not a
+     separate "deep-forest" ink, that was a Jakarta-era assumption. */
+  --brass-ink: #8e2631;
   --ok: #2f7d54;
   /* The embedded Cognito form renders on pure white; it gets its own token so
      the no-literal-hex invariant holds and dark mode can override it. */
   --form-surface: #ffffff;
-  --shadow-sm: 0 6px 16px -10px rgba(28, 35, 31, 0.45);
-  --shadow: 0 18px 40px -22px rgba(28, 35, 31, 0.45);
-  --radius: 6px;
-  --radius-lg: 10px;
+  /* Soft, large-spread, low-opacity — the live card/email's own shadow
+     formula (`0 1px 2px rgba(15,31,24,.06), 0 8px 30px rgba(15,31,24,.08)`
+     for --shadow-sm; `0 30px 60px -20px rgba(15,31,24,.30)` for --shadow),
+     not a tight drop shadow. */
+  --shadow-sm: 0 1px 2px rgba(15, 31, 24, 0.06), 0 8px 30px rgba(15, 31, 24, 0.08);
+  --shadow: 0 30px 60px -20px rgba(15, 31, 24, 0.30);
+  --radius: 6px;            /* buttons, inputs, chips — kept tight/functional */
+  --radius-lg: 18px;        /* cards, tiles — matches the live fact-tile/bento-tile radius */
+  --radius-xl: 28px;        /* hero cards (credential pass, login, countdown) — scaled down from the live section's 36px card for a compact mobile column */
 }
 
-/* No dark-mode source exists for Dubai (the marketing site has none). Derived
-   here by the same method Jakarta used — lift the primary accent for
-   contrast, keep card surfaces a step lighter than the page. --surface-2 and
-   --signal both reuse hexes the Dubai palette already defines for exactly
-   these darker/lighter roles (--deep-forest, --ysf-mint) rather than
-   inventing new ones; --surface is --deep-forest darkened further so cards
-   still read as "lifted." Revisit if the client supplies real dark-mode art. */
+/* No dark-mode source exists for Dubai (the marketing site has none, and the
+   credential email is explicitly light-only). Derived here by the same
+   method Jakarta used — lift the primary accent for contrast, keep card
+   surfaces a step lighter than the page. --surface-2, --card and --signal
+   all reuse hexes the Dubai palette already defines for exactly these
+   darker/lighter roles (--deep-forest, --ysf-mint) rather than inventing new
+   ones; --surface is --deep-forest darkened further so cards still read as
+   "lifted." There is no dark-mode "white card" equivalent, so --card matches
+   --surface-2 here rather than going white-on-dark. Revisit if the client
+   supplies real dark-mode art. */
 [data-theme='dark'] {
   --surface: #1d070a;      /* deep-forest, darkened further — page ground */
-  --surface-2: #3a0e14;    /* deep-forest — cards, lifted off the page */
+  --surface-2: #3a0e14;    /* deep-forest — tinted accent panels */
+  --surface-3: #3a0e14;    /* no distinct dark-mode mist tier exists; mirrors --surface-2 */
+  --card: #3a0e14;         /* deep-forest — plain content cards, lifted off the page */
   --ink: #f2ece3;
   --ink-strong: #fbfaf6;
   --ink-soft: rgba(242, 236, 227, 0.66);
   --ink-faint: rgba(242, 236, 227, 0.44);
   --line: rgba(242, 236, 227, 0.12);
   --line-strong: rgba(242, 236, 227, 0.22);
-  --signal: #c24c58;       /* ysf-mint — lighter maroon accent, lifted for dark-mode contrast */
+  --signal: #c24c58;       /* ysf-mint — lighter maroon accent, lifted for dark-mode contrast; close enough to the corrected #8e2631 that the existing lift still holds */
   --signal-ink: #3a0e14;
   --signal-rgb: 194, 76, 88;
-  --brass: #d9a521;
-  --brass-ink: #3a0e14;
+  --brass: #e7c673;        /* medium gold — already light enough for dark-mode contrast, no lift needed */
+  --brass-ink: #8e2631;
   --ok: #5ac98d;
   --form-surface: #ffffff;
-  --shadow-sm: 0 8px 22px -12px rgba(0, 0, 0, 0.85);
-  --shadow: 0 26px 52px -24px rgba(0, 0, 0, 0.9);
+  --shadow-sm: 0 10px 26px -14px rgba(0, 0, 0, 0.7);
+  --shadow: 0 34px 72px -28px rgba(0, 0, 0, 0.75), 0 4px 14px rgba(0, 0, 0, 0.35);
 }
 
 /* The logo art is green letters + a black tagline; the black vanishes on dark.
@@ -69,6 +101,7 @@
 
 @theme inline {
   --color-surface: var(--surface);
+  --color-card: var(--card);
   --color-ink: var(--ink);
   --color-signal: var(--signal);
   --color-brass: var(--brass);
@@ -115,7 +148,8 @@ h3 {
 }
 
 /* DM Mono — matches the marketing site's kicker pattern (uppercase, wide
-   tracking, small-caps label ahead of a heading). */
+   tracking, small-caps label ahead of a heading, gold/sand ✦ mark leading it —
+   confirmed against the live "About the Forum" section's `.r-kicker`). */
 .eyebrow,
 .section-label {
   font-family: var(--font-mono);
@@ -125,6 +159,13 @@ h3 {
   text-transform: uppercase;
   color: var(--signal);
   margin: 2px 0 12px;
+}
+
+.eyebrow::before,
+.section-label::before {
+  content: '✦';
+  color: var(--brass);
+  margin-right: 6px;
 }
 
 .mono {
@@ -404,9 +445,9 @@ textarea {
 .login-card {
   width: 100%;
   max-width: 400px;
-  background: var(--surface-2);
+  background: var(--card);
   border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   box-shadow: var(--shadow);
 }
 
@@ -454,7 +495,7 @@ textarea {
 
 .error-card {
   max-width: 420px;
-  background: var(--surface-2);
+  background: var(--card);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow);
@@ -566,7 +607,7 @@ textarea {
   right: 0;
   z-index: 50;
   width: min(340px, 88vw);
-  background: var(--surface-2);
+  background: var(--card);
   border-left: 1px solid var(--line);
   box-shadow: var(--shadow);
   transform: translateX(105%);
@@ -655,7 +696,7 @@ textarea {
     ),
     url('/img/ysf-dubai-2026-banner.webp') center / cover no-repeat;
   border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   box-shadow: var(--shadow);
   overflow: hidden;
 }
@@ -764,7 +805,7 @@ textarea {
   color: var(--ink);
   border: 1px solid var(--line);
   border-left: 4px solid var(--signal);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   box-shadow: var(--shadow-sm);
   padding: 22px 24px;
   cursor: pointer;
@@ -821,7 +862,7 @@ textarea {
   background: var(--signal);
   color: var(--signal-ink);
   border: none;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   box-shadow: var(--shadow);
   padding: 24px;
   cursor: pointer;
@@ -885,7 +926,7 @@ textarea {
 .countdown-card {
   background: var(--signal);
   color: var(--signal-ink);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   box-shadow: var(--shadow);
   padding: 24px;
   text-align: center;
@@ -1202,7 +1243,7 @@ textarea {
 
 .tile {
   text-align: left;
-  background: var(--surface-2);
+  background: var(--card);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   padding: 18px;
@@ -1380,7 +1421,7 @@ textarea {
 }
 
 .t-card {
-  background: var(--surface-2);
+  background: var(--card);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   padding: 16px 18px;
@@ -1750,7 +1791,7 @@ textarea {
 /* ============================ COMING SOON / NOTICES ===================== */
 .coming-soon,
 .interview-notice {
-  background: var(--surface-2);
+  background: var(--card);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
@@ -1797,7 +1838,7 @@ textarea {
 }
 
 .interview-embed-wrap {
-  background: var(--surface-2);
+  background: var(--card);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   padding: 12px;
@@ -1851,7 +1892,7 @@ textarea {
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  background: var(--surface-2);
+  background: var(--card);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
@@ -1913,7 +1954,7 @@ textarea {
 
 .modal {
   width: min(440px, 100%);
-  background: var(--surface-2);
+  background: var(--card);
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow);
@@ -1998,7 +2039,7 @@ textarea {
   grid-template-columns: 40px 1fr;
   gap: 14px;
   align-items: start;
-  background: var(--surface-2);
+  background: var(--card);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   padding: 18px;
@@ -2114,7 +2155,7 @@ textarea {
 
 /* ============================ CARDS / MISC ============================== */
 .card {
-  background: var(--surface-2);
+  background: var(--card);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
@@ -2166,6 +2207,12 @@ textarea {
   text-transform: uppercase;
   color: var(--signal);
   margin-bottom: 7px;
+}
+
+.card-eyebrow::before {
+  content: '✦';
+  color: var(--brass);
+  margin-right: 6px;
 }
 
 .card-title {

@@ -77,6 +77,28 @@ Needs a client call on the canonical form; not resolved here.
 - Run against all 228: **228 updated, 0 failed**. `dubai-credentials.csv` was rewritten in place to match — `send_credentials.py` (see above, ready to run) will now send the `ysfcscdffN` passwords, not the original random ones.
 - Tatiana Zvenigorodskaia is unaffected (she was never seeded — still in `dubai-flagged-needs-id.csv`, waiting on a real ID).
 
+### Design system — card surface, radius/shadow, corrected maroon/sand pair — done
+
+A spec artifact reconstructing the live marketing site's "About the Forum"
+section markup, plus a client-supplied hex pair from the official crest
+banner, refined the Phase 1 token swap in `client/src/styles/globals.css`:
+new `--card` token (white, distinct from the `--surface-2` mist tint used for
+accent panels), `--radius-lg` 10px→18px, new `--radius-xl: 28px` for hero
+cards, softened diffuse shadows, a `✦` kicker mark on `.eyebrow`/
+`.section-label`/`.card-eyebrow`, and `--signal`/`--brass` corrected to the
+crest pair (`#8E2631` maroon — supersedes `#8c2231`). Same day, reconciled
+against `scripts/credential-email.html` (already built against the true,
+client-verified palette): `--ink` corrected to the email's warm `#241417`,
+`--surface-2` corrected from mist to parchment `#faf8f4` (mist demoted to a
+new, currently-unused `--surface-3`), and `--brass` corrected a second time
+from the crest sand `#fce2c3` (real, but only used as text-on-maroon in the
+email) to the email's actual badge/chip gold `#e7c673` with maroon
+(`#8e2631`, not deep-forest) as its ink. `border-radius:0` in the email was
+deliberately **not** carried over — read as Outlook-compat, not a brand
+signal; flagged as an open question rather than resolved silently. Full
+detail and rationale in [[Dubai Design System]]. `npm run build` clean;
+verified visually both passes (Playwright, light + dark login screen).
+
 ## What's still open
 
 - **`EVENT_NAME` in `.env`** ("YSF Dubai 2026") doesn't match the form used elsewhere in the portal — needs a decision, not resolved here.

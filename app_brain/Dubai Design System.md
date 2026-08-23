@@ -68,6 +68,119 @@ All three live Dubai registration pages embed **AidaForm** (account **15158**):
 
 No Cognito account/form ids exist anywhere in the Dubai code path. This is the single biggest structural finding for the fork — see [[Dubai Fork Plan]]'s open decisions. (Side note: the marketing site's own **Jakarta** registration pages use Cognito form ids **65/70/52**, different from the delegate portal's **78/79/81** on the same Cognito account — a pre-existing inconsistency between the two Jakarta codebases, not something to carry forward as correct.)
 
+## 2026-08-23 refinement — card surface, radius/shadow scale, corrected maroon/sand pair
+
+Portal `globals.css` had already done the Phase 1 token swap (see
+[[Dubai Fork Progress]]), but a closer source — a spec artifact reconstructing
+the live **"About the Forum"** section's actual markup/CSS
+(`ysfReference.ts` / `#ysf2026`) — surfaced two component-level gaps between
+that swap and the real site, plus the client supplied a corrected color pair
+directly from the official crest banner. All three landed in
+`client/src/styles/globals.css` this session:
+
+1. **Card surface was wrong.** The real site's content cards
+   (`.ysf-about__box`, fact tiles' neighbor surfaces) are **white**, sitting on
+   the cream page — the portal had been using the mist tint (`--surface-2`,
+   `#f4eeee`) for every card uniformly, which is actually the *tinted-panel*
+   role (callouts, CTA borders), not the plain-card role. Added a new
+   `--card` token (white in light mode; unchanged deep-forest in dark, since
+   there's no dark-mode "white card" equivalent) and repointed the plain
+   content-card classes (`.card`, `.login-card`, `.error-card`, `.tile`,
+   `.t-card`, `.theme-card`, `.modal`, `.menu-drawer`, `.coming-soon`/
+   `.interview-notice`, `.interview-embed-wrap`, `.interview-self-report`) to
+   it. Accent-tinted panels that are meant to stand out with a colored border
+   (`.result-cta`, `.remind-card`, `.activity-notice`, `.interview-warning`,
+   `.coord-cred`) correctly kept `--surface-2` — that matches the real site's
+   own tinted-callout pattern.
+2. **Radius/shadow scale was much tighter than the real site.** The real
+   card is `border-radius: 36px` with a soft `0 40px 100px rgba(15,31,24,.06)`
+   shadow; fact tiles and the photo-bento tiles use `18px`; the deadline badge
+   uses `24px`. The portal had `--radius-lg: 10px` and a comparatively tight,
+   darker shadow. Bumped `--radius-lg` to `18px` (now correct for
+   tiles/general cards), added a new `--radius-xl: 28px` for the hero-weight
+   cards (`.login-card`, `.pass` credential card, `.countdown-card`,
+   `.interview-cta`, `.result-cta` — scaled down from the live 36px for a
+   compact mobile column), and softened `--shadow-sm`/`--shadow` to a larger,
+   lower-opacity spread in both themes.
+3. **Kicker mark.** The real "About" section's kicker (`.r-kicker`) leads with
+   a gold `✦` before the uppercase mono label. Added a `::before` `✦` to the
+   portal's equivalent kicker classes (`.eyebrow`, `.section-label`,
+   `.card-eyebrow`) — colored `--brass-ink` rather than `--brass` itself,
+   since `--brass` is now a very pale sand (see below) that wouldn't read
+   against the cream page as a small mark.
+4. **Color correction, supplied by the client**: the official crest-banner
+   artwork (maroon field, cream/sand type, black crest, no gold anywhere) gave
+   exact hex — **`#8E2631`** maroon and **`#FCE2C3`** warm sand — which
+   superseded the marketing-site-CSS-derived `#8c2231`/`#d9a521` pair this
+   doc's color table above still shows. `--signal` and `--brass` (light *and*
+   dark) now use the crest pair; `--brass-ink` (`#3a0e14`, dark text on the
+   light accent) needed no change. **The color table above is now stale for
+   `--forest`/`--gold`'s exact hex** — the *roles* (maroon primary, warm
+   secondary) and every other row still hold, just not those two hex values.
+   Worth a full re-audit against the crest asset if it turns out to be the
+   authoritative brand source going forward, rather than patching this note
+   piecemeal.
+5. **Not applied — flagged for later, not dead-coded now**: the "About"
+   section also documents a fact-tile 2×2 grid, a gradient flip-unit countdown
+   (Archivo tabular numerals, `--maroon-bright`→`--maroon` gradient, cream
+   digits), a circular deadline badge, and a tall/top/mid/band photo-bento
+   grid. None of these have a consuming component in the portal yet (the
+   portal's own countdown/hero patterns are already built differently), so no
+   unused CSS was added for them — revisit if/when the About screen or
+   Dashboard grows a matching section.
+
+Verified: `npm run build` (client) clean; light + dark login-screen
+screenshots (Playwright CLI) confirm the white card, larger radius, softer
+shadow, and corrected maroon button color in both themes.
+
+## 2026-08-23, same day — reconciled against `scripts/credential-email.html`
+
+Before pushing, checked the portal tokens against the credential email, which
+turned out to already be built against the true palette (client-verified
+colors) more precisely than the portal was. Found and fixed real
+discrepancies rather than assuming the two should just match on principle:
+
+- **`--ink`**: `#1c231f` (greenish near-black) → **`#241417`** (the email's
+  actual text color, warm near-black). `--ink-soft`/`--ink-faint` switched
+  from ink-derived `rgba()` to the email's own solid `#5b6660`/`#8a7e7a`.
+- **`--line`/`--line-strong`**: rebased from an ink-derived rgb to the email's
+  `rgba(26,51,38,…)` — same alpha values kept, hue corrected.
+- **`--surface-2` was the wrong tier.** It held the mist color (`#f4eeee`)
+  and was used for tinted panels — but the email's tinted inset panels
+  ("Your Login," "Next Steps") use **parchment `#faf8f4`**, and mist is only
+  the email's outermost footer strip. `--surface-2` → `#faf8f4`; added
+  `--surface-3: #f4eeee` for that quieter outer tier (not consumed by any
+  portal component yet — kept for palette parity, apply it if the portal ever
+  grows a footer-like strip).
+- **`--brass` was the wrong hex, from the earlier same-day pass.** The
+  crest-banner sand (`#fce2c3`) the client supplied is real, but the email
+  only uses it for light label *text* sitting on a maroon fill — never as a
+  badge/chip/button background. Badges, the password chip, and the deadline
+  banner all use a **medium gold, `#e7c673`**, with maroon (`#8e2631`) as the
+  ink on top — not the deep-forest `#3a0e14` the portal had been using as
+  "text on brass" since the Jakarta fork. `--brass` → `#e7c673`, `--brass-ink`
+  → `#8e2631`. The ✦ kicker mark (added earlier this session) was recolored
+  from `--brass-ink` to `--brass` accordingly — it needs the visible gold
+  fill, not the maroon ink color, to read as a mark distinct from the kicker
+  text next to it.
+- **`--shadow-sm`/`--shadow` swapped for the artifact's literal formula** —
+  the email's own `box-shadow` turned out to be a verbatim copy of the "About
+  the Forum" artifact's `--shadow`/`--shadow-lg` tokens
+  (`rgba(15,31,24,…)` base), confirming that artifact as a real source rather
+  than a documentation-page invention. Replaced the hand-tuned values from
+  earlier today with the exact formula.
+- **`border-radius:0` in the email was deliberately NOT carried over.** Every
+  box in the email is zero-radius, but that reads as an Outlook-compatibility
+  default for HTML email (widely inconsistent border-radius support across
+  clients), not a squared-corner brand statement — the soft 18–36px radius
+  scale has its own direct source (the live web card geometry) and stayed as
+  applied earlier today. Flagging the conflict here rather than silently
+  picking a side, in case the client's intent turns out to be a sharper,
+  more "formal crest/passport" look across the whole product after all.
+
+Re-verified after this pass: `npm run build` clean, fresh Playwright
+screenshot of the login screen.
+
 ## Related
 
-[[Jakarta Branding Inventory]] · [[Design System]] · [[Dubai Fork Plan]] · [[Results and Tiers]]
+[[Jakarta Branding Inventory]] · [[Design System]] · [[Dubai Fork Plan]] · [[Dubai Fork Progress]] · [[Results and Tiers]]
