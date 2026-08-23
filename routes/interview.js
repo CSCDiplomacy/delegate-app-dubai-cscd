@@ -43,6 +43,29 @@ function collectUuids(value, found = new Set(), depth = 0) {
   return found;
 }
 
+// Fallback for the current live Dubai form, which was built without a hidden
+// candidate_token field — every submission fails the UUID match above. AidaForm
+// answers come back as `fields: [{ type, label, value }]`. We pull the visible
+// "Applicant ID" short-text answer (prefilled from our URL, but editable) and
+// the email answer, and only accept the pair if BOTH point at the same
+// delegate row — matching the cross-check-or-skip approach already used by
+// scripts/reconcile-tiers.js, since applicant_id alone is a small guessable
+// sequence (YSF-DXB-2026-FF1, FF2, ...) and isn't a secret.
+function extractFallbackIdentity(body) {
+  const fields = Array.isArray(body && body.fields) ? body.fields : [];
+  let email = null;
+  let applicantId = null;
+  for (const f of fields) {
+    if (!f || typeof f !== 'object') continue;
+    if (f.type === 'email' && typeof f.value === 'string') {
+      email = f.value.trim().toLowerCase();
+    } else if (typeof f.label === 'string' && /applicant\s*id/i.test(f.label) && typeof f.value === 'string') {
+      applicantId = f.value.trim();
+    }
+  }
+  return { email, applicantId };
+}
+
 const webhookLimiter = rateLimit({
   windowMs: 60 * 1000,
   max: 30,
@@ -64,27 +87,52 @@ router.post('/webhook/:secret?', webhookLimiter, async (req, res) => {
   if (!serviceClient) return res.status(503).json({ error: 'Database not configured' });
 
   const candidates = [...collectUuids(req.body)];
-  if (!candidates.length) {
-    console.warn('[interview] webhook payload carried no token');
-    return res.status(400).json({ error: 'No candidate token in payload' });
+
+  let delegate = null;
+  let matchedBy = 'token';
+
+  if (candidates.length) {
+    const { data: rows, error } = await serviceClient
+      .from('delegates')
+      .select('id, email, interview_status')
+      .in('interview_token', candidates);
+
+    if (error) {
+      console.error('[interview] token lookup failed', error.message);
+      return res.status(500).json({ error: 'Lookup failed' });
+    }
+    if (rows && rows.length) delegate = rows[0];
   }
 
-  const { data: rows, error } = await serviceClient
-    .from('delegates')
-    .select('id, email, interview_status')
-    .in('interview_token', candidates);
-
-  if (error) {
-    console.error('[interview] token lookup failed', error.message);
-    return res.status(500).json({ error: 'Lookup failed' });
+  if (!delegate) {
+    // No hidden-field token in this payload (or it matched nothing) — fall
+    // back to the visible applicant_id + email answers, cross-checked.
+    const { email, applicantId } = extractFallbackIdentity(req.body);
+    if (email && applicantId) {
+      const { data: byId, error: byIdErr } = await serviceClient
+        .from('delegates')
+        .select('id, email, interview_status')
+        .eq('applicant_id', applicantId)
+        .maybeSingle();
+      if (byIdErr) {
+        console.error('[interview] fallback lookup failed', byIdErr.message);
+        return res.status(500).json({ error: 'Lookup failed' });
+      }
+      if (byId && typeof byId.email === 'string' && byId.email.trim().toLowerCase() === email) {
+        delegate = byId;
+        matchedBy = 'applicant_id+email fallback';
+      } else if (byId) {
+        console.warn(`[interview] fallback applicant_id ${applicantId} matched a delegate but email disagreed — skipped`);
+      }
+    }
   }
-  if (!rows || !rows.length) {
-    // Someone submitted the form without a token we issued — worth knowing about.
-    console.warn('[interview] webhook token matched no applicant');
+
+  if (!delegate) {
+    // Someone submitted the form without a token or identifiable answers we
+    // recognize — worth knowing about.
+    console.warn('[interview] webhook matched no applicant');
     return res.status(404).json({ error: 'Unknown candidate token' });
   }
-
-  const delegate = rows[0];
 
   // Idempotent: AidaForm may retry, and an applicant may double-submit. The
   // first submission is the one that counts; later ones are acknowledged and
@@ -106,10 +154,10 @@ router.post('/webhook/:secret?', webhookLimiter, async (req, res) => {
 
   serviceClient
     .from('usage_events')
-    .insert({ user_id: delegate.id, email: delegate.email, event_type: 'interview_submitted' })
+    .insert({ user_id: delegate.id, email: delegate.email, event_type: 'interview_submitted', detail: matchedBy })
     .then(() => {}, () => {}); // analytics must never fail the webhook
 
-  console.log(`[interview] submission recorded for ${delegate.email}`);
+  console.log(`[interview] submission recorded for ${delegate.email} (matched by ${matchedBy})`);
   res.json({ ok: true });
 });
 
