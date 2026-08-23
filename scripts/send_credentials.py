@@ -17,6 +17,7 @@ import csv
 import os
 import sys
 import time
+from datetime import datetime, timezone
 from pathlib import Path
 
 import requests
@@ -33,6 +34,38 @@ INTERVIEW_DEADLINE = os.environ.get("INTERVIEW_DEADLINE", "TBD, check the Interv
 
 RESEND_ENDPOINT = "https://api.resend.com/emails"
 TEMPLATE_PATH = Path(__file__).with_name("credential-email.html")
+
+# Tracks who has actually been sent the credential email, so re-running a
+# batch (e.g. after adding more rows to dubai-credentials.csv) doesn't
+# re-email anyone. Not committed (contains applicant PII) — see .gitignore.
+SENT_LOG_PATH = Path(__file__).resolve().parents[1] / "dubai-emails-sent.csv"
+SENT_LOG_FIELDS = ["email", "applicant_id", "name", "sent_at", "status"]
+
+
+def load_sent_emails() -> set[str]:
+    if not SENT_LOG_PATH.exists():
+        return set()
+    with SENT_LOG_PATH.open(newline="", encoding="utf-8") as f:
+        return {
+            row["email"].strip().lower()
+            for row in csv.DictReader(f)
+            if row.get("status") == "sent"
+        }
+
+
+def log_send(email: str, applicant_id: str, name: str, status: str) -> None:
+    is_new = not SENT_LOG_PATH.exists()
+    with SENT_LOG_PATH.open("a", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=SENT_LOG_FIELDS)
+        if is_new:
+            writer.writeheader()
+        writer.writerow({
+            "email": email,
+            "applicant_id": applicant_id,
+            "name": name,
+            "sent_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+            "status": status,
+        })
 
 
 def render_template(name: str, email: str, password: str) -> str:
@@ -77,7 +110,7 @@ def build_text(name: str, email: str, password: str) -> str:
     )
 
 
-def send(to_email: str, name: str, password: str) -> bool:
+def send(to_email: str, name: str, password: str, applicant_id: str = "") -> bool:
     # A plain-text part is included alongside the HTML: HTML-only messages render
     # blank in clients that strip or block HTML, which is the "completely blank
     # email" symptom we hit before.
@@ -97,11 +130,13 @@ def send(to_email: str, name: str, password: str) -> bool:
         json=payload,
         timeout=30,
     )
-    if resp.status_code >= 300:
+    ok = resp.status_code < 300
+    if ok:
+        print(f"  ✓ {to_email}")
+    else:
         print(f"  ✗ {to_email}: {resp.status_code} {resp.text}")
-        return False
-    print(f"  ✓ {to_email}")
-    return True
+    log_send(to_email, applicant_id, name, "sent" if ok else "failed")
+    return ok
 
 
 def main() -> None:
@@ -111,18 +146,28 @@ def main() -> None:
         sys.exit("Usage: python3 scripts/send_credentials.py <credentials.csv>")
 
     path = sys.argv[1]
-    sent = failed = 0
+    already_sent = load_sent_emails()
+    sent = failed = skipped = 0
     with open(path, newline="", encoding="utf-8") as f:
         for row in csv.DictReader(f):
             email = (row.get("email") or "").strip()
             if not email:
                 continue
-            ok = send(email, (row.get("name") or "").strip(), (row.get("password") or "").strip())
+            if email.lower() in already_sent:
+                print(f"  · {email} (already sent, skipping)")
+                skipped += 1
+                continue
+            ok = send(
+                email,
+                (row.get("name") or "").strip(),
+                (row.get("password") or "").strip(),
+                (row.get("applicant_id") or "").strip(),
+            )
             sent += ok
             failed += (not ok)
             time.sleep(0.6)  # gentle on the API rate limit
 
-    print(f"\nDone. Sent {sent}, failed {failed}.")
+    print(f"\nDone. Sent {sent}, failed {failed}, skipped {skipped} already-sent. Log: {SENT_LOG_PATH}")
 
 
 if __name__ == "__main__":

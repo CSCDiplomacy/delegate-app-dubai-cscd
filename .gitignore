@@ -66,3 +66,6 @@ reponses/unmatched.csv
 delegate-list-ysf-dubai.csv
 dubai-seed-input.csv
 dubai-flagged-needs-id.csv
+
+# Send-log from scripts/send_credentials.py (applicant PII) — never commit
+dubai-emails-sent.csv
