@@ -12,6 +12,7 @@ const crypto = require('crypto');
 const express = require('express');
 const rateLimit = require('express-rate-limit');
 const { serviceClient } = require('../lib/supabase');
+const { sendInterviewReceivedEmail } = require('../lib/email');
 
 const router = express.Router();
 
@@ -94,7 +95,7 @@ router.post('/webhook/:secret?', webhookLimiter, async (req, res) => {
   if (candidates.length) {
     const { data: rows, error } = await serviceClient
       .from('delegates')
-      .select('id, email, interview_status')
+      .select('id, email, name, interview_status')
       .in('interview_token', candidates);
 
     if (error) {
@@ -111,7 +112,7 @@ router.post('/webhook/:secret?', webhookLimiter, async (req, res) => {
     if (email && applicantId) {
       const { data: byId, error: byIdErr } = await serviceClient
         .from('delegates')
-        .select('id, email, interview_status')
+        .select('id, email, name, interview_status')
         .eq('applicant_id', applicantId)
         .maybeSingle();
       if (byIdErr) {
@@ -156,6 +157,8 @@ router.post('/webhook/:secret?', webhookLimiter, async (req, res) => {
     .from('usage_events')
     .insert({ user_id: delegate.id, email: delegate.email, event_type: 'interview_submitted', detail: matchedBy })
     .then(() => {}, () => {}); // analytics must never fail the webhook
+
+  sendInterviewReceivedEmail({ email: delegate.email, name: delegate.name }); // fire-and-forget, never fail the webhook
 
   console.log(`[interview] submission recorded for ${delegate.email} (matched by ${matchedBy})`);
   res.json({ ok: true });
