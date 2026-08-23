@@ -8,7 +8,45 @@ tags: [ops]
 
 Hostinger Node hosting via Passenger/LiteSpeed `lsnode`. `app.js` is the startup file; `server.js` is a 9-line alias for hosts whose panel points at `server.js` instead.
 
-**Dubai domain: `delegate.thecscd.org`** (replaces Jakarta's `portal.thecscd.org`). Every hardcoded `portal.thecscd.org` reference needs updating to this — at minimum: `scripts/credential-email.html`'s portal link/button, `APP_URL` env var, any CORS/CSP origin lists, and the [[Jakarta Email Toolkit]]'s templates once that gets rebuilt for Dubai. Confirm whether `HOSTINGER_DEPLOY.md`'s deploy paths/host also change or just the public-facing domain.
+**Dubai domain: `delegate.thecscd.org`** (replaces Jakarta's `portal.thecscd.org`). Every hardcoded `portal.thecscd.org` reference needs updating to this — at minimum: `scripts/credential-email.html`'s portal link/button, `APP_URL` env var, any CORS/CSP origin lists, and the [[Jakarta Email Toolkit]]'s templates once that gets rebuilt for Dubai.
+
+### Dubai deploy pipeline — confirmed 2026-08-23, different from Jakarta's
+
+`HOSTINGER_DEPLOY.md` documents Jakarta's `portal.thecscd.org` setup (manual
+SSH rsync of the backend into a separate `nodejs/` app root after every
+push — the "trap"). **Dubai does not work that way.** Same Hostinger
+account, same SSH login (`ssh -p 65002 u441737725@46.202.156.8` — see
+`DEPLOY_NOTES.local.md`), but `delegate.thecscd.org` is a **sibling domain
+folder** (`domains/delegate.thecscd.org/`) on a newer, fully-automated
+versioned pipeline:
+
+```
+domains/delegate.thecscd.org/
+├── public_html/          # just a .htaccess — Passenger serves straight out of hbuilds/current
+└── hbuilds/
+    ├── last-source/       # latest git pull
+    ├── versions/<uuid>/   # a full build (npm install + npm run build already run — client/dist is real, populated) landed here
+    ├── current -> versions/<uuid>   # symlink Passenger's PassengerAppRoot points at (…/hbuilds/current/nodejs)
+    ├── config/
+    └── logs/
+```
+
+**A plain `git push origin main` is enough** — no manual rsync, no manual
+worker restart needed, at least for a frontend-only change (verified: pushed
+a commit touching only `client/src/styles/globals.css` + docs, and within
+the pipeline's own cadence `hbuilds/current` re-pointed to a fresh version
+whose `client/dist/assets/*.css` contained the new content, confirmed both
+by grepping the file over SSH and by an actual Playwright screenshot of
+`https://delegate.thecscd.org/`). Whether *backend* changes (`routes/`,
+`lib/`, `package.json`) also deploy automatically through this same pipeline
+is **not yet verified** — only a frontend/CSS change has been tested so far.
+**Do not assume Jakarta's manual-rsync trap applies here** — check this
+pipeline's actual behavior on a backend change before assuming you need to
+SSH in for it.
+
+If you do need to poke at it directly: `readlink hbuilds/current` shows the
+live version id; `hbuilds/last-source`'s `git log` shows the latest pulled
+commit (compare to `origin/main` to confirm it caught up).
 
 ## The trap (documented in `HOSTINGER_DEPLOY.md`)
 

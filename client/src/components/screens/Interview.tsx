@@ -5,10 +5,13 @@
 // The AidaForm embed widget script must be injected imperatively: React never
 // executes <script> tags rendered in JSX.
 //
-// AidaForm's server-to-server webhook is best-effort, so we also let the
-// applicant self-confirm: a checkbox → confirmation dialog → POST mark-taken.
-// Either path flips interview_status to 'submitted', after which the form is
-// replaced by a terminal notice and the dashboard status is refreshed.
+// interview_status flips to 'submitted' via AidaForm's server-to-server
+// webhook, after which the form is replaced by a terminal notice and the
+// dashboard status is refreshed (polled every 10s while the form is open).
+// There used to also be an applicant self-confirm checkbox (POST
+// /me/interview/mark-taken as a fallback for a missed webhook) — hidden from
+// this screen 2026-08-23 per the client. The backend endpoint is untouched,
+// so it can be wired back in if the webhook proves unreliable in practice.
 import { useEffect, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import type { InterviewInfo } from '../../types';
@@ -65,9 +68,6 @@ const SupportLine = () => (
 export const Interview = () => {
   const [info, setInfo] = useState<InterviewInfo | null>(null);
   const [loaded, setLoaded] = useState(false);
-  const [confirmOpen, setConfirmOpen] = useState(false);
-  const [markingTaken, setMarkingTaken] = useState(false);
-  const [markError, setMarkError] = useState(false);
   const embedRef = useRef<HTMLDivElement>(null);
   const refreshProfile = useAuthStore((s) => s.refreshProfile);
 
@@ -122,25 +122,6 @@ export const Interview = () => {
     }
   }, [loaded, terminal]);
 
-  const confirmMarkTaken = async () => {
-    if (markingTaken || terminal) return;
-    setMarkingTaken(true);
-    setMarkError(false);
-    try {
-      const data = await api<InterviewInfo>('/me/interview/mark-taken', {
-        method: 'POST',
-      });
-      setInfo(data);
-      // Refresh the shared profile so the dashboard flips to "Completed".
-      refreshProfile();
-      setConfirmOpen(false);
-    } catch {
-      setMarkError(true);
-    } finally {
-      setMarkingTaken(false);
-    }
-  };
-
   if (!loaded) {
     return (
       <div className="stack">
@@ -184,7 +165,7 @@ export const Interview = () => {
       <div>
         <div className="eyebrow">Selection · your interview</div>
         <h1 className="screen-title">The Interview</h1>
-        <p className="tag">Step 1 · Fill out and submit the interview below.</p>
+        <p className="tag">Fill out and submit the interview below.</p>
       </div>
       <div className="interview-embed-wrap">
         <div className="interview-embed-clip">
@@ -198,72 +179,6 @@ export const Interview = () => {
           />
         </div>
       </div>
-
-      <div className="interview-warning">
-        <strong>Before you check the box below:</strong> make sure you have already submitted the
-        form above. Checking this box <strong>locks the form</strong>, you will not be able to
-        open or submit it again. If you check it by mistake before submitting, email us right away
-        at <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>.
-      </div>
-
-      <label className="interview-self-report">
-        <input
-          type="checkbox"
-          checked={confirmOpen}
-          disabled={markingTaken || terminal}
-          onChange={(e) => {
-            if (e.target.checked) {
-              setMarkError(false);
-              setConfirmOpen(true);
-            }
-          }}
-        />
-        <span>
-          <strong>Step 2 · I have already submitted the form above</strong>
-          <span>
-            This checkbox and the form don&apos;t sync automatically, checking this is what tells
-            us you&apos;re done. Only check this after you&apos;ve submitted, not before.
-          </span>
-        </span>
-      </label>
-
-      {confirmOpen && (
-        <div
-          className="modal-backdrop"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="confirm-title"
-          onClick={() => !markingTaken && setConfirmOpen(false)}
-        >
-          <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <h3 className="modal-title" id="confirm-title">
-              Confirm submission
-            </h3>
-            <p className="modal-body">
-              Are you sure you&apos;ve already submitted the interview form above? This will lock
-              the form, you won&apos;t be able to open or submit it again. If you haven&apos;t
-              submitted yet, click "Not yet" and fill out the form first.
-            </p>
-            {markError && (
-              <p className="modal-error">
-                Something went wrong. Please try again, or email {SUPPORT_EMAIL}.
-              </p>
-            )}
-            <div className="modal-actions">
-              <button
-                className="btn ghost"
-                onClick={() => setConfirmOpen(false)}
-                disabled={markingTaken}
-              >
-                Not yet
-              </button>
-              <button className="btn" onClick={confirmMarkTaken} disabled={markingTaken}>
-                {markingTaken ? 'Confirming…' : 'Yes, I have submitted'}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

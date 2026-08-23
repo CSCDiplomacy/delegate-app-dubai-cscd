@@ -22,9 +22,29 @@ Security-critical, per `CLAUDE.md`: **the AidaForm URL is a secret.** Anyone who
 
 Once an applicant loads the form, they hold its URL and could pass it on. The per-applicant token means an *untokened* submission is rejected and a *duplicate* submission is a no-op — adequate for a hiring-style process, **not cryptographically airtight**. This is a known, accepted tradeoff of iframing a third-party form; don't try to "fix" it during the Dubai fork without a product conversation first.
 
-## Current Jakarta state
+## Current Dubai state
 
-`showInterviewTab()` in `authStore.ts` is hardcoded to `false` — interviews are closed for this cohort. The screen (`client/src/components/screens/Interview.tsx`) and the whole webhook/token mechanism are fully intact and untouched, just unreachable via the UI. `Interview.tsx` currently hardcodes `SHARED_FORM_URL`, `FORM_ID='form202405'`, and `SUPPORT_EMAIL='contact@thecscd.org'` — these are this cohort's specific AidaForm account details and will need fresh values for Dubai's next interview cycle (form/account can likely be reused if CSCD keeps the same AidaForm account — verify before assuming).
+Stale note superseded — this section described the Jakarta cohort (interviews
+closed, tab hardcoded off). For Dubai, per [[Dubai Fork Progress]]'s
+"Interview readiness" entry: `showInterviewTab()` in `authStore.ts` is
+re-enabled (`isApplicant(profile)`), and `Interview.tsx` points
+`SHARED_FORM_URL` at the real Dubai AidaForm
+(`https://15158.aidaform.com/interview-ysf-dubai-2026`), preferring the
+server's per-applicant tokenized URL when available.
+
+**2026-08-23**: the applicant self-confirm checkbox (Step 2 — "I have
+already submitted the form above," a fallback that called `POST
+/me/interview/mark-taken` for cases where AidaForm's webhook didn't fire)
+was **hidden from the UI** per the client. The screen now shows only the
+embedded form; `interview_status` flips to `'submitted'` exclusively via the
+webhook (step 6 above). The backend endpoint and the flow it triggers are
+untouched — only the client-side checkbox/warning/confirm-modal were
+removed from `Interview.tsx` — so it can be reinstated quickly if the
+webhook proves unreliable in practice. Worth watching: this removes the only
+safety net for a missed/failed webhook call, so a delegate who submits but
+whose webhook silently fails now has no way to self-correct from the UI —
+they'd need to be caught manually (e.g. cross-checking AidaForm's own
+submission list against `delegates.interview_status`).
 
 ## Related
 
