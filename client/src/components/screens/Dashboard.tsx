@@ -104,6 +104,28 @@ export const Dashboard = () => {
         </div>
       </div>
 
+      {/* Interview reminder - the portal's own equivalent of the credential
+          email's "Interview open" badge / "Start your interview" CTA. Shows
+          only while there's actually something to do: an applicant who
+          hasn't submitted yet (isUnderReview already covers submitted +
+          under-processing). Sits above the activity notice/tiles so it's
+          the first action a new applicant sees, matching the "dashboard
+          leads with the interview" intent. */}
+      {applicant && !underReview && (
+        <button className="interview-cta" onClick={() => switchScreen('interview')}>
+          <div className="interview-cta-tag">
+            <Icon name="video" size={14} />
+            Interview open
+          </div>
+          <div className="interview-cta-title">Complete your interview</div>
+          <div className="interview-cta-sub">
+            A few minutes now is all it takes, and it's required for scholarship
+            consideration. Pick up right where you left off.
+          </div>
+          <span className="interview-cta-go">Start your interview</span>
+        </button>
+      )}
+
       {/* Notification for group members: their live-session activity is
           published. Sits right under identity so it's the first thing they see;
           the button jumps to the Activity tab. Renders nothing for non-group
