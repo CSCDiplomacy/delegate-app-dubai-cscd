@@ -104,6 +104,14 @@ export const Dashboard = () => {
         </div>
       </div>
 
+      {/* Skyline banner - sits directly under the credential card. A second
+          banner image is planned for the bottom of the page later (separate
+          from this one and from the existing brand banner below). */}
+      <div className="dash-hero-banner">
+        <img src="/img/dubai-skyline-hero.webp" alt="Dubai skyline" loading="lazy" />
+        <div className="dash-hero-banner-overlay" />
+      </div>
+
       {/* Notification for group members: their live-session activity is
           published. Sits right under identity so it's the first thing they see;
           the button jumps to the Activity tab. Renders nothing for non-group
