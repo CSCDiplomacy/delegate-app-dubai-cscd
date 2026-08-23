@@ -69,3 +69,6 @@ dubai-flagged-needs-id.csv
 
 # Send-log from scripts/send_credentials.py (applicant PII) — never commit
 dubai-emails-sent.csv
+
+# Mail-merge handoff recipient list (applicant PII incl. passwords) — never commit
+mail_merge/recipients.csv
