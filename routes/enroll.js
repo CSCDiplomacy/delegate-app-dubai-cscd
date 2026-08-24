@@ -284,6 +284,18 @@ router.post('/webhook/:secret?', webhookLimiter, async (req, res) => {
     }
   }
 
+  // Send FIRST, mark SECOND — sendCredentialEmail resolves false (not a
+  // thrown exception) on an API-level rejection like a Resend quota/rate
+  // limit, so credential_email_sent_at must only be set once we've actually
+  // confirmed the send succeeded. Marking it unconditionally here is exactly
+  // what caused 50 delegates to be silently un-emailed on 2026-08-24.
+  const sent = await sendCredentialEmail({ email, name: delegate.name || name, password });
+
+  if (!sent) {
+    console.error(`[enroll] credential email failed for ${email} (${applicantId}) — leaving credential_email_sent_at unset so a retry can pick it up`);
+    return res.status(502).json({ ok: false, created, emailSent: false, error: 'Credential email failed to send' });
+  }
+
   const { error: markErr } = await serviceClient
     .from('delegates')
     .update({ credential_email_sent_at: new Date().toISOString() })
@@ -295,15 +307,13 @@ router.post('/webhook/:secret?', webhookLimiter, async (req, res) => {
     return res.status(500).json({ error: 'Update failed' });
   }
 
-  sendCredentialEmail({ email, name: delegate.name || name, password }); // fire-and-forget
-
   serviceClient
     .from('usage_events')
     .insert({ user_id: delegate.id, email, event_type: 'credential_email_sent', detail: applicantId })
     .then(() => {}, () => {}); // analytics must never fail the webhook
 
   console.log(`[enroll] credentials sent to ${email} (${applicantId}, created=${created})`);
-  res.json({ ok: true, created });
+  res.json({ ok: true, created, emailSent: true });
 });
 
 module.exports = router;
