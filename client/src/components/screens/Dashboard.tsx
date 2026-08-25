@@ -15,6 +15,7 @@ import { Icon } from '../Icon';
 import type { IconName } from '../Icon';
 import type { Screen } from '../../types';
 import { ActivityNotice } from './ActivityNotice';
+import { DeadlineCountdown } from './DeadlineCountdown';
 import { TierResult } from './Results';
 
 const TILES: Array<{ screen: Screen; icon: IconName; title: string; sub: string }> = [
@@ -131,6 +132,11 @@ export const Dashboard = () => {
           the button jumps to the Activity tab. Renders nothing for non-group
           delegates. */}
       <ActivityNotice />
+
+      {/* Live countdown to the extended submission deadline (8:00 PM GST,
+          Aug 25 2026). Temporary - see DeadlineCountdown.tsx for removal
+          note once the window closes. */}
+      <DeadlineCountdown />
 
       {/* Registration / payment form for partial, self and alumni tiers renders
           here. (The full-scholarship congratulations card and the recipients

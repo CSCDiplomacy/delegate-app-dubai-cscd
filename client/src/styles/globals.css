@@ -1047,6 +1047,24 @@ textarea {
   margin: 0 auto;
 }
 
+/* Once the countdown hits zero, the card drops the maroon "urgent" fill for
+   a plain surface so the bold signal-red "Deadline passed" text has contrast
+   to read against (white-on-maroon isn't legible for that swap). */
+.countdown-card.is-expired {
+  background: var(--card);
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+
+.countdown-passed {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-size: 1.6rem;
+  color: var(--signal);
+}
+
 .remind-card {
   background: var(--surface-2);
   border: 2px solid var(--brass);
