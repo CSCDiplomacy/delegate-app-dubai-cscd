@@ -51,12 +51,12 @@ export const DeadlineCountdown = () => {
         <Icon name="clock" size={14} />
         Deadline update
       </div>
-      <div className="countdown-title">Extended deadline: today at 8:00 PM</div>
+      <div className="countdown-title">Extended deadline: today at 8:00 PM (GST)</div>
       <p className="countdown-sub">
-        Initial deadline: 12:00 PM. We strongly encourage you to complete your
-        submission as early as possible. However, to accommodate any
+        Initial deadline: 12:00 PM GST. We strongly encourage you to complete
+        your submission as early as possible. However, to accommodate any
         urgencies, the absolute maximum deadline has been extended to
-        8:00 PM.
+        8:00 PM Gulf Standard Time (Dubai, UTC+4).
       </p>
       {passed ? (
         <div className="countdown-passed">Deadline passed</div>
