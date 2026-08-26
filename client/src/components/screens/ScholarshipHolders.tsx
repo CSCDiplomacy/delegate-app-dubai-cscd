@@ -17,7 +17,7 @@ export const ScholarshipHolders = () => (
     <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
       <img
         src="/img/ysf-dubai-2026-results-poster.webp"
-        alt="Youth Strategic Forum Dubai 2026 — scholarship holders"
+        alt="Youth Strategic Forum Dubai 2026, scholarship holders"
         style={{ width: '100%', display: 'block' }}
       />
     </div>

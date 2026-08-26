@@ -50,7 +50,7 @@ const REGISTRATION_CTA_LABEL: Record<string, string> = {
 const CONGRATS_COPY: Record<string, string> = {
   full: "You've been awarded a Full Scholarship, covering your participation fee in full. Our team will confirm your place directly.",
   partial: "You've been awarded a Partial (50%) Scholarship. Complete your registration below to secure your place.",
-  special_alumni: "You've been recognized as a Special Alumni honoree — no payment required. Our team will be in touch with next steps.",
+  special_alumni: "You've been recognized as a Special Alumni honoree, no payment required. Our team will be in touch with next steps.",
 };
 
 export const Dashboard = () => {
@@ -125,9 +125,27 @@ export const Dashboard = () => {
           in authStore.ts too). Both components still exist, just unreached
           from here; revive if a future cohort needs them.
 
-          Congratulations card takes the same slot for the tiers that
+          General "Results Announced" headline card, every applicant sees
+          this regardless of tier (even untiered/no-outcome-yet) — the
+          tier-specific congratulations card below is additional, not a
+          replacement, for full/partial/special_alumni. */}
+      {applicant && (
+        <div className="interview-cta">
+          <div className="interview-cta-tag">
+            <Icon name="bell" size={14} />
+            Announcement
+          </div>
+          <div className="interview-cta-title">Results Announced!</div>
+          <div className="interview-cta-sub">
+            Scholarship results for the Youth Strategic Forum, Dubai 2026 are now live. Check
+            your status below.
+          </div>
+        </div>
+      )}
+
+      {/* Congratulations card takes the same slot for the tiers that
           actually received scholarship money (full/partial/special_alumni
-          — see CONGRATS_COPY above; self/alumni pay their own way and get
+          - see CONGRATS_COPY above; self/alumni pay their own way and get
           the registration CTA below instead, no congratulations framing). */}
       {tier && CONGRATS_COPY[tier] && (
         <div className="interview-cta">
@@ -149,7 +167,7 @@ export const Dashboard = () => {
       >
         <img
           src="/img/ysf-dubai-2026-results-poster.webp"
-          alt="Youth Strategic Forum Dubai 2026 — scholarship holders"
+          alt="Youth Strategic Forum Dubai 2026, scholarship holders"
           style={{ width: '100%', display: 'block' }}
         />
       </button>
@@ -173,7 +191,7 @@ export const Dashboard = () => {
           <div className="interview-cta-title">Complete your registration</div>
           <div className="interview-cta-sub">
             Your {REGISTRATION_CTA_LABEL[tier] || 'scholarship'} registration and payment form is
-            ready — a few minutes now secures your place.
+            ready, a few minutes now secures your place.
           </div>
           <span className="interview-cta-go">Go to registration</span>
         </button>
