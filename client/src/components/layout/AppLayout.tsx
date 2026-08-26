@@ -1,7 +1,7 @@
 // Authenticated app shell: sidebar (desktop), topbar, bottom nav (mobile),
 // updates rail, mobile menu drawer, and the active screen.
 import { useEffect } from 'react';
-import { showInterviewTab, useAuthStore } from '../../stores/authStore';
+import { showInterviewTab, showRegistrationTab, useAuthStore } from '../../stores/authStore';
 import { useDelegateStore } from '../../stores/delegateStore';
 import { useUIStore } from '../../stores/uiStore';
 import { Sidebar } from './Sidebar';
@@ -18,6 +18,7 @@ import { Hotel } from '../screens/Hotel';
 import { Schedule } from '../screens/Schedule';
 import { Contact } from '../screens/Contact';
 import { ScholarshipHolders } from '../screens/ScholarshipHolders';
+import { Registration } from '../screens/Registration';
 import { regionForEmail } from '../../data/coordinatorGroups';
 
 const SCREENS = {
@@ -31,6 +32,7 @@ const SCREENS = {
   schedule: Schedule,
   contact: Contact,
   'scholarship-holders': ScholarshipHolders,
+  registration: Registration,
 } as const;
 
 export const AppLayout = () => {
@@ -45,6 +47,7 @@ export const AppLayout = () => {
   const showInterview = showInterviewTab(profile);
   // The Activity tab only exists for delegates matched to a live-session group.
   const showActivity = !!regionForEmail(profile?.email);
+  const showRegistration = showRegistrationTab(profile);
 
   // If a gated tab disappears (submitted / enrolled / not in a group) while it's
   // active, fall back to the dashboard.
@@ -52,13 +55,14 @@ export const AppLayout = () => {
     if (!profile) return;
     if (activeScreen === 'interview' && !showInterview) switchScreen('dashboard');
     if (activeScreen === 'activity' && !showActivity) switchScreen('dashboard');
-  }, [activeScreen, profile, showInterview, showActivity, switchScreen]);
+    if (activeScreen === 'registration' && !showRegistration) switchScreen('dashboard');
+  }, [activeScreen, profile, showInterview, showActivity, showRegistration, switchScreen]);
 
   const ScreenComponent = SCREENS[activeScreen] || Dashboard;
 
   return (
     <div className="layout">
-      <Sidebar showInterview={showInterview} showActivity={showActivity} />
+      <Sidebar showInterview={showInterview} showActivity={showActivity} showRegistration={showRegistration} />
 
       <main className="main">
         <TopBar />

@@ -1,13 +1,14 @@
-// Dashboard. Results (once tiered) publish here inline - there is no separate
-// Results screen. Evaluated applicants get the announcement banner and their
-// own scholarship outcome. Event tiles stay visible but read "Coming soon"
-// until data is published. Note: this was ported from Jakarta's post-interview
-// phase; Dubai's interview window is still open (see interviewLabel below),
-// so don't assume interviews-closed copy elsewhere in this file without
-// checking against the current phase.
+// Dashboard. Results are announced (2026-08-27): the scholarship-holders
+// banner leads the page, and a tiered delegate who still owes a
+// registration form gets a CTA linking to the dedicated Registration screen
+// (client/src/components/screens/Registration.tsx) — the form itself no
+// longer embeds inline here (moved off-dashboard per request). Event tiles
+// stay visible but read "Coming soon" until data is published. Interviews
+// are closed (showInterviewTab hardcoded off in authStore.ts) — don't
+// re-add interview-open copy here without checking that's still current.
 import {
   isApplicant,
-  isUnderReview,
+  showRegistrationTab,
   useAuthStore,
 } from '../../stores/authStore';
 import { useUIStore } from '../../stores/uiStore';
@@ -15,8 +16,6 @@ import { Icon } from '../Icon';
 import type { IconName } from '../Icon';
 import type { Screen } from '../../types';
 import { ActivityNotice } from './ActivityNotice';
-import { DeadlineCountdown } from './DeadlineCountdown';
-import { TierResult } from './Results';
 
 const TILES: Array<{ screen: Screen; icon: IconName; title: string; sub: string }> = [
   { screen: 'scholarship-holders', icon: 'award', title: 'Scholarship Holders', sub: 'The fully & partially funded roster' },
@@ -37,23 +36,27 @@ const CATEGORY_LABELS: Record<string, string> = {
   special_alumni: 'Special Alumni',
 };
 
+// CTA copy for the "you still owe a form" card, by tier.
+const REGISTRATION_CTA_LABEL: Record<string, string> = {
+  partial: 'partial scholarship',
+  self: 'self-financed',
+  alumni: 'alumni',
+};
+
 export const Dashboard = () => {
   const { profile } = useAuthStore();
   const { switchScreen } = useUIStore();
 
   const applicant = isApplicant(profile);
-  const underReview = isUnderReview(profile);
   const tier = profile?.result_tier || null;
+  const needsRegistration = showRegistrationTab(profile);
 
   // Results are published, so anyone with a tier reads "Result announced".
-  // Tier - not interview status - is what decides this.
   const statusLabel = !applicant ? 'Confirmed delegate' : tier ? 'Result announced' : 'Applicant';
   const statusChip = !applicant || tier ? 'chip-ok' : 'chip-pending';
-  // 'Closed' would be wrong while the interview window is still open (Dubai's
-  // current phase) - only say that once there's an actual deadline-passed
-  // signal to check against. For now, an applicant who hasn't submitted yet
-  // just has an open interview.
-  const interviewLabel = underReview ? 'Completed' : applicant ? 'Open' : 'N/A';
+  // Interviews are closed globally now (see file header) — an applicant
+  // with no tier yet just reads "Closed", not "Open".
+  const interviewLabel = 'Closed';
   // Once a tier is on record we show the category (e.g. "Partial (50%)") in
   // the third credential slot instead of interview status, so the result
   // card itself needs no pill.
@@ -107,27 +110,24 @@ export const Dashboard = () => {
         </div>
       </div>
 
-      {/* Interview reminder - the portal's own equivalent of the credential
-          email's "Interview open" badge / "Start your interview" CTA. Shows
-          only while there's actually something to do: an applicant who
-          hasn't submitted yet (isUnderReview already covers submitted +
-          under-processing). Sits above the activity notice/tiles so it's
-          the first action a new applicant sees, matching the "dashboard
-          leads with the interview" intent. */}
-      {applicant && !underReview && (
-        <button className="interview-cta" onClick={() => switchScreen('interview')}>
-          <div className="interview-cta-tag">
-            <Icon name="video" size={14} />
-            Interview open
-          </div>
-          <div className="interview-cta-title">Complete your interview</div>
-          <div className="interview-cta-sub">
-            A few minutes now is all it takes, and it's required for scholarship
-            consideration. Pick up right where you left off.
-          </div>
-          <span className="interview-cta-go">Start your interview</span>
-        </button>
-      )}
+      {/* Interview CTA + deadline countdown removed 2026-08-27 — interviews
+          are closed and results are out (showInterviewTab is hardcoded off
+          in authStore.ts too). Both components still exist, just unreached
+          from here; revive if a future cohort needs them. */}
+
+      {/* Scholarship results banner (2026-08-27) — leads the page now that
+          results are announced. Links into the Scholarship Holders screen. */}
+      <button
+        className="card"
+        style={{ padding: 0, overflow: 'hidden', border: 0, cursor: 'pointer' }}
+        onClick={() => switchScreen('scholarship-holders')}
+      >
+        <img
+          src="/img/ysf-dubai-2026-results-poster.webp"
+          alt="Youth Strategic Forum Dubai 2026 — scholarship holders"
+          style={{ width: '100%', display: 'block' }}
+        />
+      </button>
 
       {/* Notification for group members: their live-session activity is
           published. Sits right under identity so it's the first thing they see;
@@ -135,17 +135,24 @@ export const Dashboard = () => {
           delegates. */}
       <ActivityNotice />
 
-      {/* Live countdown to the extended submission deadline (8:00 PM GST,
-          Aug 25 2026). Temporary - see DeadlineCountdown.tsx for removal
-          note once the window closes. */}
-      <DeadlineCountdown />
-
-      {/* Registration / payment form for partial, self and alumni tiers renders
-          here. (The full-scholarship congratulations card and the recipients
-          banner were removed per request; the group activity now lives in its
-          own "Activity" tab.) The form host stays so un-registered delegates
-          can still register. */}
-      {tier && <TierResult tier={tier} />}
+      {/* Registration CTA (2026-08-27) — the form itself moved to its own
+          Registration screen (see file header); this just links there.
+          Disappears the moment registration_status flips to 'submitted'
+          (showRegistrationTab), same pattern the old interview CTA used. */}
+      {needsRegistration && tier && (
+        <button className="interview-cta" onClick={() => switchScreen('registration')}>
+          <div className="interview-cta-tag">
+            <Icon name="award" size={14} />
+            Registration open
+          </div>
+          <div className="interview-cta-title">Complete your registration</div>
+          <div className="interview-cta-sub">
+            Your {REGISTRATION_CTA_LABEL[tier] || 'scholarship'} registration and payment form is
+            ready — a few minutes now secures your place.
+          </div>
+          <span className="interview-cta-go">Go to registration</span>
+        </button>
+      )}
 
       {/* Section tiles - core navigation into the event content, so it
           stays near the top rather than after the promotional material

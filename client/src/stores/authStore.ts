@@ -178,12 +178,11 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 export const isApplicant = (profile: Profile | null) =>
   (profile?.status || 'unenrolled') !== 'enrolled';
 
-// Dubai's interview stage is open: any applicant (unenrolled/underprocessing)
-// sees the tab. It stays visible after they submit too — Interview.tsx itself
-// renders the terminal "submitted" notice in that state — and disappears once
-// they're enrolled (routes/me.js's GET /interview mirrors this with the
-// 'not_applicable' state for enrolled delegates).
-export const showInterviewTab = (profile: Profile | null) => isApplicant(profile);
+// Interviews are closed and results are out (2026-08-27) — hardcoded off,
+// same treatment Jakarta got once its own interview window closed. The
+// screen/route code is untouched, just unreachable; flip this back on if a
+// future cohort needs it.
+export const showInterviewTab = (_profile: Profile | null) => false;
 
 // A submitted applicant awaiting the results decision. `result_status` is the
 // authoritative signal once scripts/reconcile-interviews.js has run; the
@@ -195,3 +194,14 @@ export const isUnderReview = (profile: Profile | null) => {
   if (profile?.result_status === 'not_evaluated') return false;
   return profile?.status === 'underprocessing' || profile?.interview_status === 'submitted';
 };
+
+// A tiered delegate who still owes a registration/payment form (partial,
+// self, alumni — full and special_alumni never get one, see Results.tsx).
+// The tab (and the Dashboard CTA that links to it) disappears the moment
+// registration_status flips to 'submitted' — same "gating is UX, not
+// security" posture as showInterviewTab.
+const TIERS_WITH_FORM = ['partial', 'self', 'alumni'];
+export const showRegistrationTab = (profile: Profile | null) =>
+  !!profile?.result_tier &&
+  TIERS_WITH_FORM.includes(profile.result_tier) &&
+  profile.registration_status !== 'submitted';
