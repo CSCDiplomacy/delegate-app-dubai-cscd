@@ -11,7 +11,8 @@ const publicRoutes = require('./routes/public');
 const meRoutes = require('./routes/me');
 const dataRoutes = require('./routes/data');
 const interviewRoutes = require('./routes/interview');
-const registrationRoutes = require('./routes/registration');
+const registrationRoutes = require('./routes/registration'); // legacy Cognito webhook, no longer wired to a live form
+const jotformRegistrationRoutes = require('./routes/jotform-registration');
 const enrollRoutes = require('./routes/enroll');
 const analyticsRoutes = require('./routes/analytics');
 const { startReminderJob } = require('./lib/reminders');
@@ -37,9 +38,12 @@ app.use(
         fontSrc: ["'self'", 'https://fonts.gstatic.com', 'https://www.cognitoforms.com', 'https://static.cognitoforms.com'],
         imgSrc: ["'self'", 'data:', 'https:'],
         connectSrc: ["'self'", 'https://*.supabase.co', 'https://*.aidaform.com', 'https://www.cognitoforms.com', 'https://static.cognitoforms.com'],
-        // Both third-party forms are embedded in <iframe>s, so their hosts must
-        // be allowed frame sources: AidaForm (interview), Cognito (registration).
-        frameSrc: ["'self'", 'https://*.aidaform.com', 'https://www.cognitoforms.com'],
+        // Third-party forms are embedded in <iframe>s, so their hosts must be
+        // allowed frame sources: AidaForm (interview), Cognito (legacy —
+        // registration forms moved to JotForm), JotForm (registration, current).
+        // JotForm forms with a payment field serve from the pci.jotform.com
+        // subdomain (PCI-scope), not the default form.jotform.com.
+        frameSrc: ["'self'", 'https://*.aidaform.com', 'https://www.cognitoforms.com', 'https://pci.jotform.com'],
         manifestSrc: ["'self'"],
         objectSrc: ["'none'"],
       },
@@ -133,6 +137,7 @@ app.use('/api/me', meRoutes);
 app.use('/api', dataRoutes);
 app.use('/api/interview', interviewRoutes);
 app.use('/api/registration', registrationRoutes);
+app.use('/api/registration-jotform', jotformRegistrationRoutes);
 app.use('/api/enroll', enrollRoutes);
 app.use('/api/internal', analyticsRoutes);
 

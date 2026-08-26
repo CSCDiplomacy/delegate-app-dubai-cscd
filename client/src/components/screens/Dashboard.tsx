@@ -33,6 +33,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   partial: 'Partial (50%)',
   self: 'Self-financed',
   alumni: 'Alumni',
+  special_alumni: 'Special Alumni',
 };
 
 export const Dashboard = () => {

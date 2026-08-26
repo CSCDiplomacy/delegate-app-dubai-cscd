@@ -19,7 +19,7 @@ export interface Profile {
 // Scholarship outcome from the video-submission evaluation. `full` is the
 // selected cohort named on the results banner; `partial` and `full` both
 // complete registration through a Cognito form.
-export type ResultTier = 'self' | 'partial' | 'full' | 'alumni';
+export type ResultTier = 'self' | 'partial' | 'full' | 'alumni' | 'special_alumni';
 
 // --- Interview (GET /api/me/interview) --------------------------------------
 export interface InterviewInfo {

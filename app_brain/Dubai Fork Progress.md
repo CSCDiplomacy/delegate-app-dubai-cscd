@@ -99,12 +99,227 @@ signal; flagged as an open question rather than resolved silently. Full
 detail and rationale in [[Dubai Design System]]. `npm run build` clean;
 verified visually both passes (Playwright, light + dark login screen).
 
+## 2026-08-25
+
+### Admin app — read-only Feedback page
+
+`admin_app_dubai` gets a new `/feedback` nav item: lists the portal's
+`feedback` table (Contact-screen ratings/comments), newest first, average
+rating in the summary line. Read-only, no `admin_audit_log` writes. Needed
+because `feedback` has no client-select RLS policy — previously the only way
+to see it was the loopback-token `analytics-dashboard.html` JSON dump.
+Non-obvious bit: `feedback.user_id` FKs to `auth.users`, not
+`public.delegates`, so PostgREST can't embed the delegate row on that
+column — fetched and joined in JS by id instead. `npx tsc --noEmit` and
+`next build` both clean; **not yet committed/deployed** — sitting as a local
+diff in `admin_app_dubai`, pending push + `vercel deploy --prod`. Full detail
+in [[Admin Dashboard]].
+
+## 2026-08-26
+
+### Results/tiers phase — kickoff, still blocked on Cognito form ids
+
+Client hasn't delivered the actual results list yet (no evaluation workbook
+for Dubai exists anywhere in the repo/brain), but started getting the portal
+ready ahead of it. Audited the results-rendering path
+([[Results and Tiers]]'s tier table) against the Dubai codebase: it turns out
+**the whole pipeline is already ported over from Jakarta, untouched, sitting
+dormant** — `Results.tsx`/`Dashboard.tsx`/`routes/me.js`'s `/profile` +
+`/accept-scholarship` all already read `delegates.result_tier` and branch
+`full` (renders nothing — the congratulations card was removed per an earlier
+client request, team confirms full-scholarship winners directly, matching
+today's "for fully they've been selected already") / `partial` (Cognito form
+**79**) / `self` (Cognito form **78**) / `alumni` (form **81**). Confirmed via
+`git log` these files haven't been touched since **2026-08-21**, i.e. before
+the Dubai fork branched on 2026-08-23 — this is inherited Jakarta code, not
+something built for Dubai.
+
+Two concrete gaps found before this can actually work for a Dubai delegate:
+
+- **`CognitoForm.tsx`'s `ACCOUNT_KEY` (`ufIsh1RjbUCGYxX0PV-sug`) and
+  `COGNITO_FORM_IDS` (`{ self: '78', partial: '79', alumni: '81' }`) are
+  CSCD's Jakarta-titled Cognito forms** ("Self Financed", "Partial (50%
+  Scholarship)" — YPDS branding). [[Results and Tiers]] already flagged this
+  as "needs re-verification, not copy-as-is" for Dubai. Still unresolved:
+  unknown whether Dubai reuses this same Cognito account with new
+  Dubai-branded forms (new form ids, same `ACCOUNT_KEY`) or a separate
+  account entirely. **Blocking — need the real Dubai form ids (and account
+  key, if different) from whoever has Cognito admin access before wiring
+  self/partial forms in for real.**
+- **`routes/registration.js`'s `APPLICANT_ID_RE` is still
+  `/YPDS-JKT-F?\d+/gi`** (and `normaliseApplicantId`'s regex matches it) —
+  Dubai's confirmed scheme is `YSF-DXB-2026-FF###` (see the 2026-08-23 entry
+  above). As-is, the Cognito registration webhook cannot recognise *any*
+  Dubai applicant id in a submission payload, so `registration_status` would
+  never flip for a Dubai self/partial delegate even with correct form ids
+  wired in. Same issue in `scripts/upload-vouchers.js`'s filename regex,
+  lower urgency (vouchers aren't part of this phase). Was already tracked as
+  a "known follow-up" below; today's audit confirms it's now a hard blocker
+  for this specific phase, not just a someday item.
+
+Not blocking, unchanged from Jakarta and presumed fine as-is:
+`www.cognitoforms.com` CSP entries in `app.js`, the seamless-embed mechanics
+in `CognitoForm.tsx`, the `full`-tier no-form/direct-confirm behavior, and
+`COGNITO_WEBHOOK_SECRET` (documented in `.env.example`, presence in the live
+`.env` not checked here per the "never read `.env`" rule — worth a
+presence-only check before this ships).
+
+**Client decision (same day): registration forms move to JotForm, not
+Cognito.** Investigated JotForm before wiring anything — an existing
+"Self Financed - Youth Strategic Forum - Dubai 2026" form (id
+`261907698196475`) turned out to be a **different, already-live pipeline**
+(marketing-site intake, own autoincrement ID scheme, own webhook into an
+n8n workflow on Railway) — not something to repurpose blindly. No dedicated
+Partial form exists yet either. **Not resolved yet**: whether that Self
+Financed form gets adapted (add an `ApplicantId` hidden field + a second
+webhook into this portal) or the portal gets its own dedicated forms built
+from scratch. Paused pending the results data actually landing (below) —
+worth revisiting now that it has.
+
+### Results workbook received, reconciled against Supabase — not yet written
+
+Client delivered `YSF-Dubai_result_list.xlsx` (repo root, gitignored-PII
+territory, not `data/*.json`), then a corrected `ysf-dubai-result-recreated.xlsx`
+superseding it same day. Structure differs from Jakarta's evaluation workbook
+(no dedicated "Self" sheet — confirmed with the client that **self tier is
+the implicit remainder**: everyone scored in the master `Sheet1` tab who
+isn't already pulled into `Full`/`Partial`/`Alumni`/`Special Alumni`).
+
+**Tier vocabulary just grew by one.** The recreated workbook split what was
+one `Alumni` sheet into two:
+- `Alumni` (1 person, Ramazan/`FF330`) — **pays**, same treatment as
+  `partial`/`self` (client decision, resolving the "TBD" flagged in
+  [[Results and Tiers]] since Jakarta).
+- **`Special Alumni`** (3 people) — **brand new tier**, not in the schema or
+  client code anywhere yet. Client decision: **no payment**, same treatment
+  as `full` (congratulations only). Needs a DB migration (constraint/enum
+  currently only allows `full`/`partial`/`self`/`alumni`) and new branches in
+  `Results.tsx`/`Dashboard.tsx`'s `CATEGORY_LABELS` before it can render
+  anything. **Not yet built.**
+
+Reconciled `reponses/dubai-tiers.csv` (gitignored) against a live Supabase
+snapshot (491 delegates seeded — up from the 228 the last entry above
+recorded, confirming a further batch landed without this doc being updated
+at the time) using `scripts/reconcile-tiers.js --dry-run`. Result: **491/491
+matched by applicant_id, 0 conflicts** — full 10, partial 30, alumni 1,
+special_alumni 3, self 447. The self count includes 76 delegates who had no
+evaluation-sheet entry at all; client decision was to fold them into `self`
+rather than leave them untiered.
+
+Cross-checking the sheet against real Supabase data (not just internal
+consistency) caught one genuine error a name-only read would have missed:
+the sheet listed `YSF-DXB-2026-FF47` against "Prashant," but Supabase says
+FF47 is Mansi's ID — Prashant/Prashanth Devendrappa's real ID is `FF473`
+(digit-drop typo, 473→47). Both are correctly self-tiered now. Three
+blank-applicant-id rows (Layla Eddiakr, Elmira İsmayıllı, Dixa Patel) were
+also backfilled via a confirmed-unique name match against Supabase, same
+method Jakarta's own script already uses as its lowest-confidence fallback.
+51 more apparent "mismatches" from that same cross-check turned out to be
+spelling/transliteration noise on real matches (Alaru/Aiaru Abzikir,
+Ijaz/Iljaz Ajvazi, etc.) — harmless, left as-is.
+
+Also surfaced, not yet resolved: two Dubai-titled JotForm applications
+(`FF1`/`naasrbilal@gmail.com`, the documented test entry from original
+seeding, and `FF22`/`hassanmehar580@gmail.com`, the JotForm account owner's
+own email — an undocumented second test entry) and a duplicate placeholder
+pair (`FF1000`/`FF1001`, both "Bzazou Ghita" — leftover from the original
+Tatiana/FF37 ID-collision cleanup that the earlier entry above thought was
+resolved by her "keeping FF37"; she's actually not at FF37 at all now).
+Client decision: fold all of them into `self` anyway with everyone else
+rather than special-case-exclude; cleaning up the test/duplicate accounts
+themselves is a separate follow-up.
+
+**Written to Supabase** (2026-08-27): all 491 delegates now have
+`result_tier` set — full 10, partial 30, alumni 1, special_alumni 3, self
+447. Two writes: `node scripts/reconcile-tiers.js --csv reponses/dubai-tiers-live.csv`
+for the 488 non-special_alumni rows (schema didn't support the new tier yet
+at that point), then a `2026-08-27-add-special-alumni-tier.sql` migration
+(applied via the Supabase MCP's `apply_migration` against `pjdbvjiemguepdyzhlft`
+— that MCP tool works fine for DDL on this project despite the earlier
+`execute_sql`-403 memory; only `execute_sql` was denied, not `apply_migration`)
+followed by a second small write for the 3 special_alumni rows.
+
+### Registration moves to JotForm — built same day
+
+Client decision: registration forms are JotForm, not Cognito (the earlier
+"needs re-verification" flag in [[Results and Tiers]] is resolved this way).
+Three live forms, confirmed by title via the JotForm API, all created
+2026-08-26, structurally identical (Full Name, Email, Declarations, a Stripe
+payment block, and a visible `applicantId` text field regex-validated
+against `YSF-DXB-2026-FF###`):
+
+| tier | JotForm id |
+|---|---|
+| partial | `262376041526455` |
+| self | `262375715752463` |
+| alumni | `262375928037465` |
+
+Built:
+- `client/src/components/JotForm.tsx` — plain `<iframe>` embed (JotForm's
+  payment-enabled forms serve from `pci.jotform.com`), prefills the
+  `applicantId` field via a `?applicantId=<id>` query param on the iframe
+  src. Simpler than Cognito's script-injected "seamless" embed at the cost of
+  not inheriting the portal's CSS. `CognitoForm.tsx` is left in place, unused.
+- `Results.tsx` rewritten to use it; `full` and the new `special_alumni` both
+  render nothing (no payment); `partial`/`self`/`alumni` all get a JotForm
+  embed now (alumni is new — client decision same day: alumni pays, resolving
+  the Jakarta-era "TBD" note).
+- `types/index.ts`'s `ResultTier` and `Dashboard.tsx`'s `CATEGORY_LABELS`
+  extended with `special_alumni`.
+- `app.js` CSP: added `https://pci.jotform.com` to `frameSrc`.
+- **New route** `routes/jotform-registration.js`, mounted at
+  `/api/registration-jotform` — structurally mirrors `routes/registration.js`
+  (secret-protected path, idempotent, match-by-applicant-id) but a different
+  payload shape: JotForm POSTs `multipart/form-data` with the actual answers
+  JSON-encoded inside a `rawRequest` field, so this route needed `multer`
+  (`.none()`, no file fields expected) as a new dependency — added at
+  `multer@2.x` specifically (1.x has an open CVE). Matches applicant ids with
+  a **Dubai-correct** regex (`YSF-DXB-\d{4}-FF\d+`) — `routes/registration.js`
+  still has Jakarta's `YPDS-JKT-F?\d+` and is now legacy/unwired, not fixed as
+  part of this change since nothing points at it anymore.
+- `lib/email.js` gained `sendRegistrationReceivedEmail()` — fired
+  best-effort from the new webhook. **Deliberately simple copy**, not the
+  itemized-invoice template (fee breakdown, "what happens next" steps,
+  scholarship inclusions list) the client shared as an n8n Code-node
+  snippet — that template is for a *different* flow (pre-selection
+  application-fee receipts, "Applied For: Fully Funded Scholarship") and its
+  `d.fee`/`d.id`/`d.txnId`/`d.Date`/`d.bcc` fields aren't confirmed to map
+  onto what these three JotForm forms' Stripe blocks actually return in
+  `rawRequest`. Guessing that mapping risks a wrong dollar amount reaching a
+  real delegate, so it wasn't attempted — **flagged as an unresolved
+  follow-up**, not silently done.
+- `.env.example` updated: `COGNITO_WEBHOOK_SECRET` re-labeled legacy; new
+  `JOTFORM_WEBHOOK_SECRET` documented. The real secret was generated but
+  **could not be written to the live `.env`** (editing `.env` is blocked by
+  the harness's permission classifier) — handed to the user to add by hand.
+
+**Two things still need a human, not code**:
+1. The `JOTFORM_WEBHOOK_SECRET` value needs adding to the live `.env` (given
+   to the user directly, not recorded in this doc since it's a live secret).
+2. **Webhook configuration on the 3 JotForm forms failed via the MCP**
+   (`form/{id}/webhooks` POST returns `401 unauthorized` — the connected
+   JotForm API key can read forms but can't write webhooks; GET on the same
+   endpoint works fine). Needs a human to add
+   `https://delegate.thecscd.org/api/registration-jotform/webhook/<secret>`
+   on each of the 3 forms by hand (Settings → Integrations → Webhooks), or a
+   JotForm key with write scope.
+
+`npm run build` (tsc + vite) and an `app.js` boot smoke test both clean
+after all of the above.
+
 ## What's still open
 
+- **Results/tiers phase is now started but blocked** — see above: need real
+  Dubai Cognito form ids (self/partial, +account key if different) and the
+  `APPLICANT_ID_RE` regex fix in `routes/registration.js` before the
+  already-built self/partial registration flow can work for a real Dubai
+  delegate. No Dubai evaluation workbook/results list exists yet either —
+  that's the separate input `scripts/reconcile-tiers.js` will need once the
+  client delivers it.
 - **`EVENT_NAME` in `.env`** ("YSF Dubai 2026") doesn't match the form used elsewhere in the portal — needs a decision, not resolved here.
 - **Sending credentials to the 228 seeded delegates** hasn't happened yet — `scripts/send_credentials.py` is ready, the deadline is set, and the anon key works, so nothing code-side is blocking it anymore. Just needs to actually be run against `dubai-credentials.csv`.
 - **Tatiana Zvenigorodskaia** needs a freshly-assigned applicant ID before she can be seeded (see above) — she's the one known gap in the 228. **Decided (2026-08-23): not urgent, deliberately deferred.** A further batch of candidates is expected with IDs greater than 230 — she'll be assigned an ID and seeded together with that batch rather than one-off now. ⏰ **Remind the user about her when they bring the next batch of candidate IDs.**
-- `routes/registration.js`'s `APPLICANT_ID_RE` and `scripts/upload-vouchers.js` still expect Jakarta's `YPDS-JKT-F###` format, not the confirmed `YSF-DXB-2026-FF###` — low urgency while registration stays postponed, but a known follow-up.
+- `routes/registration.js`'s `APPLICANT_ID_RE` and `scripts/upload-vouchers.js` still expect Jakarta's `YPDS-JKT-F###` format, not the confirmed `YSF-DXB-2026-FF###` — see the results-phase entry above, this is now a hard blocker rather than a someday item.
 - **Leaked-password protection** off in Supabase Auth — low-priority toggle.
 - **AidaForm webhook secret** needs to be configured on AidaForm's own dashboard (manual, outside this repo) before webhook-driven interview submissions will actually flip `interview_status`.
 - Everything else in [[Dubai Fork Plan]]'s Phase 3/4 (registration mechanism, `coordinatorGroups.ts` deletion, email toolkit) is still untouched and still blocked on the same open decisions listed there.
