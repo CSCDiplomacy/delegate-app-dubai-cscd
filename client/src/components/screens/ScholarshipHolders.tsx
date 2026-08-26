@@ -28,8 +28,11 @@ export const ScholarshipHolders = () => (
       </div>
       <div className="card">
         <ol className="dot-list">
-          {FULLY_FUNDED.map((name) => (
-            <li key={name}>{name}</li>
+          {FULLY_FUNDED.map(({ name, nationality }) => (
+            <li key={name}>
+              <span className="chip" style={{ marginRight: '0.6em' }}>{nationality}</span>
+              {name}
+            </li>
           ))}
         </ol>
       </div>
@@ -41,8 +44,11 @@ export const ScholarshipHolders = () => (
       </div>
       <div className="card">
         <ol className="dot-list">
-          {PARTIALLY_FUNDED.map((name) => (
-            <li key={name}>{name}</li>
+          {PARTIALLY_FUNDED.map(({ name, nationality }) => (
+            <li key={name}>
+              <span className="chip" style={{ marginRight: '0.6em' }}>{nationality}</span>
+              {name}
+            </li>
           ))}
         </ol>
       </div>

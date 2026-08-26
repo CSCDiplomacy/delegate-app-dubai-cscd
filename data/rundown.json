@@ -34,8 +34,8 @@
     {
       "date": "2026-09-23",
       "label": "September 23, 2026",
-      "title": "Modules 1–4 & Desert Safari",
-      "description": "A full day of forum modules at the Mohammed Bin Rashid Library, from AI and creativity to smart cities and design, closing with a desert safari.",
+      "title": "Modules 1–4",
+      "description": "A full day of forum modules at the Mohammed Bin Rashid Library, from AI and creativity to smart cities and design.",
       "items": [
         {
           "time": "09:30",
@@ -71,21 +71,14 @@
           "venue": "Mohammed Bin Rashid Library",
           "type": "workshop",
           "description": "Visual culture, branding, photography and design in modern lifestyles."
-        },
-        {
-          "time": "19:00",
-          "title": "Desert Safari",
-          "venue": "Dubai Desert",
-          "type": "social",
-          "description": "A dune drive into the Dubai desert with a cultural camp and dinner under the stars."
         }
       ]
     },
     {
       "date": "2026-09-24",
       "label": "September 24, 2026",
-      "title": "Modules 5–6 & Farewell",
-      "description": "The final module sessions, a policy lab, the certification ceremony, and a closing address at the Mohammed Bin Rashid Library.",
+      "title": "Modules 5–6, Farewell & Desert Safari",
+      "description": "The final module sessions, a policy lab, the certification ceremony, and a closing address at the Mohammed Bin Rashid Library, closing with a desert safari.",
       "items": [
         {
           "time": "09:30",
@@ -121,6 +114,13 @@
           "venue": "Mohammed Bin Rashid Library",
           "type": "ceremony",
           "description": "A final word and a group photograph to close the forum."
+        },
+        {
+          "time": "19:00",
+          "title": "Desert Safari",
+          "venue": "Dubai Desert",
+          "type": "social",
+          "description": "A dune drive into the Dubai desert with a cultural camp and dinner under the stars."
         }
       ]
     },

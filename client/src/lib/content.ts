@@ -91,48 +91,61 @@ export const EDITIONS: Array<{
 // wired through the data/*.json + API pipeline that Rundown/Visits/etc use
 // for content that's still being actively published — same precedent as
 // THEMES/EXPERIENCE/EDITIONS above.
-export const FULLY_FUNDED: string[] = [
-  'Aiaru Abzikir',
-  'Hanaa Haleem',
-  'Husam Yaqoob Hashim Al Balushi',
-  'Ian Emiliano Rivera Cruz',
-  'Marianne Ziad Al Halabi',
-  'Mugahid Abualgasim Musa Elnour',
-  'Naisha Aree',
-  'Nayana Chandran',
-  'Renee Naomi Odle',
-  'Saha Rathor',
+//
+// Nationality added 2026-08-27, pulled from the applicant workbook's "All
+// data 22" sheet (Nationality column, matched by exact normalised name
+// against "Full Name (as per passport)"), cross-checked against "All Data
+// 12". Source rows were a mix of demonym adjectives and country nouns
+// ("American"/"Ghanaian" vs "Ghana"/"Kazakhstan") — normalised to plain
+// country names here so the roster reads consistently. Self-reported by the
+// applicant, not otherwise verified.
+export interface ScholarshipHolder {
+  name: string;
+  nationality: string;
+}
+
+export const FULLY_FUNDED: ScholarshipHolder[] = [
+  { name: 'Aiaru Abzikir', nationality: 'Kazakhstan' },
+  { name: 'Hanaa Haleem', nationality: 'United States' },
+  { name: 'Husam Yaqoob Hashim Al Balushi', nationality: 'Oman' },
+  { name: 'Ian Emiliano Rivera Cruz', nationality: 'Mexico' },
+  { name: 'Marianne Ziad Al Halabi', nationality: 'Lebanon' },
+  { name: 'Mugahid Abualgasim Musa Elnour', nationality: 'Sudan' },
+  { name: 'Naisha Aree', nationality: 'Thailand' },
+  { name: 'Nayana Chandran', nationality: 'India' },
+  { name: 'Renee Naomi Odle', nationality: 'Barbados' },
+  { name: 'Saha Rathor', nationality: 'Pakistan' },
 ];
 
-export const PARTIALLY_FUNDED: string[] = [
-  'Acheampong Samuel Agyei',
-  'Akash Kumar',
-  'Amanda Da Silva Martins',
-  'Arjun Vij',
-  'Ceyda Gursel',
-  'Devi Krishna H',
-  'Ege Dolu',
-  'Eman Ahmed Kidwai',
-  'Farah Kharrat',
-  'Gerald Tahiri',
-  'Goh Chen How, Calvin',
-  'Himanshi Gulia',
-  'Indira Tabaeva',
-  'Khalid Ibnelbachyr',
-  'Lê Bình Minh',
-  'Mahreen Adil',
-  'Mahsati Mehdiyeva',
-  'Mariama Jawneh',
-  'Mercy Mabiza',
-  'Naba Ali',
-  'Nomin Azjargal',
-  'Noor Ul Ain',
-  'Nuttha Teanpitak',
-  'Nyame Ishmael Bonsu',
-  'Rishabh Sikarwal',
-  'Sambhav Jain',
-  'Sami Fahd Bakr Baghdadi',
-  'Shruti Hans',
-  'Steffi Abhishek Kamble',
-  'Tatiana Zvenigorodskaia',
+export const PARTIALLY_FUNDED: ScholarshipHolder[] = [
+  { name: 'Acheampong Samuel Agyei', nationality: 'Ghana' },
+  { name: 'Akash Kumar', nationality: 'Pakistan' },
+  { name: 'Amanda Da Silva Martins', nationality: 'Brazil' },
+  { name: 'Arjun Vij', nationality: 'India' },
+  { name: 'Ceyda Gursel', nationality: 'Serbia' },
+  { name: 'Devi Krishna H', nationality: 'United Arab Emirates' },
+  { name: 'Ege Dolu', nationality: 'Türkiye' },
+  { name: 'Eman Ahmed Kidwai', nationality: 'Pakistan' },
+  { name: 'Farah Kharrat', nationality: 'Tunisia' },
+  { name: 'Gerald Tahiri', nationality: 'Albania' },
+  { name: 'Goh Chen How, Calvin', nationality: 'Singapore' },
+  { name: 'Himanshi Gulia', nationality: 'India' },
+  { name: 'Indira Tabaeva', nationality: 'Kyrgyzstan' },
+  { name: 'Khalid Ibnelbachyr', nationality: 'France' },
+  { name: 'Lê Bình Minh', nationality: 'Vietnam' },
+  { name: 'Mahreen Adil', nationality: 'Pakistan' },
+  { name: 'Mahsati Mehdiyeva', nationality: 'Azerbaijan' },
+  { name: 'Mariama Jawneh', nationality: 'Gambia' },
+  { name: 'Mercy Mabiza', nationality: 'Zimbabwe' },
+  { name: 'Naba Ali', nationality: 'India' },
+  { name: 'Nomin Azjargal', nationality: 'Mongolia' },
+  { name: 'Noor Ul Ain', nationality: 'Pakistan' },
+  { name: 'Nuttha Teanpitak', nationality: 'Thailand' },
+  { name: 'Nyame Ishmael Bonsu', nationality: 'Ghana' },
+  { name: 'Rishabh Sikarwal', nationality: 'India' },
+  { name: 'Sambhav Jain', nationality: 'India' },
+  { name: 'Sami Fahd Bakr Baghdadi', nationality: 'United Kingdom' },
+  { name: 'Shruti Hans', nationality: 'India' },
+  { name: 'Steffi Abhishek Kamble', nationality: 'India' },
+  { name: 'Tatiana Zvenigorodskaia', nationality: 'Russia' },
 ];
