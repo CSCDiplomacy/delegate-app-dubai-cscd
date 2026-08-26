@@ -28,36 +28,30 @@ const TILES: Array<{ screen: Screen; icon: IconName; title: string; sub: string 
 // Short, credential-friendly label for each tier. The result card no longer
 // carries a "Partial scholarship" pill of its own; this is where a delegate
 // reads which category they fall into, right alongside their ID and status.
+// Matches the wording used on the Scholarship Holders page.
 const CATEGORY_LABELS: Record<string, string> = {
-  full: 'Full scholarship',
-  partial: 'Partial (50%)',
-  self: 'Self-financed',
+  full: 'Fully Funded Scholarship',
+  partial: 'Partially Funded (50%) Scholarship',
+  self: 'Self-Financed',
   alumni: 'Alumni',
   special_alumni: 'Special Alumni',
 };
 
-// CTA copy for the "you still owe a form" card, by tier.
-const REGISTRATION_CTA_LABEL: Record<string, string> = {
-  partial: 'partial scholarship',
-  self: 'self-financed',
-  alumni: 'alumni',
-};
+// Whether a tier's outcome is a scholarship win ("Congratulations" framing)
+// or not (a plain "Your result" note) - full/partial/special_alumni won
+// something, self/alumni pay their own way.
+const IS_SCHOLARSHIP_TIER = new Set(['full', 'partial', 'special_alumni']);
 
-// Congratulations card copy (2026-08-27) — only the tiers that actually
-// received scholarship money: full, partial, special_alumni. self and
-// alumni pay their own way, so they get the registration CTA instead, not
-// a "congratulations" framing.
-const CONGRATS_COPY: Record<string, string> = {
-  full: "You've been awarded a Full Scholarship, covering your participation fee in full. Our team will confirm your place directly.",
-  partial: "You've been awarded a Partial (50%) Scholarship. Complete your registration below to secure your place.",
+// Result card copy (2026-08-27) - one merged card per tier: the outcome
+// text plus, where a form is still owed, the registration action, instead
+// of two separate cards.
+const RESULT_COPY: Record<string, string> = {
+  full: "You've been awarded a Fully Funded Scholarship, covering your participation fee in full. Our team will confirm your place directly.",
+  partial: "You've been awarded a Partially Funded (50%) Scholarship. Complete your registration below to secure your place.",
   special_alumni: "You've been recognized as a Special Alumni honoree, no payment required. Our team will be in touch with next steps.",
+  self: "Unfortunately, you have not been selected for a scholarship this time. You're still very welcome to attend the Youth Strategic Forum, Dubai 2026 as a self-financed delegate. Complete your registration below to secure your place.",
+  alumni: "You've been recognized in our Alumni network. Complete your registration below to secure your place.",
 };
-
-// self tier didn't win a scholarship, so it gets a different framing than
-// the congratulations card above (not "Congratulations", a plain result
-// note), landing in the same dashboard slot.
-const SELF_NOTE_COPY =
-  "Unfortunately, you have not been selected for a scholarship this time. You're still very welcome to attend the Youth Strategic Forum, Dubai 2026 as a self-financed delegate. Complete your registration below to secure your place.";
 
 export const Dashboard = () => {
   const { profile } = useAuthStore();
@@ -149,33 +143,33 @@ export const Dashboard = () => {
         </div>
       )}
 
-      {/* Congratulations card takes the same slot for the tiers that
-          actually received scholarship money (full/partial/special_alumni
-          - see CONGRATS_COPY above; alumni pays its own way and gets the
-          registration CTA below instead, no congratulations framing). */}
-      {tier && CONGRATS_COPY[tier] && (
-        <div className="interview-cta">
-          <div className="interview-cta-tag">
-            <Icon name="award" size={14} />
-            Congratulations
+      {/* Result card (2026-08-27) - one card per tier: outcome text, plus
+          the registration action folded in for tiers that still owe a form
+          (was two separate cards; merged per request). Clickable only when
+          a form is actually owed - full/special_alumni render as a plain
+          non-interactive card, nothing to do. */}
+      {tier &&
+        RESULT_COPY[tier] &&
+        (needsRegistration ? (
+          <button className="interview-cta" onClick={() => switchScreen('registration')}>
+            <div className="interview-cta-tag">
+              <Icon name="award" size={14} />
+              {IS_SCHOLARSHIP_TIER.has(tier) ? 'Congratulations' : 'Your result'}
+            </div>
+            <div className="interview-cta-title">{CATEGORY_LABELS[tier]}</div>
+            <div className="interview-cta-sub">{RESULT_COPY[tier]}</div>
+            <span className="interview-cta-go">Complete your registration</span>
+          </button>
+        ) : (
+          <div className="interview-cta">
+            <div className="interview-cta-tag">
+              <Icon name="award" size={14} />
+              Congratulations
+            </div>
+            <div className="interview-cta-title">{CATEGORY_LABELS[tier]}</div>
+            <div className="interview-cta-sub">{RESULT_COPY[tier]}</div>
           </div>
-          <div className="interview-cta-title">{CATEGORY_LABELS[tier]}</div>
-          <div className="interview-cta-sub">{CONGRATS_COPY[tier]}</div>
-        </div>
-      )}
-
-      {/* Same slot, self tier's own framing (2026-08-27) - not a scholarship
-          outcome, so not "Congratulations", a plain result note instead. */}
-      {tier === 'self' && (
-        <div className="interview-cta">
-          <div className="interview-cta-tag">
-            <Icon name="award" size={14} />
-            Your result
-          </div>
-          <div className="interview-cta-title">Self-Financed</div>
-          <div className="interview-cta-sub">{SELF_NOTE_COPY}</div>
-        </div>
-      )}
+        ))}
 
       {/* Scholarship results banner (2026-08-27) — leads the page now that
           results are announced. Links into the Scholarship Holders screen. */}
@@ -196,25 +190,6 @@ export const Dashboard = () => {
           the button jumps to the Activity tab. Renders nothing for non-group
           delegates. */}
       <ActivityNotice />
-
-      {/* Registration CTA (2026-08-27) — the form itself moved to its own
-          Registration screen (see file header); this just links there.
-          Disappears the moment registration_status flips to 'submitted'
-          (showRegistrationTab), same pattern the old interview CTA used. */}
-      {needsRegistration && tier && (
-        <button className="interview-cta" onClick={() => switchScreen('registration')}>
-          <div className="interview-cta-tag">
-            <Icon name="award" size={14} />
-            Registration open
-          </div>
-          <div className="interview-cta-title">Complete your registration</div>
-          <div className="interview-cta-sub">
-            Your {REGISTRATION_CTA_LABEL[tier] || 'scholarship'} registration and payment form is
-            ready, a few minutes now secures your place.
-          </div>
-          <span className="interview-cta-go">Go to registration</span>
-        </button>
-      )}
 
       {/* Section tiles - core navigation into the event content, so it
           stays near the top rather than after the promotional material
