@@ -172,7 +172,9 @@ export const Dashboard = () => {
         ))}
 
       {/* Scholarship results banner (2026-08-27) — leads the page now that
-          results are announced. Links into the Scholarship Holders screen. */}
+          results are announced. Links into the Scholarship Holders screen.
+          Heading added per request so the poster isn't unlabeled. */}
+      <div className="section-label">Fully Funded Scholarship Holders</div>
       <button
         className="card"
         style={{ padding: 0, overflow: 'hidden', border: 0, cursor: 'pointer' }}
