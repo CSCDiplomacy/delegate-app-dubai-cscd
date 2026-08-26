@@ -53,6 +53,12 @@ const CONGRATS_COPY: Record<string, string> = {
   special_alumni: "You've been recognized as a Special Alumni honoree, no payment required. Our team will be in touch with next steps.",
 };
 
+// self tier didn't win a scholarship, so it gets a different framing than
+// the congratulations card above (not "Congratulations", a plain result
+// note), landing in the same dashboard slot.
+const SELF_NOTE_COPY =
+  "Unfortunately, you have not been selected for a scholarship this time. You're still very welcome to attend the Youth Strategic Forum, Dubai 2026 as a self-financed delegate. Complete your registration below to secure your place.";
+
 export const Dashboard = () => {
   const { profile } = useAuthStore();
   const { switchScreen } = useUIStore();
@@ -145,8 +151,8 @@ export const Dashboard = () => {
 
       {/* Congratulations card takes the same slot for the tiers that
           actually received scholarship money (full/partial/special_alumni
-          - see CONGRATS_COPY above; self/alumni pay their own way and get
-          the registration CTA below instead, no congratulations framing). */}
+          - see CONGRATS_COPY above; alumni pays its own way and gets the
+          registration CTA below instead, no congratulations framing). */}
       {tier && CONGRATS_COPY[tier] && (
         <div className="interview-cta">
           <div className="interview-cta-tag">
@@ -155,6 +161,19 @@ export const Dashboard = () => {
           </div>
           <div className="interview-cta-title">{CATEGORY_LABELS[tier]}</div>
           <div className="interview-cta-sub">{CONGRATS_COPY[tier]}</div>
+        </div>
+      )}
+
+      {/* Same slot, self tier's own framing (2026-08-27) - not a scholarship
+          outcome, so not "Congratulations", a plain result note instead. */}
+      {tier === 'self' && (
+        <div className="interview-cta">
+          <div className="interview-cta-tag">
+            <Icon name="award" size={14} />
+            Your result
+          </div>
+          <div className="interview-cta-title">Self-Financed</div>
+          <div className="interview-cta-sub">{SELF_NOTE_COPY}</div>
         </div>
       )}
 
