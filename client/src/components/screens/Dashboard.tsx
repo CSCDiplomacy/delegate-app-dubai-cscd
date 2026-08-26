@@ -31,7 +31,7 @@ const TILES: Array<{ screen: Screen; icon: IconName; title: string; sub: string 
 // Matches the wording used on the Scholarship Holders page.
 const CATEGORY_LABELS: Record<string, string> = {
   full: 'Fully Funded Scholarship',
-  partial: 'Partially Funded (50%) Scholarship',
+  partial: 'Partially Funded Scholarship',
   self: 'Self-Financed',
   alumni: 'Alumni',
   special_alumni: 'Special Alumni',
@@ -47,7 +47,7 @@ const IS_SCHOLARSHIP_TIER = new Set(['full', 'partial', 'special_alumni']);
 // of two separate cards.
 const RESULT_COPY: Record<string, string> = {
   full: "You've been awarded a Fully Funded Scholarship, covering your participation fee in full. Our team will confirm your place directly.",
-  partial: "You've been awarded a Partially Funded (50%) Scholarship. Complete your registration below to secure your place.",
+  partial: "You've been awarded a Partially Funded Scholarship. Complete your registration below to secure your place.",
   special_alumni: "You've been recognized as a Special Alumni honoree, no payment required. Our team will be in touch with next steps.",
   self: "Unfortunately, you have not been selected for a scholarship this time. You're still very welcome to attend the Youth Strategic Forum, Dubai 2026 as a self-financed delegate. Complete your registration below to secure your place.",
   alumni: "You've been recognized in our Alumni network. Complete your registration below to secure your place.",

@@ -37,7 +37,7 @@ export const ScholarshipHolders = () => (
 
     <div>
       <div className="section-label">
-        <Icon name="award" size={16} /> Partial (50%) scholarship ({PARTIALLY_FUNDED.length})
+        <Icon name="award" size={16} /> Partial scholarship ({PARTIALLY_FUNDED.length})
       </div>
       <div className="card">
         <ol className="dot-list">
