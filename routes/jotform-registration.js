@@ -148,6 +148,7 @@ router.post('/webhook/:secret?', webhookLimiter, upload.none(), async (req, res)
     email: delegate.email,
     name: delegate.name,
     tier: FORM_TIER[req.body.formID] || null,
+    applicantId: delegate.applicant_id,
   });
 
   console.log(`[jotform-registration] submission recorded for ${delegate.email} (${delegate.applicant_id})`);

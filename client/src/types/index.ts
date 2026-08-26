@@ -158,7 +158,8 @@ export type Screen =
   | 'venue'
   | 'hotel'
   | 'schedule'
-  | 'contact';
+  | 'contact'
+  | 'scholarship-holders';
 
 export interface Config {
   supabaseUrl: string;

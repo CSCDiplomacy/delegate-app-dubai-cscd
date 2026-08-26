@@ -82,3 +82,57 @@ export const EDITIONS: Array<{
   { city: 'Jakarta', year: '2026', note: 'Convergence of Power' },
   { city: 'Dubai', year: '2026', note: 'Convergence of Innovation', current: true },
 ];
+
+// Scholarship Holders page (2026-08-27, results announcement phase). Full
+// names as recorded in delegates.name (Supabase), matching the client's
+// evaluation workbook exactly — see app_brain/Dubai Fork Progress.md for the
+// full reconciliation. This is a fixed, one-time roster (not derived live
+// from the delegate's own session), so it's hardcoded here rather than
+// wired through the data/*.json + API pipeline that Rundown/Visits/etc use
+// for content that's still being actively published — same precedent as
+// THEMES/EXPERIENCE/EDITIONS above.
+export const FULLY_FUNDED: string[] = [
+  'Aiaru Abzikir',
+  'Hanaa Haleem',
+  'Husam Yaqoob Hashim Al Balushi',
+  'Ian Emiliano Rivera Cruz',
+  'Marianne Ziad Al Halabi',
+  'Mugahid Abualgasim Musa Elnour',
+  'Naisha Aree',
+  'Nayana Chandran',
+  'Renee Naomi Odle',
+  'Saha Rathor',
+];
+
+export const PARTIALLY_FUNDED: string[] = [
+  'Acheampong Samuel Agyei',
+  'Akash Kumar',
+  'Amanda Da Silva Martins',
+  'Arjun Vij',
+  'Ceyda Gursel',
+  'Devi Krishna H',
+  'Ege Dolu',
+  'Eman Ahmed Kidwai',
+  'Farah Kharrat',
+  'Gerald Tahiri',
+  'Goh Chen How, Calvin',
+  'Himanshi Gulia',
+  'Indira Tabaeva',
+  'Khalid Ibnelbachyr',
+  'Lê Bình Minh',
+  'Mahreen Adil',
+  'Mahsati Mehdiyeva',
+  'Mariama Jawneh',
+  'Mercy Mabiza',
+  'Naba Ali',
+  'Nomin Azjargal',
+  'Noor Ul Ain',
+  'Nuttha Teanpitak',
+  'Nyame Ishmael Bonsu',
+  'Rishabh Sikarwal',
+  'Sambhav Jain',
+  'Sami Fahd Bakr Baghdadi',
+  'Shruti Hans',
+  'Steffi Abhishek Kamble',
+  'Tatiana Zvenigorodskaia',
+];

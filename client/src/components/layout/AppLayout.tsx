@@ -17,6 +17,7 @@ import { Venue } from '../screens/Venue';
 import { Hotel } from '../screens/Hotel';
 import { Schedule } from '../screens/Schedule';
 import { Contact } from '../screens/Contact';
+import { ScholarshipHolders } from '../screens/ScholarshipHolders';
 import { regionForEmail } from '../../data/coordinatorGroups';
 
 const SCREENS = {
@@ -29,6 +30,7 @@ const SCREENS = {
   hotel: Hotel,
   schedule: Schedule,
   contact: Contact,
+  'scholarship-holders': ScholarshipHolders,
 } as const;
 
 export const AppLayout = () => {

@@ -7,6 +7,7 @@ import type { Screen } from '../../types';
 
 const NAV: Array<{ screen: Screen; label: string; icon: IconName }> = [
   { screen: 'dashboard', label: 'Dashboard', icon: 'home' },
+  { screen: 'scholarship-holders', label: 'Scholarship Holders', icon: 'award' },
   { screen: 'about', label: 'The Summit', icon: 'globe' },
   { screen: 'rundown', label: 'Rundown', icon: 'clock' },
   { screen: 'venue', label: 'Visit & Dinner', icon: 'hotel' },

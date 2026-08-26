@@ -19,6 +19,7 @@ import { DeadlineCountdown } from './DeadlineCountdown';
 import { TierResult } from './Results';
 
 const TILES: Array<{ screen: Screen; icon: IconName; title: string; sub: string }> = [
+  { screen: 'scholarship-holders', icon: 'award', title: 'Scholarship Holders', sub: 'The fully & partially funded roster' },
   { screen: 'about', icon: 'globe', title: 'The Summit', sub: 'Themes, story & lineage' },
   { screen: 'rundown', icon: 'clock', title: 'Rundown', sub: 'The day-by-day programme' },
   { screen: 'venue', icon: 'hotel', title: 'Institutional visit & dinner', sub: 'City visits, dinner logistics' },

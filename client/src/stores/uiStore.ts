@@ -16,6 +16,7 @@ const SCREENS: Screen[] = [
   'hotel',
   'schedule',
   'contact',
+  'scholarship-holders',
 ];
 
 function applyTheme(theme: Theme) {

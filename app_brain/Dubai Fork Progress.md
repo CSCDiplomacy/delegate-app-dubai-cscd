@@ -293,19 +293,85 @@ Built:
   **could not be written to the live `.env`** (editing `.env` is blocked by
   the harness's permission classifier) — handed to the user to add by hand.
 
-**Two things still need a human, not code**:
-1. The `JOTFORM_WEBHOOK_SECRET` value needs adding to the live `.env` (given
-   to the user directly, not recorded in this doc since it's a live secret).
-2. **Webhook configuration on the 3 JotForm forms failed via the MCP**
-   (`form/{id}/webhooks` POST returns `401 unauthorized` — the connected
-   JotForm API key can read forms but can't write webhooks; GET on the same
-   endpoint works fine). Needs a human to add
-   `https://delegate.thecscd.org/api/registration-jotform/webhook/<secret>`
-   on each of the 3 forms by hand (Settings → Integrations → Webhooks), or a
-   JotForm key with write scope.
+**Both resolved same day**: user added `JOTFORM_WEBHOOK_SECRET` via Hostinger's
+env panel and the webhook URL by hand on all 3 JotForm forms (confirmed via
+the JotForm API's `GET .../webhooks` — all three list the correct URL).
+
+### Shipped to production — 2026-08-27
+
+Committed only the actual touched files (not the working tree's other
+in-progress, unrelated changes — a different reminder-email campaign was
+mid-flight in the same working directory) as
+`7b857de feat(dubai): results announcement + JotForm registration`, merged
+`origin/main`'s two already-diverged countdown-deadline commits (same
+content, different hashes — likely cherry-picked/squashed onto main
+separately from this branch's copies; a plain `git merge` resolved it with
+no conflicts), pushed to `main` (`9b29182`).
+
+**Learned about the deploy pipeline** (wasn't documented anywhere before):
+Hostinger's Node.js app for `delegate.thecscd.org` is git-based —
+`~/domains/delegate.thecscd.org/hbuilds/` on the box (SSH: `ssh -p 65002
+u441737725@46.202.156.8`, credential already in shell history from earlier
+work — not otherwise documented, worth adding to this repo's deploy notes),
+with `last-source` (a live checkout of `origin/main`), `versions/<id>/` (one
+immutable built copy per deploy, each running `npm install && npm run
+build`), and `current` (a symlink to the active version) — the running
+process is literally `lsnode:.../hbuilds/current/...`. **It auto-deploys
+on push** — no manual SSH/build/restart step was actually needed; by the
+time this was investigated post-push, `last-source` already had the new
+commit and a fresh `versions/` build already existed, node already running
+warm off it. `.env` for this app lives separately at
+`hbuilds/config/.env`, not in the source tree — matches why editing the
+repo's own `.env` was never going to reach production anyway.
+
+**Verified live**, not just deployed: `/health` → 200; the new webhook
+route rejects a bad secret with `401` (was `404` pre-deploy, confirming the
+route exists now); a correct-secret request with no applicant id → `400`;
+a correct-secret request with a well-formed but nonexistent applicant id →
+`404 Unknown candidate applicant_id`. All match the route's intended
+behavior — this is as far as it can be exercised without a real JotForm
+submission or fabricating a change to a real delegate's row.
 
 `npm run build` (tsc + vite) and an `app.js` boot smoke test both clean
-after all of the above.
+throughout.
+
+### Scholarship Holders page + real receipt totals — same day
+
+Client asked for a new in-portal page listing the 10 fully-funded and 30
+partially-funded names, plus the `result_poster.webp` graphic they supplied
+(a genuine Dubai asset — not to be confused with the pre-existing, unused
+`public/img/results-selected-delegates.png`, which turned out to be a
+**leftover Jakarta/YPDS asset**, wrong event entirely, never referenced in
+code; left alone, not deleted).
+
+- New screen `client/src/components/screens/ScholarshipHolders.tsx`, wired
+  into `Screen`/`uiStore`/`AppLayout` the same way every other content
+  screen is, nav entry in `Sidebar.tsx` + a Dashboard tile, `award` icon.
+  Not added to `BottomNav.tsx` (mobile only has 5 slots, already tight).
+- Names are **hardcoded** in `lib/content.ts` (`FULLY_FUNDED`/
+  `PARTIALLY_FUNDED`), not fetched from `data/*.json` + API like
+  Rundown/Visits — same precedent as `THEMES`/`EXPERIENCE`/`EDITIONS` in the
+  same file: this is a fixed, one-time roster, not content still being
+  published. Pulled from `delegates.name` (Supabase), the source of truth,
+  **not** the sheet's informal first-name-only entries — cross-verified
+  against the poster image itself (Full tier's 10 names match exactly).
+  A few names were display-cleaned (title-case, stripped an obvious
+  data-entry artifact — "Sami Fahd Bakr Baghdadi**12**" → without the
+  trailing digits) — cosmetic only, `delegates.name` in the DB is untouched.
+- Poster copied to both `client/public/img/` and `public/img/` as
+  `ysf-dubai-2026-results-poster.webp` (existing dual-copy convention).
+
+**Receipt email fully resolved** (was the one open item from the JotForm
+work above): client confirmed reference number = `applicant_id` (not a
+separate generated id, and ignore JotForm's txnId entirely), base fees
+**self $499 / partial $299 / alumni $250**, flat **8%** tax/processing,
+**show only the total** (no line-item breakdown). `lib/email.js`'s
+`sendRegistrationReceivedEmail` rewritten accordingly;
+`routes/jotform-registration.js` now passes `applicantId` through. No
+longer a follow-up.
+
+`npm run build` clean again after this batch; poster confirmed present in
+`client/dist/img/`.
 
 ## What's still open
 
