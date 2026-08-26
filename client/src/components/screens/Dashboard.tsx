@@ -128,14 +128,20 @@ export const Dashboard = () => {
           General "Results Announced" headline card, every applicant sees
           this regardless of tier (even untiered/no-outcome-yet) — the
           tier-specific congratulations card below is additional, not a
-          replacement, for full/partial/special_alumni. */}
+          replacement, for full/partial/special_alumni. Title says
+          "Congratulations!" for the tiers that actually won a scholarship
+          (2026-08-27, per request) and stays "Results Announced!" for
+          everyone else, since congratulating a self/alumni/no-outcome-yet
+          delegate here would contradict their own card right below. */}
       {applicant && (
         <div className="interview-cta">
           <div className="interview-cta-tag">
             <Icon name="bell" size={14} />
             Announcement
           </div>
-          <div className="interview-cta-title">Results Announced!</div>
+          <div className="interview-cta-title">
+            {tier && IS_SCHOLARSHIP_TIER.has(tier) ? 'Congratulations!' : 'Results Announced!'}
+          </div>
           <div className="interview-cta-sub">
             Scholarship results for the Youth Strategic Forum, Dubai 2026 are now live. Check
             your status below.
