@@ -42,6 +42,11 @@ const CATEGORY_LABELS: Record<string, string> = {
 // something, self/alumni pay their own way.
 const IS_SCHOLARSHIP_TIER = new Set(['full', 'partial', 'special_alumni']);
 
+// Tiers that go through a JotForm registration/payment form (partial/self/
+// alumni). full/special_alumni never register, so they can never be in the
+// "registration received" state. Mirrors TIERS_WITH_FORM in authStore.ts.
+const FORM_TIERS = new Set(['partial', 'self', 'alumni']);
+
 // Result card copy (2026-08-27) - one merged card per tier: the outcome
 // text plus, where a form is still owed, the registration action, instead
 // of two separate cards.
@@ -60,6 +65,14 @@ export const Dashboard = () => {
   const applicant = isApplicant(profile);
   const tier = profile?.result_tier || null;
   const needsRegistration = showRegistrationTab(profile);
+  // A form-owing tier (partial/self/alumni) whose JotForm submission has come
+  // through the webhook (registration_status flipped to 'submitted'). These
+  // are the delegates who should read "Registration received" instead of a
+  // "complete your registration" prompt.
+  const registrationReceived =
+    !!tier &&
+    FORM_TIERS.has(tier) &&
+    profile?.registration_status === 'submitted';
 
   // Results are published, so anyone with a tier reads "Result announced".
   const statusLabel = !applicant ? 'Confirmed delegate' : tier ? 'Result announced' : 'Applicant';
@@ -156,7 +169,19 @@ export const Dashboard = () => {
           non-interactive card, nothing to do. */}
       {tier &&
         RESULT_COPY[tier] &&
-        (needsRegistration ? (
+        (registrationReceived ? (
+          <div className="interview-cta">
+            <div className="interview-cta-tag">
+              <Icon name="check" size={14} />
+              Registration received
+            </div>
+            <div className="interview-cta-title">{CATEGORY_LABELS[tier]}</div>
+            <div className="interview-cta-sub">
+              We've received your registration. There's nothing further you need to do right now,
+              our team will confirm your place shortly.
+            </div>
+          </div>
+        ) : needsRegistration ? (
           <button className="interview-cta" onClick={() => switchScreen('registration')}>
             <div className="interview-cta-tag">
               <Icon name="award" size={14} />
