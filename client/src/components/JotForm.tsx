@@ -58,12 +58,6 @@ export const JotForm = ({
           style={{ width: '100%', minHeight: 900, border: 0, display: 'block' }}
         />
       </div>
-      <div className="cognito-embed-fallback">
-        <p>Having trouble loading the form?</p>
-        <a href={src} target="_blank" rel="noopener noreferrer">
-          Open the registration form in a new tab →
-        </a>
-      </div>
     </div>
   );
 };
