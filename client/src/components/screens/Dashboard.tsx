@@ -43,6 +43,16 @@ const REGISTRATION_CTA_LABEL: Record<string, string> = {
   alumni: 'alumni',
 };
 
+// Congratulations card copy (2026-08-27) — only the tiers that actually
+// received scholarship money: full, partial, special_alumni. self and
+// alumni pay their own way, so they get the registration CTA instead, not
+// a "congratulations" framing.
+const CONGRATS_COPY: Record<string, string> = {
+  full: "You've been awarded a Full Scholarship, covering your participation fee in full. Our team will confirm your place directly.",
+  partial: "You've been awarded a Partial (50%) Scholarship. Complete your registration below to secure your place.",
+  special_alumni: "You've been recognized as a Special Alumni honoree — no payment required. Our team will be in touch with next steps.",
+};
+
 export const Dashboard = () => {
   const { profile } = useAuthStore();
   const { switchScreen } = useUIStore();
@@ -113,7 +123,22 @@ export const Dashboard = () => {
       {/* Interview CTA + deadline countdown removed 2026-08-27 — interviews
           are closed and results are out (showInterviewTab is hardcoded off
           in authStore.ts too). Both components still exist, just unreached
-          from here; revive if a future cohort needs them. */}
+          from here; revive if a future cohort needs them.
+
+          Congratulations card takes the same slot for the tiers that
+          actually received scholarship money (full/partial/special_alumni
+          — see CONGRATS_COPY above; self/alumni pay their own way and get
+          the registration CTA below instead, no congratulations framing). */}
+      {tier && CONGRATS_COPY[tier] && (
+        <div className="interview-cta">
+          <div className="interview-cta-tag">
+            <Icon name="award" size={14} />
+            Congratulations
+          </div>
+          <div className="interview-cta-title">{CATEGORY_LABELS[tier]}</div>
+          <div className="interview-cta-sub">{CONGRATS_COPY[tier]}</div>
+        </div>
+      )}
 
       {/* Scholarship results banner (2026-08-27) — leads the page now that
           results are announced. Links into the Scholarship Holders screen. */}
