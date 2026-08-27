@@ -82,18 +82,20 @@ router.get('/profile', requireAuth, async (req, res) => {
   });
 });
 
-// A full-scholarship delegate accepting their award from the dashboard button.
-// Only `result_tier = 'full'` may accept — the client hides the button for
-// everyone else, and this re-checks the tier server-side (gating is UX, not
-// security). Idempotent: the guarded WHERE means a second click / double-submit
-// is a no-op and returns the original acceptance time.
+// A no-payment delegate confirming their seat from the dashboard button.
+// Only the tiers that owe no registration form — `full` and `special_alumni` —
+// may confirm here (partial/self/alumni confirm by submitting their JotForm).
+// The client hides the button for everyone else, and this re-checks the tier
+// server-side (gating is UX, not security). Idempotent: the guarded WHERE means
+// a second click / double-submit is a no-op and returns the original time.
+const SEAT_CONFIRM_TIERS = new Set(['full', 'special_alumni']);
 router.post('/accept-scholarship', requireAuth, async (req, res) => {
   if (!serviceClient) return res.status(503).json({ error: 'Database not configured' });
 
   const delegate = await getDelegate(req.user.id);
   if (!delegate) return res.status(404).json({ error: 'No delegate profile found' });
-  if (delegate.result_tier !== 'full') {
-    return res.status(403).json({ error: 'Not eligible to accept a scholarship' });
+  if (!SEAT_CONFIRM_TIERS.has(delegate.result_tier)) {
+    return res.status(403).json({ error: 'Not eligible to confirm a seat' });
   }
 
   // Already accepted — return the recorded time without touching the row.

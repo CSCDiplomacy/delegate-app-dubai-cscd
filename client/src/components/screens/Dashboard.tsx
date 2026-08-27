@@ -6,12 +6,14 @@
 // stay visible but read "Coming soon" until data is published. Interviews
 // are closed (showInterviewTab hardcoded off in authStore.ts) — don't
 // re-add interview-open copy here without checking that's still current.
+import { useState } from 'react';
 import {
   isApplicant,
   showRegistrationTab,
   useAuthStore,
 } from '../../stores/authStore';
 import { useUIStore } from '../../stores/uiStore';
+import { api } from '../../services/api';
 import { Icon } from '../Icon';
 import type { IconName } from '../Icon';
 import type { Screen } from '../../types';
@@ -56,6 +58,58 @@ const RESULT_COPY: Record<string, string> = {
   special_alumni: "You've been recognized as a Special Alumni honoree, no payment required. Our team will be in touch with next steps.",
   self: "Unfortunately, you have not been selected for a scholarship this time. You're still very welcome to attend the Youth Strategic Forum, Dubai 2026 as a self-financed delegate. Complete your registration below to secure your place.",
   alumni: "You've been recognized in our Alumni network. Complete your registration below to secure your place.",
+};
+
+// Seat-confirmation card for the two tiers that owe no registration form —
+// full and special_alumni. They have nothing to pay and no JotForm to fill, so
+// the one action left is to actively accept their place. The button posts to
+// /me/accept-scholarship (idempotent, tier-checked server-side) and, once
+// scholarship_accepted_at is set, the card flips to a confirmed badge.
+const SeatConfirm = ({ tier }: { tier: string }) => {
+  const { profile, refreshProfile } = useAuthStore();
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const confirmed = !!profile?.scholarship_accepted_at;
+
+  const confirm = async () => {
+    setBusy(true);
+    setError(null);
+    try {
+      await api('/me/accept-scholarship', { method: 'POST' });
+      await refreshProfile();
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Could not confirm your seat. Please try again.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div className={`interview-cta${confirmed ? ' is-done' : ''}`}>
+      <div className="interview-cta-tag">
+        <Icon name={confirmed ? 'check' : 'award'} size={14} />
+        {confirmed ? 'Seat confirmed' : IS_SCHOLARSHIP_TIER.has(tier) ? 'Congratulations' : 'Your result'}
+      </div>
+      <div className="interview-cta-title">{CATEGORY_LABELS[tier]}</div>
+      <div className="interview-cta-sub">{RESULT_COPY[tier]}</div>
+      {confirmed ? (
+        <div className="seat-confirmed">
+          <Icon name="check" size={15} />
+          Your seat is confirmed
+        </div>
+      ) : (
+        <button className="seat-confirm-btn" onClick={confirm} disabled={busy}>
+          {!busy && <Icon name="check" size={16} />}
+          {busy ? 'Confirming…' : 'Confirm my seat'}
+        </button>
+      )}
+      {error && (
+        <div className="interview-cta-sub" style={{ marginTop: 10, color: 'var(--signal)' }}>
+          {error}
+        </div>
+      )}
+    </div>
+  );
 };
 
 export const Dashboard = () => {
@@ -192,14 +246,9 @@ export const Dashboard = () => {
             <span className="interview-cta-go">Complete your registration</span>
           </button>
         ) : (
-          <div className="interview-cta">
-            <div className="interview-cta-tag">
-              <Icon name="award" size={14} />
-              Congratulations
-            </div>
-            <div className="interview-cta-title">{CATEGORY_LABELS[tier]}</div>
-            <div className="interview-cta-sub">{RESULT_COPY[tier]}</div>
-          </div>
+          // full / special_alumni — no form to fill, so their one action is to
+          // actively confirm their seat via the animated button in this card.
+          <SeatConfirm tier={tier} />
         ))}
 
       {/* Scholarship results banner (2026-08-27) — leads the page now that
