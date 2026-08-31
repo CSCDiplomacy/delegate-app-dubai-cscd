@@ -18,6 +18,7 @@ import { Icon } from '../Icon';
 import type { IconName } from '../Icon';
 import type { Screen } from '../../types';
 import { ActivityNotice } from './ActivityNotice';
+import { PartialScholarshipRequest } from '../PartialScholarshipRequest';
 
 const TILES: Array<{ screen: Screen; icon: IconName; title: string; sub: string }> = [
   { screen: 'scholarship-holders', icon: 'award', title: 'Scholarship Holders', sub: 'The fully & partially funded roster' },
@@ -250,6 +251,11 @@ export const Dashboard = () => {
           // actively confirm their seat via the animated button in this card.
           <SeatConfirm tier={tier} />
         ))}
+
+      {/* Partial-scholarship request offer — self-financed delegates only.
+          Self-gates internally (renders null for every other tier), so it's
+          safe to drop here unconditionally right under their result card. */}
+      <PartialScholarshipRequest />
 
       {/* Scholarship results banner (2026-08-27) — leads the page now that
           results are announced. Links into the Scholarship Holders screen.

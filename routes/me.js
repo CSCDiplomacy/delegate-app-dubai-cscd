@@ -64,6 +64,22 @@ router.get('/hotel', requireAuth, async (req, res) => {
 // `status` drives the whole Coming Soon gate on the client, so it ships here.
 router.get('/profile', requireAuth, async (req, res) => {
   const delegate = await getDelegate(req.user.id);
+
+  // Whether this delegate has already asked to be re-evaluated for the partial
+  // (50%) scholarship — drives the dashboard CTA's "Request received" state so
+  // the form can't be submitted twice. null = never requested. Only the `self`
+  // tier is ever offered the request, so skip the lookup for everyone else (an
+  // approved request flips the delegate to `partial`, hiding the card anyway).
+  let scholarshipRequestStatus = null;
+  if (serviceClient && delegate && delegate.result_tier === 'self') {
+    const { data: reqRow } = await serviceClient
+      .from('scholarship_requests')
+      .select('status')
+      .eq('delegate_id', delegate.id)
+      .maybeSingle();
+    scholarshipRequestStatus = reqRow ? reqRow.status : null;
+  }
+
   res.json({
     name: (delegate && delegate.name) || req.user.email,
     email: req.user.email,
@@ -79,6 +95,8 @@ router.get('/profile', requireAuth, async (req, res) => {
     // dashboard embed for a "Registration received" card for partial/self tiers.
     registration_status: (delegate && delegate.registration_status) || 'not_started',
     registration_submitted_at: (delegate && delegate.registration_submitted_at) || null,
+    // null | 'pending' | 'approved' | 'rejected' — see /scholarship-request below.
+    scholarship_request_status: scholarshipRequestStatus,
   });
 });
 
@@ -128,6 +146,66 @@ router.post('/accept-scholarship', requireAuth, async (req, res) => {
     .then(() => {}, () => {});
 
   return res.json({ accepted_at: finalAt });
+});
+
+// A self-financed delegate asking to be re-evaluated for the partial (50%)
+// scholarship, from the dashboard. Built in-app, no third-party form. Only the
+// `self` tier is eligible — the client hides the CTA for everyone else and this
+// re-checks the tier server-side (gating is UX, not security). One row per
+// delegate: a second submit returns the existing status untouched (idempotent),
+// so the "Request received" state can never be overwritten or duplicated.
+const SCHOLARSHIP_REQUEST_TIERS = new Set(['self']);
+router.post('/scholarship-request', requireAuth, async (req, res) => {
+  if (!serviceClient) return res.status(503).json({ error: 'Database not configured' });
+
+  const delegate = await getDelegate(req.user.id);
+  if (!delegate) return res.status(404).json({ error: 'No delegate profile found' });
+  if (!SCHOLARSHIP_REQUEST_TIERS.has(delegate.result_tier)) {
+    return res.status(403).json({ error: 'Not eligible to request a partial scholarship' });
+  }
+
+  // Already requested — return the recorded status without touching the row.
+  const { data: existing } = await serviceClient
+    .from('scholarship_requests')
+    .select('status')
+    .eq('delegate_id', delegate.id)
+    .maybeSingle();
+  if (existing) {
+    return res.json({ state: 'received', status: existing.status });
+  }
+
+  const body = req.body || {};
+  const email = String(body.email || req.user.email || '').trim();
+  const answerFit = String(body.answer_fit || '').trim();
+  const answerContribution = String(body.answer_contribution || '').trim();
+  if (!email || !answerFit || !answerContribution) {
+    return res.status(400).json({ error: 'Please add your email and answer both questions.' });
+  }
+
+  const { error } = await serviceClient.from('scholarship_requests').insert({
+    delegate_id: delegate.id,
+    email,
+    answer_fit: answerFit,
+    answer_contribution: answerContribution,
+  });
+
+  // 23505 = unique_violation: a concurrent double-submit won the race between
+  // the existence check above and this insert — treat it as already received.
+  if (error && error.code !== '23505') {
+    return res.status(500).json({ error: error.message });
+  }
+
+  serviceClient
+    .from('usage_events')
+    .insert({
+      user_id: delegate.id,
+      email: req.user.email,
+      event_type: 'scholarship_requested',
+      detail: delegate.applicant_id || null,
+    })
+    .then(() => {}, () => {});
+
+  return res.json({ state: 'received', status: 'pending' });
 });
 
 // Accommodation voucher (PDF). Uploaded once via scripts/upload-vouchers.js

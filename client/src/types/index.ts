@@ -14,6 +14,9 @@ export interface Profile {
   /** Flipped to 'submitted' by the Cognito registration webhook (partial/self). */
   registration_status: 'not_started' | 'submitted';
   registration_submitted_at: string | null;
+  /** A `self`-tier delegate's request to be re-evaluated for the partial (50%)
+   *  scholarship. null = never requested; otherwise the admin decision state. */
+  scholarship_request_status: 'pending' | 'approved' | 'rejected' | null;
 }
 
 // Scholarship outcome from the video-submission evaluation. `full` is the
