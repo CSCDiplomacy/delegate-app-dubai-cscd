@@ -163,6 +163,12 @@ router.post('/scholarship-request', requireAuth, async (req, res) => {
   if (!SCHOLARSHIP_REQUEST_TIERS.has(delegate.result_tier)) {
     return res.status(403).json({ error: 'Not eligible to request a partial scholarship' });
   }
+  // Already paid the self-financed fee — a fee waiver no longer applies. The
+  // client hides the card once registration is submitted; this mirrors that
+  // server-side (defense-in-depth).
+  if (delegate.registration_status === 'submitted') {
+    return res.status(403).json({ error: 'Registration already completed' });
+  }
 
   // Already requested — return the recorded status without touching the row.
   const { data: existing } = await serviceClient
