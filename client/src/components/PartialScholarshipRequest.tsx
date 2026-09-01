@@ -1,7 +1,7 @@
 // Dashboard card offering self-financed delegates the chance to be re-evaluated
-// for a Partial (50%) Scholarship. Built entirely in-app — no AidaForm/Cognito/
-// JotForm — posting to POST /api/me/scholarship-request. Framing mirrors the
-// CIPES/YPEF "Scholarship Opportunity" invite, re-skinned for YSF Dubai.
+// for a Partial Waiver on the participation fee. Built entirely in-app — no
+// AidaForm/Cognito/JotForm — posting to POST /api/me/scholarship-request. The
+// endpoint stores the delegate's account email (no email field on the form).
 //
 // Three states, all driven by profile.scholarship_request_status:
 //   null      → the offer + a button that expands the form inline
@@ -18,7 +18,6 @@ import { Icon } from './Icon';
 export const PartialScholarshipRequest = () => {
   const { profile, refreshProfile } = useAuthStore();
   const [open, setOpen] = useState(false);
-  const [email, setEmail] = useState(profile?.email || '');
   const [answerFit, setAnswerFit] = useState('');
   const [answerContribution, setAnswerContribution] = useState('');
   const [busy, setBusy] = useState(false);
@@ -37,9 +36,9 @@ export const PartialScholarshipRequest = () => {
           <Icon name="check" size={14} />
           Request received
         </div>
-        <div className="interview-cta-title">Partial scholarship request received</div>
+        <div className="interview-cta-title">Partial waiver request received</div>
         <div className="interview-cta-sub">
-          Thank you. We've received your request to be considered for a Partial Scholarship.
+          Thank you. We've received your request to be considered for a Partial Waiver.
           Our team will review it and be in touch. There's nothing further you need to do right
           now.
         </div>
@@ -47,8 +46,7 @@ export const PartialScholarshipRequest = () => {
     );
   }
 
-  const canSubmit =
-    email.trim() && answerFit.trim() && answerContribution.trim() && !busy;
+  const canSubmit = answerFit.trim() && answerContribution.trim() && !busy;
 
   const submit = async () => {
     if (!canSubmit) return;
@@ -58,7 +56,6 @@ export const PartialScholarshipRequest = () => {
       await api('/me/scholarship-request', {
         method: 'POST',
         body: JSON.stringify({
-          email: email.trim(),
           answer_fit: answerFit.trim(),
           answer_contribution: answerContribution.trim(),
         }),
@@ -76,38 +73,27 @@ export const PartialScholarshipRequest = () => {
     <div className="interview-cta is-lite">
       <div className="interview-cta-tag">
         <Icon name="award" size={14} />
-        Scholarship Opportunity
+        Waiver Opportunity
       </div>
-      <div className="interview-cta-title">Request a Partial Scholarship</div>
+      <div className="interview-cta-title">Request a Partial Waiver</div>
       <div className="interview-cta-sub">
         Given the exceptional interest in the Youth Strategic Forum, Dubai 2026, we're inviting
-        self-financed delegates to be considered for a Partial Scholarship on the
+        self-financed delegates to be considered for a Partial Waiver on the
         participation fee. If you'd like to be considered, share a brief statement below.
-        Shortlisted candidates may be offered the scholarship after review.
+        Shortlisted candidates may be offered the waiver after review.
       </div>
 
       {!open ? (
         <button className="seat-confirm-btn" onClick={() => setOpen(true)}>
           <Icon name="award" size={16} />
-          Request partial scholarship
+          Request partial waiver
         </button>
       ) : (
         <div style={{ marginTop: 18 }}>
           <div className="field">
-            <label htmlFor="ps-email">Your email</label>
-            <input
-              id="ps-email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com"
-            />
-          </div>
-
-          <div className="field">
             <label htmlFor="ps-fit">
               What unique perspective, impact, and motivation make you a strong candidate for this
-              scholarship?
+              waiver?
             </label>
             <textarea
               id="ps-fit"
