@@ -263,6 +263,42 @@ export const Dashboard = () => {
           safe to drop here unconditionally right under their result card. */}
       <PartialScholarshipRequest />
 
+      {/* Registration CTA for self-financed delegates (2026-09-01). Their full
+          result card is hidden (see above), but they still need a way to
+          register/pay, so this slim light-variant card carries the action —
+          shown until they submit, then a short "received" confirmation. */}
+      {tier === 'self' &&
+        (registrationReceived ? (
+          <div className="interview-cta is-lite">
+            <div className="interview-cta-tag">
+              <Icon name="check" size={14} />
+              Registration received
+            </div>
+            <div className="interview-cta-title">Registration received</div>
+            <div className="interview-cta-sub">
+              We've received your registration. There's nothing further you need to do right now,
+              our team will confirm your place shortly.
+            </div>
+          </div>
+        ) : needsRegistration ? (
+          <button
+            className="interview-cta is-lite"
+            style={{ cursor: 'pointer' }}
+            onClick={() => switchScreen('registration')}
+          >
+            <div className="interview-cta-tag">
+              <Icon name="award" size={14} />
+              Registration
+            </div>
+            <div className="interview-cta-title">Complete your registration</div>
+            <div className="interview-cta-sub">
+              Secure your place at the Youth Strategic Forum, Dubai 2026 as a self-financed
+              delegate.
+            </div>
+            <span className="interview-cta-go">Complete your registration</span>
+          </button>
+        ) : null)}
+
       {/* Scholarship results banner (2026-08-27) — leads the page now that
           results are announced. Links into the Scholarship Holders screen.
           Heading added per request so the poster isn't unlabeled. */}
