@@ -92,7 +92,7 @@ function html() {
               <div style="display:inline-block; margin-bottom:15px; font-family:'Inter',sans-serif; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:#8E2631; background:#E7C673; padding:5px 11px; font-weight:700;">Waiver Opportunity</div>
               <h1 class="hero" style="margin:0 0 15px; font-family:'Archivo','Avenir Next Condensed','Segoe UI Semibold',Arial,sans-serif; font-weight:800; text-transform:uppercase; letter-spacing:-0.02em; line-height:1.06; font-size:25px; color:#241417;">Request a Partial Waiver</h1>
               <p style="margin:0 0 12px; color:#5B6660;">Dear Delegate,</p>
-              <p style="margin:0 0 12px; color:#5B6660;">Thank you for your interest in the <strong style="color:#241417;">Youth Strategic Forum (YSF) Dubai 2026</strong>, and for taking your place as a self-financed delegate.</p>
+              <p style="margin:0 0 12px; color:#5B6660;">Thank you for your interest in the <strong style="color:#241417;">Youth Strategic Forum (YSF) Dubai 2026</strong>.</p>
               <p style="margin:0; color:#5B6660;">Given the exceptional interest and participation from delegates across many nationalities, we are pleased to invite self-financed delegates to be considered for a <strong style="color:#241417;">Partial Waiver</strong> on the participation fee, to further support emerging leaders who can contribute meaningfully to the Forum's themes and institutional engagements.</p>
             </td>
           </tr>
