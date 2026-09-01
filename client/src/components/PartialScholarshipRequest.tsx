@@ -86,6 +86,14 @@ export const PartialScholarshipRequest = () => {
         Shortlisted candidates may be offered the waiver after review.
       </div>
 
+      <div
+        className="interview-cta-sub"
+        style={{ marginTop: 12, fontWeight: 700, color: 'var(--ink)' }}
+      >
+        5 partial seats, awarded on a rolling basis. Deadline: 3 September 2026, 11:59 PM (Dubai
+        time).
+      </div>
+
       {!open ? (
         <button className="seat-confirm-btn" onClick={() => setOpen(true)}>
           <Icon name="award" size={16} />
