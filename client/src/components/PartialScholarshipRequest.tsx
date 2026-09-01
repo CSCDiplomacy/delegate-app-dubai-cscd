@@ -25,6 +25,9 @@ export const PartialScholarshipRequest = () => {
 
   // Only self-financed delegates are offered this (server re-checks too).
   if (profile?.result_tier !== 'self') return null;
+  // ...and not once they've already paid: a self-financed delegate who has
+  // completed their registration/payment shouldn't be offered a fee waiver.
+  if (profile?.registration_status === 'submitted') return null;
 
   const requested = !!profile?.scholarship_request_status;
 
