@@ -73,7 +73,7 @@ export const PartialScholarshipRequest = () => {
   };
 
   return (
-    <div className="interview-cta">
+    <div className="interview-cta is-lite">
       <div className="interview-cta-tag">
         <Icon name="award" size={14} />
         Scholarship Opportunity

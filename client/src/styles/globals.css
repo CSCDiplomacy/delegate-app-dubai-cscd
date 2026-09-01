@@ -914,6 +914,26 @@ textarea {
   transform: none;
 }
 
+/* "Lite" variant of the CTA card — light surface instead of the solid signal
+   fill, for content-heavy cards like the partial-scholarship request form where
+   white inputs on a dark ground read as heavy. Two-class selector so it wins
+   over the base .interview-cta background without !important. */
+.interview-cta.is-lite {
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-sm);
+  cursor: default;
+}
+.interview-cta.is-lite:hover {
+  transform: none;
+}
+/* Accent the eyebrow tag in the brand signal colour on the light card. */
+.interview-cta.is-lite .interview-cta-tag {
+  color: var(--signal);
+  opacity: 1;
+}
+
 .interview-cta-tag {
   display: inline-flex;
   align-items: center;

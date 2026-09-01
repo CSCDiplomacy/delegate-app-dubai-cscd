@@ -200,8 +200,13 @@ export const Dashboard = () => {
           "Congratulations!" for the tiers that actually won a scholarship
           (2026-08-27, per request) and stays "Results Announced!" for
           everyone else, since congratulating a self/alumni/no-outcome-yet
-          delegate here would contradict their own card right below. */}
-      {applicant && (
+          delegate here would contradict their own card right below.
+
+          Hidden for the `self` tier (2026-09-01): self-financed delegates now
+          lead with the "Request a Partial Scholarship" card below instead of a
+          "Results Announced / not selected" message, so both this banner and
+          their result card are suppressed for that tier only. */}
+      {applicant && tier !== 'self' && (
         <div className="interview-cta">
           <div className="interview-cta-tag">
             <Icon name="bell" size={14} />
@@ -223,6 +228,7 @@ export const Dashboard = () => {
           a form is actually owed - full/special_alumni render as a plain
           non-interactive card, nothing to do. */}
       {tier &&
+        tier !== 'self' &&
         RESULT_COPY[tier] &&
         (registrationReceived ? (
           <div className="interview-cta">

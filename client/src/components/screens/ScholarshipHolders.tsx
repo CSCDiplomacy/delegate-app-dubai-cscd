@@ -3,7 +3,7 @@
 // Dashboard (see Results.tsx). Names are hardcoded in lib/content.ts; see
 // that file's comment for why this doesn't go through the data/*.json +
 // API pipeline the still-being-published content screens use.
-import { FULLY_FUNDED, PARTIALLY_FUNDED } from '../../lib/content';
+import { FULLY_FUNDED } from '../../lib/content';
 import { Icon } from '../Icon';
 
 export const ScholarshipHolders = () => (
@@ -29,22 +29,6 @@ export const ScholarshipHolders = () => (
       <div className="card">
         <ol className="dot-list">
           {FULLY_FUNDED.map(({ name, nationality }) => (
-            <li key={name}>
-              {name}
-              <span className="chip" style={{ marginLeft: '0.6em' }}>{nationality}</span>
-            </li>
-          ))}
-        </ol>
-      </div>
-    </div>
-
-    <div>
-      <div className="section-label">
-        <Icon name="award" size={16} /> Partial scholarship ({PARTIALLY_FUNDED.length})
-      </div>
-      <div className="card">
-        <ol className="dot-list">
-          {PARTIALLY_FUNDED.map(({ name, nationality }) => (
             <li key={name}>
               {name}
               <span className="chip" style={{ marginLeft: '0.6em' }}>{nationality}</span>
