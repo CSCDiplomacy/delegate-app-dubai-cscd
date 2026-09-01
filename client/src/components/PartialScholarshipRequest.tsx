@@ -81,9 +81,9 @@ export const PartialScholarshipRequest = () => {
       <div className="interview-cta-title">Request a Partial Waiver</div>
       <div className="interview-cta-sub">
         Given the exceptional interest in the Youth Strategic Forum, Dubai 2026, we're inviting
-        self-financed delegates to be considered for a Partial Waiver on the
-        participation fee. If you'd like to be considered, share a brief statement below.
-        Shortlisted candidates may be offered the waiver after review.
+        self-financed delegates to be considered for a Partial Waiver covering 50% of the
+        self-financed participation fee. If you'd like to be considered, share a brief statement
+        below. Shortlisted candidates may be offered the waiver after review.
       </div>
 
       <div
