@@ -15,6 +15,23 @@ import { useAuthStore } from '../stores/authStore';
 import { api } from '../services/api';
 import { Icon } from './Icon';
 
+// What a self-financed place at YSF Dubai 2026 includes — shown on the waiver
+// card so delegates understand what their fee (and the 50% waiver) covers.
+const SELF_FUNDED_INCLUDES = [
+  'Forum Invitation Letter',
+  'Accommodation for 3 nights at a 4-star hotel (twin-sharing, upgradeable)',
+  'Youth Statements & Interventions, training sessions',
+  'Certificate of Participation',
+  '10-week virtual course, post-forum',
+  'Partial scholarship opportunities for future programs',
+  'Two international meals during the forum',
+  'Cruise Dinner & Desert Safari',
+  'YSF personalized merchandise',
+  'Community of Impact Creators',
+  'Opportunity for internship at CSCD (if qualified)',
+  'Opportunity to teach with us (if qualified)',
+];
+
 export const PartialScholarshipRequest = () => {
   const { profile, refreshProfile } = useAuthStore();
   const [open, setOpen] = useState(false);
@@ -88,7 +105,35 @@ export const PartialScholarshipRequest = () => {
 
       <div
         className="interview-cta-sub"
-        style={{ marginTop: 12, fontWeight: 700, color: 'var(--ink)' }}
+        style={{ marginTop: 14, fontWeight: 700, color: 'var(--ink)' }}
+      >
+        What your self-financed place includes
+      </div>
+      <ul style={{ listStyle: 'none', margin: '8px 0 0', padding: 0 }}>
+        {SELF_FUNDED_INCLUDES.map((perk) => (
+          <li
+            key={perk}
+            style={{
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: 8,
+              fontSize: '0.86rem',
+              lineHeight: 1.45,
+              color: 'var(--ink-soft)',
+              marginBottom: 6,
+            }}
+          >
+            <span style={{ color: 'var(--signal)', flexShrink: 0, marginTop: 2 }}>
+              <Icon name="check" size={14} />
+            </span>
+            {perk}
+          </li>
+        ))}
+      </ul>
+
+      <div
+        className="interview-cta-sub"
+        style={{ marginTop: 14, fontWeight: 700, color: 'var(--ink)' }}
       >
         5 partial seats, awarded on a rolling basis. Deadline: 3 September 2026, 11:59 PM (Dubai
         time).
