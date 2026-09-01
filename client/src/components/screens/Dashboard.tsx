@@ -258,11 +258,6 @@ export const Dashboard = () => {
           <SeatConfirm tier={tier} />
         ))}
 
-      {/* Partial-scholarship request offer — self-financed delegates only.
-          Self-gates internally (renders null for every other tier), so it's
-          safe to drop here unconditionally right under their result card. */}
-      <PartialScholarshipRequest />
-
       {/* Registration CTA for self-financed delegates (2026-09-01). Their full
           result card is hidden (see above), but they still need a way to
           register/pay, so this slim light-variant card carries the action —
@@ -298,6 +293,12 @@ export const Dashboard = () => {
             <span className="interview-cta-go">Complete your registration</span>
           </button>
         ) : null)}
+
+      {/* Partial-scholarship request offer — self-financed delegates only.
+          Self-gates internally (renders null for every other tier). Sits below
+          the registration card so completing registration reads as the primary
+          action, the waiver request as the secondary one. */}
+      <PartialScholarshipRequest />
 
       {/* Scholarship results banner (2026-08-27) — leads the page now that
           results are announced. Links into the Scholarship Holders screen.
