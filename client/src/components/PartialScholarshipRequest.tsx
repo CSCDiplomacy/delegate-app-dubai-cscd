@@ -81,7 +81,7 @@ export const PartialScholarshipRequest = () => {
       <div className="interview-cta-title">Request a Partial Scholarship</div>
       <div className="interview-cta-sub">
         Given the exceptional interest in the Youth Strategic Forum, Dubai 2026, we're inviting
-        self-financed delegates to be considered for a Partial (50%) Scholarship on the
+        self-financed delegates to be considered for a Partial Scholarship on the
         participation fee. If you'd like to be considered, share a brief statement below.
         Shortlisted candidates may be offered the scholarship after review.
       </div>
