@@ -1403,6 +1403,88 @@ textarea {
   border-color: var(--line-strong);
 }
 
+/* Live countdown shown above the partial-tier registration form. Gold panel so
+   it reads as an urgent deadline banner, matching --brass's documented role
+   (badges, chips, deadline banner). See RegistrationCountdown.tsx. */
+.reg-countdown {
+  background: var(--brass);
+  color: var(--brass-ink);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  padding: 18px 20px;
+}
+
+.reg-countdown-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.reg-countdown-label svg {
+  stroke: currentColor;
+}
+
+.reg-countdown-clock {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.reg-countdown-seg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 3ch;
+}
+
+.reg-countdown-num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.9rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.reg-countdown-unit {
+  margin-top: 4px;
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.reg-countdown-colon {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.6rem;
+  line-height: 1;
+  opacity: 0.5;
+  transform: translateY(-6px);
+}
+
+.reg-countdown-deadline {
+  margin-top: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+/* Make the contact link legible inside the "Registration closed" card, which
+   reuses the .interview-cta.is-done surface. */
+.interview-cta-sub a {
+  color: var(--signal);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
 .tile-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
