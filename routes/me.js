@@ -188,11 +188,18 @@ router.post('/scholarship-request', requireAuth, async (req, res) => {
     return res.status(400).json({ error: 'Please add your email and answer both questions.' });
   }
 
+  // No-approval policy (2026-09-05): every self-financed requester is granted
+  // the partial waiver automatically. The row is written straight to 'approved'
+  // and the delegate is flipped self -> partial in the same request, so their
+  // portal shows the partial (pay-50%) form immediately with no admin step.
   const { error } = await serviceClient.from('scholarship_requests').insert({
     delegate_id: delegate.id,
     email,
     answer_fit: answerFit,
     answer_contribution: answerContribution,
+    status: 'approved',
+    decided_at: new Date().toISOString(),
+    decided_by: 'auto-approved (no-approval policy)',
   });
 
   // 23505 = unique_violation: a concurrent double-submit won the race between
@@ -200,6 +207,13 @@ router.post('/scholarship-request', requireAuth, async (req, res) => {
   if (error && error.code !== '23505') {
     return res.status(500).json({ error: error.message });
   }
+
+  // Flip the tier (guarded on still-self so a concurrent flip is a no-op).
+  await serviceClient
+    .from('delegates')
+    .update({ result_tier: 'partial' })
+    .eq('id', delegate.id)
+    .eq('result_tier', 'self');
 
   serviceClient
     .from('usage_events')
@@ -211,7 +225,7 @@ router.post('/scholarship-request', requireAuth, async (req, res) => {
     })
     .then(() => {}, () => {});
 
-  return res.json({ state: 'received', status: 'pending' });
+  return res.json({ state: 'received', status: 'approved' });
 });
 
 // Accommodation voucher (PDF). Uploaded once via scripts/upload-vouchers.js

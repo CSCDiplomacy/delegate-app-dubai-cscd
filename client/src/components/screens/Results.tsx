@@ -16,7 +16,6 @@
 //
 // No tier → nothing renders at all (see Dashboard).
 import { JotForm, JOTFORM_IDS } from '../JotForm';
-import { PartialRegistration } from '../RegistrationCountdown';
 import { useAuthStore } from '../../stores/authStore';
 import type { ResultTier } from '../../types';
 
@@ -38,18 +37,6 @@ export const TierResult = ({ tier }: { tier: ResultTier }) => {
   // registered nothing shows.
   const registered = profile?.registration_status === 'submitted';
   if (registered) return null;
-
-  // Partial tier only: the registration window has a hard deadline, so it gets
-  // a live countdown and, once the deadline passes, a "Registration closed"
-  // card in place of the form. self/alumni keep their plain form, no timer.
-  if (tier === 'partial') {
-    return (
-      <PartialRegistration
-        title={TITLES.partial}
-        applicantId={profile?.applicant_id}
-      />
-    );
-  }
 
   return (
     <JotForm

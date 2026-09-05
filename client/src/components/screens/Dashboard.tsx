@@ -19,7 +19,6 @@ import type { IconName } from '../Icon';
 import type { Screen } from '../../types';
 import { ActivityNotice } from './ActivityNotice';
 import { PartialScholarshipRequest } from '../PartialScholarshipRequest';
-import { PartialCountdownBanner } from '../RegistrationCountdown';
 
 const TILES: Array<{ screen: Screen; icon: IconName; title: string; sub: string }> = [
   { screen: 'scholarship-holders', icon: 'award', title: 'Scholarship Holders', sub: 'The fully & partially funded roster' },
@@ -258,11 +257,6 @@ export const Dashboard = () => {
           // actively confirm their seat via the animated button in this card.
           <SeatConfirm tier={tier} />
         ))}
-
-      {/* Partial tier only: a live countdown to the registration deadline, right
-          on the home screen next to the CTA above. Flips to a "Registration
-          closed" card once the deadline passes. Only while a form is still owed. */}
-      {tier === 'partial' && needsRegistration && <PartialCountdownBanner />}
 
       {/* Registration CTA for self-financed delegates (2026-09-01). Their full
           result card is hidden (see above), but they still need a way to
