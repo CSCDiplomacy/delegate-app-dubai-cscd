@@ -1,15 +1,15 @@
-// Dashboard card offering self-financed delegates the chance to be re-evaluated
-// for a Partial Waiver on the participation fee. Built entirely in-app — no
-// AidaForm/Cognito/JotForm — posting to POST /api/me/scholarship-request. The
-// endpoint stores the delegate's account email (no email field on the form).
+// Dashboard card offering self-financed delegates a Partial Waiver on the
+// participation fee. Built entirely in-app, posting to
+// POST /api/me/scholarship-request (the endpoint stores the delegate's account
+// email; there are no form fields).
 //
-// Three states, all driven by profile.scholarship_request_status:
-//   null      → the offer + a button that expands the form inline
-//   (any set) → "Request received" (pending/approved/rejected all collapse here;
-//                an approved delegate is already 'partial' tier and won't reach
-//                this card at all, since it only renders for the `self` tier)
-// The card self-gates: it renders nothing unless the delegate is `self` tier,
-// matching the server-side eligibility check (gating is UX, not security).
+// No-approval / no-deadline policy (2026-09-05): there is no questionnaire and
+// no review. Pressing the button grants the waiver immediately (the server
+// flips the delegate self -> partial), so we just ask the delegate to refresh
+// the page to continue to their partial registration form.
+//
+// The card self-gates: it renders nothing unless the delegate is `self` tier
+// (an approved delegate is already `partial` and never reaches this card).
 import { useState } from 'react';
 import { useAuthStore } from '../stores/authStore';
 import { api } from '../services/api';
@@ -33,11 +33,9 @@ const SELF_FUNDED_INCLUDES = [
 ];
 
 export const PartialScholarshipRequest = () => {
-  const { profile, refreshProfile } = useAuthStore();
-  const [open, setOpen] = useState(false);
-  const [answerFit, setAnswerFit] = useState('');
-  const [answerContribution, setAnswerContribution] = useState('');
+  const { profile } = useAuthStore();
   const [busy, setBusy] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   // Only self-financed delegates are offered this (server re-checks too).
@@ -46,42 +44,32 @@ export const PartialScholarshipRequest = () => {
   // completed their registration/payment shouldn't be offered a fee waiver.
   if (profile?.registration_status === 'submitted') return null;
 
-  const requested = !!profile?.scholarship_request_status;
-
-  // Already requested — show the confirmation state, no form.
-  if (requested) {
+  // Confirmed: either we just submitted, or a request already exists on the
+  // profile. Ask the delegate to refresh so their partial form loads.
+  const done = submitted || !!profile?.scholarship_request_status;
+  if (done) {
     return (
       <div className="interview-cta is-done">
         <div className="interview-cta-tag">
           <Icon name="check" size={14} />
-          Request received
+          Waiver confirmed
         </div>
-        <div className="interview-cta-title">Partial waiver request received</div>
+        <div className="interview-cta-title">Your Partial Waiver is confirmed</div>
         <div className="interview-cta-sub">
-          Thank you. We've received your request to be considered for a Partial Waiver.
-          Our team will review it and be in touch. There's nothing further you need to do right
-          now.
+          Please refresh the page to continue to your registration, where you can complete your
+          Partial Waiver (50%) payment.
         </div>
       </div>
     );
   }
 
-  const canSubmit = answerFit.trim() && answerContribution.trim() && !busy;
-
   const submit = async () => {
-    if (!canSubmit) return;
+    if (busy) return;
     setBusy(true);
     setError(null);
     try {
-      await api('/me/scholarship-request', {
-        method: 'POST',
-        body: JSON.stringify({
-          answer_fit: answerFit.trim(),
-          answer_contribution: answerContribution.trim(),
-        }),
-      });
-      // Profile now reports 'pending' → this card flips to the received state.
-      await refreshProfile();
+      await api('/me/scholarship-request', { method: 'POST', body: JSON.stringify({}) });
+      setSubmitted(true);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Could not submit your request. Please try again.');
     } finally {
@@ -97,10 +85,9 @@ export const PartialScholarshipRequest = () => {
       </div>
       <div className="interview-cta-title">Request a Partial Waiver</div>
       <div className="interview-cta-sub">
-        Given the exceptional interest in the Youth Strategic Forum, Dubai 2026, we're inviting
-        self-financed delegates to be considered for a Partial Waiver covering 50% of the
-        self-financed participation fee. If you'd like to be considered, share a brief statement
-        below. Shortlisted candidates may be offered the waiver after review.
+        Given the exceptional interest in the Youth Strategic Forum, Dubai 2026, we're offering
+        self-financed delegates a Partial Waiver covering 50% of the self-financed participation
+        fee. Request it below and your registration will switch to the partial (50%) fee.
       </div>
 
       <div
@@ -131,64 +118,14 @@ export const PartialScholarshipRequest = () => {
         ))}
       </ul>
 
-      <div
-        className="interview-cta-sub"
-        style={{ marginTop: 14, fontWeight: 700, color: 'var(--ink)' }}
-      >
-        5 partial seats, awarded on a rolling basis. Deadline: 3 September 2026, 11:59 PM (Dubai
-        time).
-      </div>
+      <button className="seat-confirm-btn" onClick={submit} disabled={busy} style={{ marginTop: 16 }}>
+        {!busy && <Icon name="award" size={16} />}
+        {busy ? 'Requesting…' : 'Request partial waiver'}
+      </button>
 
-      {!open ? (
-        <button className="seat-confirm-btn" onClick={() => setOpen(true)}>
-          <Icon name="award" size={16} />
-          Request partial waiver
-        </button>
-      ) : (
-        <div style={{ marginTop: 18 }}>
-          <div className="field">
-            <label htmlFor="ps-fit">
-              What unique perspective, impact, and motivation make you a strong candidate for this
-              waiver?
-            </label>
-            <textarea
-              id="ps-fit"
-              rows={4}
-              value={answerFit}
-              onChange={(e) => setAnswerFit(e.target.value)}
-              placeholder="Your unique perspective, impact, and motivation…"
-            />
-          </div>
-
-          <div className="field">
-            <label htmlFor="ps-contribution">
-              How will your participation contribute to the global strategy and cultural diplomacy
-              dialogue?
-            </label>
-            <textarea
-              id="ps-contribution"
-              rows={4}
-              value={answerContribution}
-              onChange={(e) => setAnswerContribution(e.target.value)}
-              placeholder="Your contribution to the Forum's high-level discussions and engagements…"
-            />
-          </div>
-
-          <div className="interview-cta-sub" style={{ marginTop: -4, marginBottom: 4 }}>
-            Maximum 150 to 200 words each. Focus on your unique perspective, impact, and motivation,
-            and your potential contribution to the Forum's high-level discussions and engagements.
-          </div>
-
-          <button className="seat-confirm-btn" onClick={submit} disabled={!canSubmit}>
-            {!busy && <Icon name="check" size={16} />}
-            {busy ? 'Sending…' : 'Submit request'}
-          </button>
-
-          {error && (
-            <div className="interview-cta-sub" style={{ marginTop: 10, color: 'var(--signal)' }}>
-              {error}
-            </div>
-          )}
+      {error && (
+        <div className="interview-cta-sub" style={{ marginTop: 10, color: 'var(--signal)' }}>
+          {error}
         </div>
       )}
     </div>

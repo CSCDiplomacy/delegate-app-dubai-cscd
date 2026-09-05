@@ -180,12 +180,15 @@ router.post('/scholarship-request', requireAuth, async (req, res) => {
     return res.json({ state: 'received', status: existing.status });
   }
 
+  // No questionnaire under the no-approval policy (2026-09-05). Email comes from
+  // the authenticated account; the answer_* columns are NOT NULL in the schema,
+  // so we store a fixed placeholder rather than requiring any input.
   const body = req.body || {};
   const email = String(body.email || req.user.email || '').trim();
-  const answerFit = String(body.answer_fit || '').trim();
-  const answerContribution = String(body.answer_contribution || '').trim();
-  if (!email || !answerFit || !answerContribution) {
-    return res.status(400).json({ error: 'Please add your email and answer both questions.' });
+  const answerFit = '(auto-approved, no questionnaire)';
+  const answerContribution = '(auto-approved, no questionnaire)';
+  if (!email) {
+    return res.status(400).json({ error: 'No account email on file.' });
   }
 
   // No-approval policy (2026-09-05): every self-financed requester is granted
