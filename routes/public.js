@@ -9,7 +9,7 @@ const router = express.Router();
 const DATA_DIR = path.join(__dirname, '..', 'data');
 
 // Pre-load all files into memory at boot time.
-// hotels.json is deliberately NOT served here — the hotel (Gevora Hotel) is
+// hotels.json is deliberately NOT served here — the hotel (FORM Hotel Al Jaddaf) is
 // confidential, only /api/me/hotel (auth + enrolled-gated) may return it.
 const _cache = {};
 ['rundown.json', 'visits.json', 'speakers.json', 'checkin.json', 'contact.json'].forEach((file) => {
@@ -26,7 +26,7 @@ const _cache = {};
 // confidential hotel name — pre-compute a redacted copy and serve that unless
 // the request carries a valid token for an *enrolled* delegate.
 const _rundownRedacted = _cache['rundown.json']
-  ? _cache['rundown.json'].replace(/the Gevora Hotel/g, 'the hotel').replace(/Gevora Hotel/g, 'Hotel')
+  ? _cache['rundown.json'].replace(/the FORM Hotel Al Jaddaf/g, 'the hotel').replace(/FORM Hotel Al Jaddaf/g, 'Hotel')
   : null;
 
 // Optional auth check: a missing/invalid token or a non-enrolled delegate

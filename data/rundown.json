@@ -6,19 +6,19 @@
       "date": "2026-09-22",
       "label": "September 22, 2026",
       "title": "Arrivals & Orientation",
-      "description": "Delegates arrive and check into the Gevora Hotel; the forum opens with an orientation and welcome address, followed by a dinner cruise at Dubai Marina.",
+      "description": "Delegates arrive and check into the FORM Hotel Al Jaddaf; the forum opens with an orientation and welcome address, followed by a dinner cruise at Dubai Marina.",
       "items": [
         {
           "time": "15:00",
           "title": "Delegate arrivals & check-in",
-          "venue": "Gevora Hotel",
+          "venue": "FORM Hotel Al Jaddaf",
           "type": "ceremony",
           "description": "Official check-in, forum materials and settling into the venue."
         },
         {
           "time": "18:00",
           "title": "Orientation & welcome address",
-          "venue": "Gevora Hotel",
+          "venue": "FORM Hotel Al Jaddaf",
           "type": "ceremony",
           "description": "An introduction to the forum, its expectations and overarching objectives."
         },
@@ -128,19 +128,19 @@
       "date": "2026-09-25",
       "label": "September 25, 2026",
       "title": "Check-out",
-      "description": "A final breakfast together before delegates check out of the Gevora Hotel and depart Dubai.",
+      "description": "A final breakfast together before delegates check out of the FORM Hotel Al Jaddaf and depart Dubai.",
       "items": [
         {
           "time": "09:00",
           "title": "Final breakfast",
-          "venue": "Gevora Hotel",
+          "venue": "FORM Hotel Al Jaddaf",
           "type": "meal",
           "description": "A last breakfast together before delegates go their separate ways."
         },
         {
           "time": "11:00",
           "title": "Hotel check-out",
-          "venue": "Gevora Hotel",
+          "venue": "FORM Hotel Al Jaddaf",
           "description": "Delegates settle any accounts and check out of the forum hotel."
         },
         {

@@ -1,19 +1,20 @@
 {
-  "_note": "Delegate accommodation reference for the Youth Strategic Forum, Dubai 2026. Key entries must match delegates.hotel_id; 'dubai-hotel' is the only one in use (see routes/me.js, routes/public.js). Facts sourced from the CSCD marketing site's StaySection; room type, sharing arrangement, and exact booking terms are operational details that arrive with the delegate roster and are marked TBD below rather than invented.",
+  "_note": "Delegate accommodation reference for the Youth Strategic Forum, Dubai 2026. Key entries must match delegates.hotel_id; 'dubai-hotel' is the only one in use (see routes/me.js, routes/public.js). Hotel confirmed as FORM Hotel Al Jaddaf, Dubai (a Member of Design Hotels); facts sourced from the hotel's own site and Design Hotels. Room type, sharing arrangement, and exact booking terms are operational details that arrive with the delegate roster and are marked TBD below rather than invented.",
   "hotels": {
     "dubai-hotel": {
-      "name": "Gevora Hotel",
+      "name": "FORM Hotel Al Jaddaf",
       "subtitle": "Delegate accommodation",
-      "location": "Sheikh Zayed Road, Dubai, United Arab Emirates",
-      "description": "Your accommodation for the Youth Strategic Forum, Dubai 2026: the tallest hotel in the world, rising 75 floors above Dubai's iconic Sheikh Zayed Road, minutes from the forum venue.",
+      "location": "Al Jaddaf, Dubai, United Arab Emirates",
+      "description": "Your accommodation for the Youth Strategic Forum, Dubai 2026: FORM Hotel Al Jaddaf, a design-led boutique hotel and the first Design Hotels property in the Middle East, set in the historical Al Jaddaf district overlooking Dubai Creek, minutes from the Dubai Design District and Downtown Dubai.",
       "highlights": [
-        "Tallest hotel in the world (75 floors, 356m)",
-        "Rooftop infinity pool and skyline views",
-        "Fine-dining restaurants, spa, gym & wellness",
-        "On Sheikh Zayed Road, minutes from the venue"
+        "A Member of Design Hotels — the brand's first Middle East property",
+        "24-hour rooftop gym with panoramic city views",
+        "Outdoor pool with a poolside bar",
+        "300 m from Al Jadaf Metro; ~10 min to Downtown Dubai, Burj Khalifa & Dubai Mall"
       ],
-      "address": "Sheikh Zayed Road, Dubai, United Arab Emirates",
-      "map": "https://www.google.com/maps/search/?api=1&query=Gevora+Hotel+Dubai",
+      "address": "Al Jaddaf, Culture Village, Dubai, United Arab Emirates",
+      "image": "/img/form-hotel.webp",
+      "map": "https://www.google.com/maps/search/?api=1&query=FORM+Hotel+Al+Jaddaf+Dubai",
       "checkin": "3:00 PM",
       "checkout": "11:00 AM",
       "policy": [

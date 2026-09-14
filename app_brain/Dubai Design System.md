@@ -50,7 +50,7 @@ Gold wipe-fill button hover (bottom-up, text flips to deep-forest) · chess-moti
 ## Event facts
 
 - **Dates**: September 22–25, 2026. **Venue**: Mohammed Bin Rashid Library, Al Jaddaf, Dubai.
-- **Hotel**: Gevora Hotel, Sheikh Zayed Road ("tallest hotel in the world," 75 floors, 356m).
+- **Hotel**: FORM Hotel Al Jaddaf, Dubai (a Member of Design Hotels™) — design-led boutique hotel in the historical Al Jaddaf district, by Dubai Creek. Confidential: only ever shown to enrolled delegates (redacted in the public rundown).
 - **Agenda**: Day 1 arrivals + orientation + Marina cruise dinner · Day 2 Modules 1–4 + desert safari · Day 3 Modules 5–6 + certification ceremony + closing · Day 4 checkout.
 - **6 program modules**: AI Creativity & Human Expression · Digital Storytelling & Youth Culture · Smart Cities & Creative Communities · Aesthetics of Technology & Lifestyle · Virtual Escapism & Immersive Travel · Art, Media & Cultural Influence.
 - **Tiers found**: Fully Funded (applications closed, merit-based) and Self Financed ($599) — both share an 11-bullet feature list. **Summit Pass** exists only as a standalone registration page + AidaForm — no price/feature board built for it anywhere.

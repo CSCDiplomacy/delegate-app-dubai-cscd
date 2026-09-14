@@ -29,7 +29,7 @@ async function getDelegate(userId) {
 }
 
 // Combined hotel view: the delegate's booking row + the shared hotel reference.
-// Locked to confirmed delegates — the hotel (Gevora Hotel) is confidential and
+// Locked to confirmed delegates — the hotel (FORM Hotel Al Jaddaf) is confidential and
 // must not be revealed to applicants still awaiting a decision.
 router.get('/hotel', requireAuth, async (req, res) => {
   const delegate = await getDelegate(req.user.id);
