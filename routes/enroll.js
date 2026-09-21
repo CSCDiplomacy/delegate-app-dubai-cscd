@@ -39,10 +39,16 @@ function safeEqual(a, b) {
   return crypto.timingSafeEqual(ba, bb);
 }
 
-// Dubai applicant ids look like YSF-DXB-2026-FF123. Collected anywhere in the
-// payload (not just an exact field match) because we don't yet know n8n's
-// exact JSON shape — same defensive approach as registration.js/interview.js.
-const APPLICANT_ID_RE = /YSF-DXB-\d{4}-FF\d+/gi;
+// Dubai applicant ids look like YSF-DXB-2026-<PREFIX><N>, where PREFIX encodes
+// which flow the applicant came through: `FF` for the fully-featured/general
+// application, `SF` for the public website's Self Financed form (which posts
+// here too as of 2026-09-01 — form_id 261907698196475, fee USD 599, distinct
+// from the in-portal self registration at USD 499). Forum-access ids will land
+// here later under their own prefix. So we match ANY 2–4 letter prefix rather
+// than hard-coding `FF` — collected anywhere in the payload (not an exact field
+// match) because n8n's JSON shape varies; same defensive approach as
+// registration.js/interview.js.
+const APPLICANT_ID_RE = /YSF-DXB-\d{4}-[A-Z]{2,4}\d+/gi;
 const EMAIL_RE = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/gi;
 
 function collectMatches(value, regex, found = new Set(), depth = 0) {
@@ -101,8 +107,16 @@ function collectEmails(value, keyHint, primary, alternate, depth = 0) {
 // walk the payload for the first key that looks like a name field. Matches
 // n8n's cleaned-up shape (personal_information.full_name) as well as raw
 // JotForm field ids (q4_fullName).
-const NAME_KEY_RE = /(^|_)(full[_ ]?name|name)$/i;
-function findName(value, depth = 0) {
+//
+// We look for an explicit *full* name FIRST, then fall back to any name-ish
+// key. This ordering matters: n8n's cleaned shape carries first_name /
+// last_name / full_name side by side, and a plain /name$/ match would return
+// `first_name` ("Shiven A") since it appears earlier in the object than
+// `full_name` ("SHIVEN ANUP RAGH"). The two-pass lookup picks the full name.
+const FULL_NAME_KEY_RE = /(^|_)full[_ ]?name$/i;
+const NAME_KEY_RE = /(^|_)name$/i;
+
+function findByKey(value, keyRe, depth = 0) {
   if (depth > 8) return null;
   if (typeof value === 'string') {
     // Some upstream systems (n8n's raw webhook capture, in particular) embed
@@ -111,7 +125,7 @@ function findName(value, depth = 0) {
     const trimmed = value.trim();
     if (trimmed.length > 1 && (trimmed[0] === '{' || trimmed[0] === '[')) {
       try {
-        return findName(JSON.parse(trimmed), depth + 1);
+        return findByKey(JSON.parse(trimmed), keyRe, depth + 1);
       } catch {
         return null;
       }
@@ -121,29 +135,39 @@ function findName(value, depth = 0) {
   if (!value || typeof value !== 'object') return null;
   if (Array.isArray(value)) {
     for (const v of value) {
-      const found = findName(v, depth + 1);
+      const found = findByKey(v, keyRe, depth + 1);
       if (found) return found;
     }
     return null;
   }
   for (const [key, v] of Object.entries(value)) {
-    if (NAME_KEY_RE.test(key.trim()) && typeof v === 'string' && v.trim()) {
+    if (keyRe.test(key.trim()) && typeof v === 'string' && v.trim()) {
       return v.trim();
     }
   }
   for (const v of Object.values(value)) {
-    const found = findName(v, depth + 1);
+    const found = findByKey(v, keyRe, depth + 1);
     if (found) return found;
   }
   return null;
 }
 
+function findName(value) {
+  return findByKey(value, FULL_NAME_KEY_RE) || findByKey(value, NAME_KEY_RE);
+}
+
 // Matches the convention already used for every delegate seeded so far
-// (scripts/seed-delegates.js batches): ysfcscdff<N>, where N is the numeric
-// suffix of their applicant_id (YSF-DXB-2026-FF37 -> ysfcscdff37).
+// (scripts/seed-delegates.js batches): ysfcscd<prefix><N>, where prefix is the
+// applicant_id's letter prefix lowercased and N its numeric suffix
+// (YSF-DXB-2026-FF37 -> ysfcscdff37, YSF-DXB-2026-SF5 -> ysfcscdsf5). Folding
+// the prefix in keeps FF unchanged (backward-compatible with the seeded batch)
+// while giving SF/forum-access ids their own distinct passwords instead of
+// silently reusing the `ff` string.
 function passwordFromApplicantId(applicantId) {
-  const m = applicantId.match(/(\d+)$/);
-  return `ysfcscdff${m ? m[1] : ''}`;
+  const m = applicantId.match(/-([A-Z]{2,4})(\d+)$/i);
+  const prefix = m ? m[1].toLowerCase() : 'ff';
+  const number = m ? m[2] : '';
+  return `ysfcscd${prefix}${number}`;
 }
 
 const webhookLimiter = rateLimit({

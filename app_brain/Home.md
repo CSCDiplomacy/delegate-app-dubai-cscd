@@ -40,6 +40,7 @@ Start with [[Event Lifecycle Stages]] — it's the spine. The portal isn't one s
 - [[Dubai Fork Progress]] — **start here to see what's actually done** — running log against the plan, updated as work lands (Supabase live + seeded, Phases 1–2 complete, interview readiness fixed, credential email rebranded)
 - [[Dubai Design System]] — the maroon/gold/Archivo palette and content already built on the marketing site (source of truth for Dubai's look)
 - [[Jakarta Email Toolkit]] — the separate human-run email system that also needs a Dubai rebrand
+- [[Dubai Delegate Email Toolkit]] — **live** scripts to email delegates their Letter of Invitation + Code of Conduct (reuse for every future candidate batch)
 - [[Jakarta Branding Inventory]] — exhaustive file-by-file checklist of every Jakarta/YPDS-specific string in the portal, classified EVENT / REUSABLE / AMBIGUOUS
 - [[Known Issues and Dead Code]] — stray files, doc drift, dead code, data inconsistencies discovered while documenting — worth cleaning up during the fork rather than dragging forward
 

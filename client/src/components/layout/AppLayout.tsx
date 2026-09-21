@@ -40,7 +40,7 @@ const SCREENS = {
 
 export const AppLayout = () => {
   const { profile } = useAuthStore();
-  const { loadAll, voucherAvailable } = useDelegateStore();
+  const { loadAll } = useDelegateStore();
   const { activeScreen, switchScreen, menuOpen, setMenuOpen } = useUIStore();
 
   useEffect(() => {
@@ -61,7 +61,7 @@ export const AppLayout = () => {
   // The Activity tab only exists for delegates matched to a live-session group.
   const showActivity = !!regionForEmail(profile?.email);
   const showRegistration = showRegistrationTab(profile);
-  const showRoomUpgrade = showRoomUpgradeTab(profile, voucherAvailable);
+  const showRoomUpgrade = showRoomUpgradeTab(profile);
 
   // If a gated tab disappears (submitted / enrolled / not in a group) while it's
   // active, fall back to the dashboard.

@@ -44,6 +44,19 @@ Everything in `scripts/`, mapped to the lifecycle stage it belongs to (see [[Eve
 |---|---|
 | `upload-vouchers.js` | One-time bulk upload of `accommodation_vouchers/*.pdf` into the private Storage bucket, deriving keys from filename `YPDS-JKT-(26-)?F###.pdf` — **functionally tied to the applicant-id format**, same caveat as [[Registration Flow]]. |
 
+## Credential distribution — mail merge is the source of truth, not `credential_email_sent_at`
+
+**All existing Dubai candidates have already received their portal login
+credentials via a mail-merge process** (outside the app). Therefore
+`delegates.credential_email_sent_at` being **NULL is expected/by-design** for
+the bulk cohort — it is set **only** by the in-app registration webhook flow
+(`routes/enroll.js`), so a NULL value does **not** mean "never credentialed."
+As of 2026-09-01 only 4 of the 32 invitation-letter delegates show a non-NULL
+`credential_email_sent_at`; the rest were credentialed by the mail merge, not by
+a gap. Do **not** mass-resend credentials off the back of that column. The only
+delegates genuinely lacking a login are those with **no Supabase Auth user at
+all** (verify via `auth.admin.listUsers`). See [[credential-email-dubai-ops-notes]].
+
 ## Related
 
-[[Event Lifecycle Stages]] · [[Data Model]] · [[Jakarta Branding Inventory]]
+[[Event Lifecycle Stages]] · [[Data Model]] · [[Jakarta Branding Inventory]] · [[Dubai Delegate Email Toolkit]]

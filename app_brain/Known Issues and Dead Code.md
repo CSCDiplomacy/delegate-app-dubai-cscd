@@ -47,6 +47,34 @@ Practical effect: the embedded form never actually carries a `candidate_token`, 
 
 `ANALYTICS_TOKEN` (gates `routes/analytics.js`'s internal dashboard) is used in code but **not listed in `.env.example`**. Worth adding while touching that file anyway for Dubai.
 
+## Jotform Self-Financed unique-id collision (SF0001 == SF1) — needs manual fix
+
+The Dubai **Self Financed** Jotform (`261907698196475`) has two autoincrement
+fields (qids 77 & 78, both `idPrefix "YSF-DXB-2026-SF"`, `idPadding 4`,
+`currentIndex 1`). Padding was added and the counter **reset after the first 4
+submissions**, so the 5th self-funded applicant, **Sanvia Lobo** (submitted
+29 Aug 2026), was issued **SF0001**, which numerically equals **SF1** already
+held by **M R Vikas Gowda** — a duplicate id. Her printed Letter of Invitation
+also had a **blank Ref No.** from the same glitch.
+
+**What was done (2026-08-31):** for the invitation-email batch, Sanvia was
+issued **SF5** (next free number) and her letter's Ref No. was patched to
+`YSF-DXB-2026-SF5` with PyMuPDF before sending. This is a stopgap on the PDF/CSV
+only — **the Jotform submission still says SF0001.**
+
+**TODO (client):** update Sanvia's id in Jotform to **SF5**, and **disable the
+n8n workflow first** so it doesn't regenerate/overwrite the id or re-fire on the
+edit. Also fix the autoincrement config so the counter doesn't reset/collide
+again. Separately, the one **Forum Access** delegate (Nasiratdinov Sapar
+Jetkerbay-uly) had Ref "Not applicable"; he was assigned **FA1**
+(`YSF-DXB-2026-FA1`) for the same batch.
+
+Batch tooling (not committed data): `scripts/send-invitations.py`,
+`scripts/invitation-email.html`, `scripts/dubai-missing-invites.csv`
+(gitignored, PII). All 28 PDF invitees were emailed their single-page letter;
+self + forum-access letters had "Your scholarship includes" reworded to
+"Your participation includes".
+
 ## Related
 
 [[Jakarta Branding Inventory]] · [[Auth and Gating]] · [[Results and Tiers]] · [[Design System]] · [[Architecture]]

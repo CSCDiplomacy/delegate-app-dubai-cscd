@@ -206,13 +206,12 @@ export const showRegistrationTab = (profile: Profile | null) =>
   TIERS_WITH_FORM.includes(profile.result_tier) &&
   profile.registration_status !== 'submitted';
 
-// Room Upgrade tab: enrolled delegates who have a voucher live (i.e., they
-// are on the shared hotel booking and therefore have a room to upgrade). The
-// tab stays visible after approval so the delegate keeps a durable in-portal
-// confirmation surface. Gating is UX, not security -- the JotForm webhook and
-// admin scripts do not rely on it. voucherAvailable lives in delegateStore
-// and is passed in by AppLayout so this helper stays a pure selector.
-export const showRoomUpgradeTab = (
-  profile: Profile | null,
-  voucherAvailable: boolean
-) => voucherAvailable && (profile?.status || 'unenrolled') === 'enrolled';
+// Room Upgrade tab: any enrolled delegate. Originally we also required a
+// voucher to be live (only delegates on the shared hotel booking have a room
+// to upgrade), but vouchers aren't uploaded yet and the client wants everyone
+// enrolled to be able to request the upgrade now. Gating is UX, not security
+// -- the JotForm webhook and admin scripts do not rely on it. The tab stays
+// visible after approval so the delegate keeps a durable in-portal
+// confirmation surface.
+export const showRoomUpgradeTab = (profile: Profile | null) =>
+  (profile?.status || 'unenrolled') === 'enrolled';

@@ -11,10 +11,14 @@
             "id": "e18103143ee3bc1f",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
+              "type": "markdown",
+              "state": {
+                "file": "Dubai Delegate Email Toolkit.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Dubai Delegate Email Toolkit"
             }
           }
         ]
@@ -186,6 +190,9 @@
   },
   "active": "e18103143ee3bc1f",
   "lastOpenFiles": [
+    "Home.md",
+    "Dubai Fork Plan.md",
+    "Dubai Design System.md.tmp.365796.dfa891e05736",
     "Dubai Fork Progress.md.tmp.209174.5985d31fee48",
     "Dubai Fork Progress.md.tmp.209174.893c0daa47e6",
     "Dubai Fork Plan.md.tmp.209174.8f1f4e2cb83f",
@@ -195,10 +202,7 @@
     "Dubai Fork Progress.md.tmp.209174.8664e4085299",
     "Dubai Fork Progress.md.tmp.209174.dd330ac03db3",
     "Dubai Fork Plan.md.tmp.209174.bcc99985b0f8",
-    "Home.md.tmp.209174.c659624d8a86",
-    "Home.md",
     "Dubai Fork Progress.md",
-    "Dubai Fork Progress.md.tmp.209174.03f0a9ef6664",
     "Architecture.md",
     "Auth and Gating.md",
     "Data Model.md",
@@ -206,7 +210,6 @@
     "Design System.md",
     "Dubai Design System.md",
     "Operational Scripts.md",
-    "Dubai Fork Plan.md",
     "Untitled.canvas",
     "Known Issues and Dead Code.md",
     "Jakarta Email Toolkit.md",
