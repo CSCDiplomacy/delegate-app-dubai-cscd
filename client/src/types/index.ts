@@ -17,6 +17,10 @@ export interface Profile {
   /** A `self`-tier delegate's request to be re-evaluated for the partial (50%)
    *  scholarship. null = never requested; otherwise the admin decision state. */
   scholarship_request_status: 'pending' | 'approved' | 'rejected' | null;
+  /** Enrolled delegate's request to upgrade from twin-sharing to a single room
+   *  (USD 140, JotForm-hosted). null = not requested; pending after the JotForm
+   *  webhook fires; approved once ops flips it via set-room-upgrade-status.js. */
+  room_upgrade_status: 'pending' | 'approved' | 'rejected' | null;
 }
 
 // Scholarship outcome from the video-submission evaluation. `full` is the
@@ -163,7 +167,8 @@ export type Screen =
   | 'schedule'
   | 'contact'
   | 'scholarship-holders'
-  | 'registration';
+  | 'registration'
+  | 'room-upgrade';
 
 export interface Config {
   supabaseUrl: string;

@@ -20,10 +20,12 @@ export const Sidebar = ({
   showInterview,
   showActivity,
   showRegistration,
+  showRoomUpgrade,
 }: {
   showInterview: boolean;
   showActivity: boolean;
   showRegistration: boolean;
+  showRoomUpgrade: boolean;
 }) => {
   const { profile, eventName, logout } = useAuthStore();
   const { activeScreen, switchScreen, theme, toggleTheme } = useUIStore();
@@ -38,6 +40,9 @@ export const Sidebar = ({
       : []),
     ...(showActivity
       ? ([{ screen: 'activity', label: 'Activity', icon: 'award' }] as typeof NAV)
+      : []),
+    ...(showRoomUpgrade
+      ? ([{ screen: 'room-upgrade', label: 'Room Upgrade', icon: 'hotel' }] as typeof NAV)
       : []),
     ...NAV.slice(1), // scholarship-holders, about, rundown, venue, hotel, schedule, contact
   ];

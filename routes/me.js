@@ -80,6 +80,19 @@ router.get('/profile', requireAuth, async (req, res) => {
     scholarshipRequestStatus = reqRow ? reqRow.status : null;
   }
 
+  // Room-upgrade request state -- drives the Room Upgrade tab's three-state
+  // (null form / pending banner / approved success). Only enrolled delegates
+  // ever have a booking to upgrade, so skip the lookup for anyone else.
+  let roomUpgradeStatus = null;
+  if (serviceClient && delegate && delegate.status === 'enrolled') {
+    const { data: upgRow } = await serviceClient
+      .from('room_upgrade_requests')
+      .select('status')
+      .eq('delegate_id', delegate.id)
+      .maybeSingle();
+    roomUpgradeStatus = upgRow ? upgRow.status : null;
+  }
+
   res.json({
     name: (delegate && delegate.name) || req.user.email,
     email: req.user.email,
@@ -97,6 +110,10 @@ router.get('/profile', requireAuth, async (req, res) => {
     registration_submitted_at: (delegate && delegate.registration_submitted_at) || null,
     // null | 'pending' | 'approved' | 'rejected' — see /scholarship-request below.
     scholarship_request_status: scholarshipRequestStatus,
+    // null | 'pending' | 'approved' | 'rejected'. Flipped by the JotForm
+    // room-upgrade webhook (pending) and by scripts/set-room-upgrade-status.js
+    // (approved/rejected). Drives the Room Upgrade tab visibility and state.
+    room_upgrade_status: roomUpgradeStatus,
   });
 });
 

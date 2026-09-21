@@ -18,6 +18,7 @@ const SCREENS: Screen[] = [
   'contact',
   'scholarship-holders',
   'registration',
+  'room-upgrade',
 ];
 
 function applyTheme(theme: Theme) {

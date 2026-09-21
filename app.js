@@ -13,6 +13,7 @@ const dataRoutes = require('./routes/data');
 const interviewRoutes = require('./routes/interview');
 const registrationRoutes = require('./routes/registration'); // legacy Cognito webhook, no longer wired to a live form
 const jotformRegistrationRoutes = require('./routes/jotform-registration');
+const roomUpgradeRoutes = require('./routes/room-upgrade');
 const enrollRoutes = require('./routes/enroll');
 const analyticsRoutes = require('./routes/analytics');
 const { startReminderJob } = require('./lib/reminders');
@@ -138,6 +139,7 @@ app.use('/api', dataRoutes);
 app.use('/api/interview', interviewRoutes);
 app.use('/api/registration', registrationRoutes);
 app.use('/api/registration-jotform', jotformRegistrationRoutes);
+app.use('/api/room-upgrade', roomUpgradeRoutes);
 app.use('/api/enroll', enrollRoutes);
 app.use('/api/internal', analyticsRoutes);
 
