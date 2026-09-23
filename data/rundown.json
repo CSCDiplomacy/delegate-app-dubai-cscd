@@ -1,151 +1,150 @@
 {
-  "_note": "Youth Strategic Forum, Dubai 2026 — event rundown (Sep 22–25, 2026). Day-level structure and start times sourced from the CSCD marketing site's Agenda section (cscd_website/src/components/events/ysf-dubai-2026/AgendaSection.tsx). Exact session end-times and room numbers within the venue are not yet confirmed and are omitted rather than invented — update once the client confirms the delegate-facing schedule.",
+  "_note": "Youth Strategic Forum, Dubai 2026 — event rundown. Days 0 and 1 sourced from the client's Official Rundown PDF (YSF Dubai 2026 - Rundown.pdf, shared 2026-09-23). Day 2 detailed schedule not yet released by the client; Day 3 is check-out logistics.",
   "timezone": "Asia/Dubai",
   "days": [
     {
       "date": "2026-09-22",
       "label": "September 22, 2026",
-      "title": "Arrivals & Orientation",
-      "description": "Delegates arrive and check into the FORM Hotel Al Jaddaf; the forum opens with an orientation and welcome address, followed by a dinner cruise at Dubai Marina.",
+      "title": "Arrival & Networking",
+      "description": "Delegates arrive and check into the hotel, gather for a welcome reception in the lobby, and set sail for a gala dinner cruise along Dubai's iconic skyline.",
       "items": [
         {
           "time": "15:00",
-          "title": "Delegate arrivals & check-in",
+          "title": "Hotel Check-in",
           "venue": "FORM Hotel Al Jaddaf",
           "type": "ceremony",
-          "description": "Official check-in, forum materials and settling into the venue."
+          "description": "Official check-in and settling into the forum hotel."
+        },
+        {
+          "time": "17:00",
+          "title": "Welcome Reception",
+          "venue": "FORM Hotel Al Jaddaf — Lobby",
+          "type": "social",
+          "description": "An introductory informal gathering for attendees to meet, mingle, and network in the hotel lobby before leaving for the Gala Dinner. This session establishes an open and welcoming environment, allowing participants to familiarise themselves with fellow delegates in a semi-formal setting. This marks the beginning of an intellectual journey where your unique perspectives will shape new paradigms for our shared economic future."
         },
         {
           "time": "18:00",
-          "title": "Orientation & welcome address",
-          "venue": "FORM Hotel Al Jaddaf",
-          "type": "ceremony",
-          "description": "An introduction to the forum, its expectations and overarching objectives."
-        },
-        {
-          "time": "20:00",
-          "title": "Cruise Dinner at Marina",
+          "title": "Gala Dinner — Dubai Cruise",
           "venue": "Dubai Marina",
           "type": "social",
-          "description": "An evening on the water at Dubai Marina dedicated to breaking the ice and building cross-cultural understanding."
+          "description": "An elegant evening cruise bringing delegates together for a gala dinner against the backdrop of Dubai's iconic skyline. The evening combines fine dining, cultural exchange, networking, and a memorable celebration of the YSF international community."
         }
       ]
     },
     {
       "date": "2026-09-23",
       "label": "September 23, 2026",
-      "title": "Modules 1–4",
-      "description": "A full day of forum modules at the Mohammed Bin Rashid Library, from AI and creativity to smart cities and design.",
+      "title": "Main Event",
+      "description": "A full day at the Mohammed Bin Rashid Library: a guided visit, the opening session with the Executive Director, and three deliberative sessions on sustainability, energy diplomacy, and cultural statecraft.",
       "items": [
         {
+          "time": "07:00",
+          "title": "Breakfast at Hotel",
+          "venue": "FORM Hotel Al Jaddaf",
+          "type": "meal",
+          "description": "Breakfast is served at the hotel between 07:00 and 09:00 ahead of departure."
+        },
+        {
           "time": "09:30",
-          "title": "Forum opening & keynote",
+          "title": "Departure from Hotel",
+          "venue": "FORM Hotel Al Jaddaf",
+          "type": "ceremony",
+          "description": "Delegates depart the hotel together for the Mohammed Bin Rashid Library."
+        },
+        {
+          "time": "09:45",
+          "title": "Arrive at Mohammed Bin Rashid Library",
+          "venue": "Mohammed Bin Rashid Library",
+          "type": "ceremony",
+          "description": "Arrival and registration at the forum venue."
+        },
+        {
+          "time": "10:00",
+          "title": "Guided Visit to the Mohammed Bin Rashid Library & Exhibition",
+          "venue": "Mohammed Bin Rashid Library",
+          "type": "workshop",
+          "description": "A guided visit to the Mohammed Bin Rashid Library, Dubai's landmark cultural and knowledge institution and the official venue of YSF Dubai 2026. Delegates will explore its collections, architecture, and cultural spaces while engaging with Dubai's vision for knowledge, learning, and innovation."
+        },
+        {
+          "time": "10:40",
+          "title": "Opening Session with Mr. Hafiz Hassan",
           "venue": "Mohammed Bin Rashid Library",
           "type": "keynote",
-          "description": "The strategic outlook for the days ahead, setting the tone for the modules."
+          "description": "An opening address by Mr. Hassan, Executive Director of CSCD, introducing the vision, purpose, and key objectives of YSF Dubai 2026. Delegates will be welcomed into the Forum and oriented to its themes, programme, and spirit of international exchange."
         },
         {
-          "time": "10:15",
-          "title": "Module 01: AI, Creativity & Human Expression",
+          "time": "11:00",
+          "title": "Coffee Break",
           "venue": "Mohammed Bin Rashid Library",
-          "type": "workshop",
-          "description": "How AI is transforming creativity, communication and the future of human expression."
+          "type": "meal",
+          "description": "A short coffee break before the first session."
         },
         {
-          "time": "11:45",
-          "title": "Module 02: Digital Storytelling & Youth Culture",
+          "time": "11:15",
+          "title": "Session with Najia Qazi — Sustainability & the Policy Sandbox",
           "venue": "Mohammed Bin Rashid Library",
           "type": "workshop",
-          "description": "Social media, cinema, gaming and streaming shaping global youth trends."
+          "description": "A hands-on workshop with Najia Qazi (Sustainability Consultant and Founder of Sustainable Narrative in the UAE) exploring how sustainability policies can move from ambition to implementation through a policy sandbox, where participants develop, test, and refine practical solutions to real-world sustainability challenges. Delegates will work across sectors to consider the People, Planet, Profit framework, balancing environmental impact, social value, and commercial viability while thinking through the policy choices needed to accelerate the transition toward a circular economy."
         },
         {
-          "time": "14:00",
-          "title": "Module 03: Smart Cities & Creative Communities",
+          "time": "13:15",
+          "title": "Lunch Break",
           "venue": "Mohammed Bin Rashid Library",
-          "type": "workshop",
-          "description": "Technology-driven urban development and innovation ecosystems that shape societies."
+          "type": "meal",
+          "description": "Lunch is served for delegates at the venue."
         },
         {
-          "time": "15:45",
-          "title": "Module 04: Aesthetics of Technology & Lifestyle",
+          "time": "15:00",
+          "title": "Session with Dr. Farid Guliyev — Energy Policy & Climate Diplomacy",
           "venue": "Mohammed Bin Rashid Library",
-          "type": "workshop",
-          "description": "Visual culture, branding, photography and design in modern lifestyles."
+          "type": "panel",
+          "description": "A deliberative session with Dr. Farid Guliyev (Assistant Professor of Political Science at the American University in Dubai) examining the implications of the Trump administration's energy policy for global climate governance and international cooperation. The session will explore the evolving relationship between energy security, domestic policy, climate commitments, and multilateral cooperation, and what these shifts may mean for the future of international climate diplomacy."
+        },
+        {
+          "time": "16:00",
+          "title": "Session with Dr. Omar Bortolazzi — Art, Culture & Statecraft",
+          "venue": "Mohammed Bin Rashid Library",
+          "type": "panel",
+          "description": "A session with Dr. Omar Bortolazzi (Program Director, Master of Arts in International Affairs and Associate Professor of Political Science at American University Dubai) exploring how art and culture shape global influence and why youth needs to think like creative practitioners, not just policy analysts. From understanding soft power mechanisms to reimagining strategy through aesthetic production, this session delves deeper into the unexpected intersections between culture and statecraft."
+        },
+        {
+          "time": "17:00",
+          "title": "Conclusion & Reflection Session",
+          "venue": "Mohammed Bin Rashid Library",
+          "type": "ceremony",
+          "description": "A closing reflection to bring together the day's threads and mark the end of Day 1."
         }
       ]
     },
     {
       "date": "2026-09-24",
       "label": "September 24, 2026",
-      "title": "Modules 5–6, Farewell & Desert Safari",
-      "description": "The final module sessions, a policy lab, the certification ceremony, and a closing address at the Mohammed Bin Rashid Library, closing with a desert safari.",
-      "items": [
-        {
-          "time": "09:30",
-          "title": "Module 05: Virtual Escapism & Immersive Travel",
-          "venue": "Mohammed Bin Rashid Library",
-          "type": "workshop",
-          "description": "Tourism, virtual experiences and digital lifestyles across borders."
-        },
-        {
-          "time": "10:45",
-          "title": "Module 06: Art, Media & Cultural Influence",
-          "venue": "Mohammed Bin Rashid Library",
-          "type": "workshop",
-          "description": "Music, film, theatre and online media as tools of storytelling and influence."
-        },
-        {
-          "time": "12:00",
-          "title": "Policy lab & group presentations",
-          "venue": "Mohammed Bin Rashid Library",
-          "type": "panel",
-          "description": "Delegates present the ideas and strategies shaped across the forum."
-        },
-        {
-          "time": "14:00",
-          "title": "Certification ceremony",
-          "venue": "Mohammed Bin Rashid Library",
-          "type": "ceremony",
-          "description": "Recognition of participation and the Ideal Strategist endorsement."
-        },
-        {
-          "time": "15:30",
-          "title": "Closing address & group photograph",
-          "venue": "Mohammed Bin Rashid Library",
-          "type": "ceremony",
-          "description": "A final word and a group photograph to close the forum."
-        },
-        {
-          "time": "19:00",
-          "title": "Desert Safari",
-          "venue": "Dubai Desert",
-          "type": "social",
-          "description": "A dune drive into the Dubai desert with a cultural camp and dinner under the stars."
-        }
-      ]
+      "title": "Day 2",
+      "description": "Detailed schedule to be shared by the organisers.",
+      "items": []
     },
     {
       "date": "2026-09-25",
       "label": "September 25, 2026",
-      "title": "Check-out",
+      "title": "Departure",
       "description": "A final breakfast together before delegates check out of the FORM Hotel Al Jaddaf and depart Dubai.",
       "items": [
         {
           "time": "09:00",
-          "title": "Final breakfast",
+          "title": "Final Breakfast",
           "venue": "FORM Hotel Al Jaddaf",
           "type": "meal",
           "description": "A last breakfast together before delegates go their separate ways."
         },
         {
           "time": "11:00",
-          "title": "Hotel check-out",
+          "title": "Hotel Check-out",
           "venue": "FORM Hotel Al Jaddaf",
           "description": "Delegates settle any accounts and check out of the forum hotel."
         },
         {
           "time": "12:00",
-          "title": "Delegate departures",
+          "title": "Delegate Departures",
           "venue": "Dubai",
           "description": "Onward travel as delegates depart Dubai."
         }
