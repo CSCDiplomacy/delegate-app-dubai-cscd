@@ -35,10 +35,11 @@
       "date": "2026-09-23",
       "label": "September 23, 2026",
       "title": "Main Event",
-      "description": "A full day at the Mohammed Bin Rashid Library: a guided visit, the opening session with the Executive Director, and three deliberative sessions on sustainability, energy diplomacy, and cultural statecraft.",
+      "description": "A full day at the Mohammed Bin Rashid Library: opening orientation, a policy lab on sustainable futures, a debate on growth and sustainability, and sessions on energy diplomacy and cultural influence.",
       "items": [
         {
           "time": "07:00",
+          "end_time": "09:00",
           "title": "Breakfast at Hotel",
           "venue": "FORM Hotel Al Jaddaf",
           "type": "meal",
@@ -60,6 +61,7 @@
         },
         {
           "time": "10:00",
+          "end_time": "10:40",
           "title": "Guided Visit to the Mohammed Bin Rashid Library & Exhibition",
           "venue": "Mohammed Bin Rashid Library",
           "type": "workshop",
@@ -67,48 +69,55 @@
         },
         {
           "time": "10:40",
-          "title": "Opening Session with Mr. Hafiz Hassan",
+          "end_time": "11:00",
+          "title": "Opening Session: Vision, Strategy & the YSF Experience",
           "venue": "Mohammed Bin Rashid Library",
           "type": "keynote",
-          "description": "An opening address by Mr. Hassan, Executive Director of CSCD, introducing the vision, purpose, and key objectives of YSF Dubai 2026. Delegates will be welcomed into the Forum and oriented to its themes, programme, and spirit of international exchange."
+          "description": "An opening orientation introducing the vision, objectives, and key themes of YSF Dubai 2026. The session will set the context for the Forum and prepare delegates for four days of international exchange, dialogue, and collaboration."
         },
         {
           "time": "11:00",
-          "title": "Coffee Break",
-          "venue": "Mohammed Bin Rashid Library",
-          "type": "meal",
-          "description": "A short coffee break before the first session."
-        },
-        {
-          "time": "11:15",
-          "title": "Session with Najia Qazi — Sustainability & the Policy Sandbox",
+          "end_time": "13:00",
+          "title": "Policy Lab: Designing Practical Solutions for a Sustainable Future",
           "venue": "Mohammed Bin Rashid Library",
           "type": "workshop",
-          "description": "A hands-on workshop with Najia Qazi (Sustainability Consultant and Founder of Sustainable Narrative in the UAE) exploring how sustainability policies can move from ambition to implementation through a policy sandbox, where participants develop, test, and refine practical solutions to real-world sustainability challenges. Delegates will work across sectors to consider the People, Planet, Profit framework, balancing environmental impact, social value, and commercial viability while thinking through the policy choices needed to accelerate the transition toward a circular economy."
+          "description": "An interactive workshop exploring how smart cities can move from ambition to implementation. Delegates will develop and test practical responses to real-world challenges while considering the relationship between environmental responsibility, social value, economic viability, and policy innovation."
         },
         {
           "time": "13:15",
+          "end_time": "14:30",
           "title": "Lunch Break",
           "venue": "Mohammed Bin Rashid Library",
           "type": "meal",
           "description": "Lunch is served for delegates at the venue."
         },
         {
-          "time": "15:00",
-          "title": "Session with Dr. Farid Guliyev — Energy Policy & Climate Diplomacy",
+          "time": "14:30",
+          "end_time": "15:00",
+          "title": "Debate Session — Can Economic Growth and Sustainability Truly Coexist?",
           "venue": "Mohammed Bin Rashid Library",
           "type": "panel",
-          "description": "A deliberative session with Dr. Farid Guliyev (Assistant Professor of Political Science at the American University in Dubai) examining the implications of the Trump administration's energy policy for global climate governance and international cooperation. The session will explore the evolving relationship between energy security, domestic policy, climate commitments, and multilateral cooperation, and what these shifts may mean for the future of international climate diplomacy."
+          "description": "A structured debate challenging delegates to examine the tensions and possibilities between economic growth, environmental responsibility, and social development. Delegates will take opposing positions, engage with competing arguments, and consider whether sustainability requires fundamentally rethinking how economies measure progress and prosperity."
+        },
+        {
+          "time": "15:00",
+          "end_time": "16:00",
+          "title": "Energy, Climate Policy & the Future of Multilateral Cooperation",
+          "venue": "Mohammed Bin Rashid Library",
+          "type": "panel",
+          "description": "A discussion examining the evolving relationship between energy policy, climate commitments, and international cooperation. Delegates will explore how domestic priorities, energy security, and shifting global dynamics influence the future of climate diplomacy and multilateral action."
         },
         {
           "time": "16:00",
-          "title": "Session with Dr. Omar Bortolazzi — Art, Culture & Statecraft",
+          "end_time": "17:00",
+          "title": "Culture, Creativity & Global Influence",
           "venue": "Mohammed Bin Rashid Library",
           "type": "panel",
-          "description": "A session with Dr. Omar Bortolazzi (Program Director, Master of Arts in International Affairs and Associate Professor of Political Science at American University Dubai) exploring how art and culture shape global influence and why youth needs to think like creative practitioners, not just policy analysts. From understanding soft power mechanisms to reimagining strategy through aesthetic production, this session delves deeper into the unexpected intersections between culture and statecraft."
+          "description": "An exploration of how art, culture, aesthetics, and creative expression shape influence in international affairs. The session will examine the relationship between culture and strategy and consider how young people can approach global challenges not only as policy thinkers, but also as creative practitioners."
         },
         {
           "time": "17:00",
+          "end_time": "17:30",
           "title": "Conclusion & Reflection Session",
           "venue": "Mohammed Bin Rashid Library",
           "type": "ceremony",
