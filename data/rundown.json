@@ -128,9 +128,48 @@
     {
       "date": "2026-09-24",
       "label": "September 24, 2026",
-      "title": "Day 2",
-      "description": "Detailed schedule to be shared by the organisers.",
-      "items": []
+      "title": "Presentations, Sessions & Closing",
+      "description": "A day of delegate group task presentations, a speaker session, a panel discussion, and a closing with group photos.",
+      "items": [
+        {
+          "time": "09:30",
+          "title": "Day 3 Introduction",
+          "venue": "Mohammed Bin Rashid Library",
+          "type": "ceremony",
+          "description": "An introduction framing the day's programme and setting up the delegate presentations."
+        },
+        {
+          "time": "10:00",
+          "end_time": "11:00",
+          "title": "Delegate Presentations — Group Task",
+          "venue": "Mohammed Bin Rashid Library",
+          "type": "workshop",
+          "description": "Delegate groups present the outcomes of their group task to the Forum."
+        },
+        {
+          "time": "11:00",
+          "end_time": "12:00",
+          "title": "Speaker Session",
+          "venue": "Mohammed Bin Rashid Library",
+          "type": "keynote",
+          "description": "A featured speaker session for the Forum."
+        },
+        {
+          "time": "12:00",
+          "end_time": "13:15",
+          "title": "Panel Discussion",
+          "venue": "Mohammed Bin Rashid Library",
+          "type": "panel",
+          "description": "A panel discussion with invited voices, drawing together the Forum's themes."
+        },
+        {
+          "time": "13:15",
+          "title": "Group Photos & Conclusion",
+          "venue": "Mohammed Bin Rashid Library",
+          "type": "ceremony",
+          "description": "A closing moment for the Forum with group photographs and final remarks."
+        }
+      ]
     },
     {
       "date": "2026-09-25",
