@@ -17,6 +17,14 @@ const dayTabLabel = (day: RundownDay) => {
 export const Rundown = () => {
   const { rundown, favourites, toggleFavourite } = useDelegateStore();
   const [activeDay, setActiveDay] = useState(0);
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
+  const toggleExpanded = (id: string) =>
+    setExpanded((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
 
   if (!rundown?.days?.length) {
     return (
@@ -64,6 +72,8 @@ export const Rundown = () => {
             {day.items.map((item) => {
               const id = sessionId(day, item);
               const starred = favourites.has(id);
+              const hasDesc = !!item.description;
+              const isOpen = expanded.has(id);
               return (
                 <div key={id} className="t-item">
                   <div className="t-time">
@@ -74,25 +84,57 @@ export const Rundown = () => {
                       <Icon name={typeIcon(item.type)} size={13} />
                     </span>
                   </div>
-                  <div className="t-card">
-                    <div className="t-head">
-                      <span className="t-type">{item.type || 'session'}</span>
-                      <button
-                        className={starred ? 'star-btn starred' : 'star-btn'}
-                        onClick={() => toggleFavourite(id)}
-                        aria-pressed={starred}
-                        title={starred ? 'Remove from my schedule' : 'Save to my schedule'}
-                      >
-                        {starred ? '★' : '☆'}
-                      </button>
-                    </div>
-                    <div className="t-title">{item.title}</div>
-                    {item.venue && (
-                      <div className="t-venue">
-                        <Icon name="mapPin" size={12} /> {item.venue}
+                  <div className={`t-card${hasDesc ? ' has-toggle' : ''}${isOpen ? ' is-open' : ''}`}>
+                    <button
+                      type="button"
+                      className="t-summary"
+                      onClick={hasDesc ? () => toggleExpanded(id) : undefined}
+                      aria-expanded={hasDesc ? isOpen : undefined}
+                      aria-controls={hasDesc ? `desc-${id}` : undefined}
+                      disabled={!hasDesc}
+                    >
+                      <div className="t-head">
+                        <span className="t-type">{item.type || 'session'}</span>
+                        <div className="t-actions">
+                          <span
+                            role="button"
+                            tabIndex={0}
+                            className={starred ? 'star-btn starred' : 'star-btn'}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              toggleFavourite(id);
+                            }}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                toggleFavourite(id);
+                              }
+                            }}
+                            aria-pressed={starred}
+                            title={starred ? 'Remove from my schedule' : 'Save to my schedule'}
+                          >
+                            {starred ? '★' : '☆'}
+                          </span>
+                          {hasDesc && (
+                            <span className="t-chev" aria-hidden="true">
+                              <Icon name="chevronDown" size={16} />
+                            </span>
+                          )}
+                        </div>
                       </div>
+                      <div className="t-title">{item.title}</div>
+                      {item.venue && (
+                        <div className="t-venue">
+                          <Icon name="mapPin" size={12} /> {item.venue}
+                        </div>
+                      )}
+                    </button>
+                    {hasDesc && isOpen && (
+                      <p id={`desc-${id}`} className="t-desc">
+                        {item.description}
+                      </p>
                     )}
-                    {item.description && <p className="t-desc">{item.description}</p>}
                   </div>
                 </div>
               );

@@ -1681,6 +1681,40 @@ textarea {
   padding: 16px 18px;
 }
 
+/* Full-width, unstyled button that turns the whole card header (type, title,
+   venue, star, chevron) into a single tap target that toggles the description
+   drawer. Star handles its own click via stopPropagation on the span. */
+.t-summary {
+  all: unset;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.t-summary:disabled,
+.t-card:not(.has-toggle) .t-summary {
+  cursor: default;
+}
+.t-summary:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 3px;
+  border-radius: var(--radius-md);
+}
+.t-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.t-chev {
+  display: inline-flex;
+  color: var(--ink-faint);
+  transition: transform 0.18s ease, color 0.18s ease;
+}
+.t-card.is-open .t-chev {
+  transform: rotate(180deg);
+  color: var(--signal);
+}
+
 /* Actions To Do — one card, brass edge to read as "act on this", distinct
    from the crimson used for results/awards. */
 .action-card {
